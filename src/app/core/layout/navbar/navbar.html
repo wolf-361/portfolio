@@ -1,24 +1,23 @@
 <mat-toolbar class="navbar">
-  <a class="brand" routerLink="/">Luc Allaire</a>
+  <!-- Brand -->
+  <button class="brand" (click)="scrollTo('hero')">
+    <span class="brand-prefix">~/</span>luc.allaire
+  </button>
 
-  <nav class="nav-links">
-    <a
-      class="nav-link"
-      routerLink="/"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <span class="nav-index">01</span>
-      <span class="nav-sep">//</span>
-      <span class="nav-label">{{ lang.t('home', 'accueil') }}</span>
-      <span class="nav-cursor" aria-hidden="true">_</span>
-    </a>
-    <a class="nav-link" routerLink="/projects" routerLinkActive="active">
-      <span class="nav-index">02</span>
-      <span class="nav-sep">//</span>
-      <span class="nav-label">{{ lang.t('projects', 'projets') }}</span>
-      <span class="nav-cursor" aria-hidden="true">_</span>
-    </a>
+  <!-- Desktop anchor nav -->
+  <nav class="nav-links" aria-label="Navigation principale">
+    @for (item of navItems; track item.fragment) {
+      <button
+        class="nav-link"
+        [class.active]="isActive(item.fragment)"
+        (click)="scrollTo(item.fragment)"
+      >
+        <span class="nav-index">{{ item.index }}</span>
+        <span class="nav-sep">.</span>
+        <span class="nav-label">{{ lang.t(item.labelEn, item.labelFr) }}</span>
+        <span class="nav-cursor" aria-hidden="true">_</span>
+      </button>
+    }
   </nav>
 
   <span class="spacer"></span>
@@ -30,9 +29,9 @@
 
   <!-- Lang toggle -->
   <button
-    mat-icon-button
+    mat-button
     class="lang-btn"
-    [matTooltip]="lang.t('Passer en français', 'Switch to English')"
+    [matTooltip]="lang.t('Switch to French', 'Switch to English')"
     (click)="lang.toggle()"
   >
     <span class="lang-label">{{ lang.t('FR', 'EN') }}</span>
@@ -41,33 +40,25 @@
   <!-- Theme toggle -->
   <button
     mat-icon-button
-    [matTooltip]="theme.isDark() ? 'Switch to light' : 'Switch to dark'"
+    class="theme-btn"
+    [matTooltip]="theme.isDark() ? 'Light mode' : 'Dark mode'"
     (click)="theme.toggle()"
   >
     <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
   </button>
 
-  <!-- Mobile hamburger -->
-  <button class="hamburger" mat-icon-button [matMenuTriggerFor]="mobileMenu">
+  <!-- Mobile hamburger — shows overlay instead of mat-menu -->
+  <button
+    class="hamburger"
+    mat-icon-button
+    [attr.aria-label]="lang.t('Open menu', 'Ouvrir le menu')"
+    (click)="openMobileNav()"
+  >
     <mat-icon>menu</mat-icon>
   </button>
 </mat-toolbar>
 
-<mat-menu #mobileMenu="matMenu">
-  <a mat-menu-item routerLink="/">
-    <mat-icon>home</mat-icon>
-    01 // {{ lang.t('home', 'accueil') }}
-  </a>
-  <a mat-menu-item routerLink="/projects">
-    <mat-icon>folder</mat-icon>
-    02 // {{ lang.t('projects', 'projets') }}
-  </a>
-  <a mat-menu-item href="assets/cv.pdf" target="_blank" rel="noopener" download>
-    <mat-icon>description</mat-icon>
-    CV
-  </a>
-  <button mat-menu-item (click)="lang.toggle()">
-    <mat-icon>translate</mat-icon>
-    {{ lang.t('Français', 'English') }}
-  </button>
-</mat-menu>
+<!-- Full-screen mobile nav overlay -->
+@if (mobileNavOpen()) {
+  <app-mobile-nav (closed)="closeMobileNav()" />
+}

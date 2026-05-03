@@ -34,7 +34,7 @@ export const PALETTES: PaletteName[] = [
 export class ThemeService {
   private readonly _theme = signal<Theme>((this.readStored('theme') as Theme) ?? 'system');
   private readonly _palette = signal<PaletteName>(
-    (this.readStored('palette') as PaletteName) ?? 'violet',
+    (this.readStored('palette') as PaletteName) ?? 'cyan',
   );
 
   readonly isDark = computed(() => {

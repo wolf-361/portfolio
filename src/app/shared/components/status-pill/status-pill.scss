@@ -8,7 +8,7 @@
 .pill {
   display: inline-flex;
   align-items: center;
-  gap: sp.$sm;
+  gap: 0; // gap managed by led margins for precision
   padding: sp.$xs sp.$md;
   border-radius: sys.$corner-full;
   border: 1px solid sys.$outline-variant;
@@ -18,22 +18,25 @@
   font-weight: 500;
   letter-spacing: 0.04em;
   color: sys.$on-surface-variant;
+  overflow: visible; // allow pulse ring to expand beyond pill bounds
 }
 
-// LED dot
+// LED dot — left margin gives pulse ring room from pill edge, right margin spaces it from text
 .led {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
   position: relative;
+  margin-left: 4px;
+  margin-right: 10px;
 }
 
 // Pulse ring — expands outward and fades
 .led::after {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: -4px;
   border-radius: 50%;
   animation: led-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }

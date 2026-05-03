@@ -141,11 +141,12 @@
 }
 
 // Thin vertical line marking "now" on the timeline
+// Extends upward into the row area by the axis margin (0.5rem = sp.$sm)
 .now-line {
   position: absolute;
-  top: -sp.$sm;
+  top: -0.5rem;
   width: 1px;
-  height: calc(100% + sp.$sm + sp.$xs);
+  height: calc(100% + 0.5rem + 0.25rem); // sp.$sm + sp.$xs
   background: sys.$primary;
   opacity: 0.4;
   transform: translateX(-50%);

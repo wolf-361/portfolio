@@ -1,0 +1,57 @@
+<div class="overlay" @overlay>
+  <!-- Header -->
+  <div class="ov-head">
+    <span class="brand mono">~/luc<span class="cursor" aria-hidden="true"></span></span>
+    <button
+      class="close-btn"
+      mat-icon-button
+      (click)="close()"
+      [attr.aria-label]="lang.t('Close menu', 'Fermer le menu')"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Section label -->
+  <p class="menu-label mono" aria-hidden="true">// menu</p>
+
+  <!-- Nav items -->
+  <nav class="nav" [attr.aria-label]="lang.t('Main navigation', 'Navigation principale')">
+    @for (item of navItems; track item.fragment) {
+      <button class="nav-item" (click)="navigate(item.fragment)">
+        <span class="nav-prefix mono">// {{ item.index }}.</span>
+        <span class="nav-text">{{ lang.t(item.labelEn, item.labelFr) }}</span>
+      </button>
+    }
+  </nav>
+
+  <!-- Footer -->
+  <footer class="ov-foot">
+    <div class="foot-row">
+      <ui-status-pill
+        [label]="lang.t('Available for work', 'Disponible pour emploi')"
+        status="available"
+      />
+    </div>
+    <div class="foot-row">
+      <div class="socials">
+        <a
+          class="social-link mono"
+          href="https://github.com/wolf-361"
+          target="_blank"
+          rel="noopener"
+        >
+          GitHub ↗
+        </a>
+        <a
+          class="social-link mono"
+          href="https://www.linkedin.com/in/wolf361/"
+          target="_blank"
+          rel="noopener"
+        >
+          LinkedIn ↗
+        </a>
+      </div>
+    </div>
+  </footer>
+</div>
