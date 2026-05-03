@@ -1,0 +1,34 @@
+@use 'styles/sys' as sys;
+@use 'styles/spacing' as sp;
+
+:host {
+  display: block;
+}
+
+.chip-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: sp.$xs;
+}
+
+// Override MatChip defaults to match the portfolio's mono/compact aesthetic
+.tag-chip {
+  font-family: sys.$font-mono !important;
+  font-size: 0.6875rem !important; // 11px
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  height: 24px !important;
+  padding: 0 sp.$sm !important;
+  border-radius: sys.$corner-extra-small !important;
+  background: sys.$surface-container-high !important;
+  color: sys.$on-surface-variant !important;
+  border: 1px solid sys.$outline-variant !important;
+
+  // Accent variant — first chip when accentFirst=true
+  &.accent {
+    background: sys.$primary-container !important;
+    color: sys.$on-primary-container !important;
+    border-color: transparent !important;
+  }
+}

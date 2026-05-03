@@ -1,0 +1,118 @@
+@use 'styles/sys' as sys;
+
+.page {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 2rem 5rem;
+}
+
+.page-inner {
+  max-width: 780px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.back-link {
+  align-self: flex-start;
+  color: sys.$on-surface-variant;
+}
+
+.project-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.subtitle {
+  font: sys.$label-medium;
+  color: sys.$on-surface-variant;
+}
+
+.status-badge {
+  font: sys.$label-small;
+  color: sys.$primary;
+  background: sys.$primary-container;
+  padding: 0.125rem 0.5rem;
+  border-radius: sys.$corner-full;
+}
+
+.title {
+  margin: 0;
+  font: sys.$display-small;
+  font-weight: 700;
+  color: sys.$on-surface;
+  line-height: 1.15;
+}
+
+.tags {
+  margin-top: 0.25rem;
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.content-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.section-title {
+  margin: 0;
+  font: sys.$title-large;
+  font-weight: 600;
+  color: sys.$on-surface;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid sys.$outline-variant;
+}
+
+.section-body {
+  margin: 0;
+  font: sys.$body-large;
+  color: sys.$on-surface-variant;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.diagram {
+  margin: 0;
+  padding: 1.25rem 1.5rem;
+  background: sys.$surface-container;
+  border-radius: sys.$corner-medium;
+  border: 1px solid sys.$outline-variant;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: sys.$on-surface;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.links-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 6rem 2rem;
+  color: sys.$on-surface-variant;
+  font: sys.$body-large;
+}

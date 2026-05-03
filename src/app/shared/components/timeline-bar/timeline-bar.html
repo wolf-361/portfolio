@@ -1,0 +1,41 @@
+<div class="timeline">
+  <!-- Rows -->
+  <div class="rows">
+    @for (row of rows(); track row.label) {
+      <div class="row">
+        <span class="row-label">{{ row.label }}</span>
+        <div class="track">
+          <div
+            class="bar"
+            [class]="'bar-' + row.variant"
+            [style.left]="barLeft(row)"
+            [style.width]="barWidth(row)"
+            [attr.aria-label]="row.barLabel"
+          >
+            @if (row.starred) {
+              <span class="bar-star" aria-label="Dean's List">★</span>
+            }
+            <span class="bar-label">{{ row.barLabel }}</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Year axis -->
+  <div class="axis">
+    <span class="axis-spacer"></span>
+    <div class="axis-track">
+      @for (tick of axisTicks(); track tick) {
+        <span
+          class="tick"
+          [class.tick-current]="isCurrentYear(tick)"
+          [style.left]="toPercent(tick) + '%'"
+          >{{ tick }}</span
+        >
+      }
+      <!-- Current position indicator -->
+      <span class="now-line" [style.left]="currentYearLeft()"></span>
+    </div>
+  </div>
+</div>

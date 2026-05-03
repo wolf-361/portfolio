@@ -6,7 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { ThemeService, PALETTES } from '../../theme/theme';
+import { ThemeService } from '../../theme/theme';
+import { LangService } from '../../lang/lang';
 
 @Component({
   selector: 'app-navbar',
@@ -24,9 +25,5 @@ import { ThemeService, PALETTES } from '../../theme/theme';
 })
 export class NavbarComponent {
   readonly theme = inject(ThemeService);
-  readonly palettes = PALETTES;
-
-  paletteName(name: string): string {
-    return name.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-  }
+  readonly lang = inject(LangService);
 }

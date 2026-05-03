@@ -1,0 +1,60 @@
+@use 'styles/sys' as sys;
+
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  padding: 4rem 2rem;
+
+  &.alt {
+    background: sys.$surface-container-low;
+  }
+}
+
+.section-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page-title {
+  margin: 0 0 0.5rem;
+  font: sys.$display-small;
+  font-weight: 700;
+  color: sys.$on-surface;
+}
+
+.page-subtitle {
+  margin: 0 0 2.5rem;
+  font: sys.$body-large;
+  color: sys.$on-surface-variant;
+}
+
+.section-title {
+  margin: 0 0 0.5rem;
+  font: sys.$headline-medium;
+  font-weight: 700;
+  color: sys.$on-surface;
+}
+
+.section-subtitle {
+  margin: 0 0 2rem;
+  font: sys.$body-medium;
+  color: sys.$on-surface-variant;
+  max-width: 640px;
+  line-height: 1.65;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 1.25rem;
+}
+
+@media (max-width: 599px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

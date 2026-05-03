@@ -1,0 +1,83 @@
+@use 'styles/sys' as sys;
+@use 'styles/spacing' as sp;
+
+:host {
+  display: inline-block;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: sp.$sm;
+  padding: sp.$xs sp.$md;
+  border-radius: sys.$corner-full;
+  border: 1px solid sys.$outline-variant;
+  background: sys.$surface-container;
+  font-family: sys.$font-mono;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: sys.$on-surface-variant;
+}
+
+// LED dot
+.led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+}
+
+// Pulse ring — expands outward and fades
+.led::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  animation: led-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes led-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+// ── Status variants ────────────────────────────────────────────────────────────
+// All colors map to M3 tokens so they adapt to theme + palette changes.
+
+.status-available {
+  .led {
+    background: sys.$tertiary;
+
+    &::after {
+      background: sys.$tertiary;
+    }
+  }
+}
+
+.status-busy {
+  .led {
+    background: sys.$secondary;
+
+    &::after {
+      background: sys.$secondary;
+    }
+  }
+}
+
+.status-unavailable {
+  .led {
+    background: sys.$outline;
+
+    &::after {
+      display: none; // No pulse when unavailable
+    }
+  }
+}

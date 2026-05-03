@@ -1,0 +1,7 @@
+<mat-chip-set class="chip-set">
+  @for (tag of tags(); track tag; let i = $index) {
+    <mat-chip class="tag-chip" [class.accent]="accentFirst() && i === 0" disableRipple>
+      {{ tag }}
+    </mat-chip>
+  }
+</mat-chip-set>

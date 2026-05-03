@@ -1,0 +1,66 @@
+@use 'styles/sys' as sys;
+
+.card {
+  border-radius: sys.$corner-medium;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: box-shadow 200ms ease;
+
+  &.featured {
+    border: 1px solid sys.$primary-container;
+  }
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.subtitle {
+  font: sys.$label-medium;
+  color: sys.$on-surface-variant;
+}
+
+.status-badge {
+  font: sys.$label-small;
+  color: sys.$primary;
+  background: sys.$primary-container;
+  padding: 0.125rem 0.5rem;
+  border-radius: sys.$corner-full;
+}
+
+.title {
+  margin: 0;
+  font: sys.$title-large;
+  font-weight: 600;
+  color: sys.$on-surface;
+}
+
+.description {
+  margin: 0;
+  font: sys.$body-medium;
+  color: sys.$on-surface-variant;
+  line-height: 1.65;
+}
+
+.tags {
+  margin-top: 0.25rem;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  min-height: 36px;
+}

@@ -1,16 +1,41 @@
 <mat-toolbar class="navbar">
-  <span class="brand" routerLink="/">AppName</span>
+  <a class="brand" routerLink="/">Luc Allaire</a>
 
   <nav class="nav-links">
-    <a mat-button routerLink="/showcase" routerLinkActive="active">Showcase</a>
-    <a mat-button routerLink="/example" routerLinkActive="active">Example</a>
+    <a
+      class="nav-link"
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <span class="nav-index">01</span>
+      <span class="nav-sep">//</span>
+      <span class="nav-label">{{ lang.t('home', 'accueil') }}</span>
+      <span class="nav-cursor" aria-hidden="true">_</span>
+    </a>
+    <a class="nav-link" routerLink="/projects" routerLinkActive="active">
+      <span class="nav-index">02</span>
+      <span class="nav-sep">//</span>
+      <span class="nav-label">{{ lang.t('projects', 'projets') }}</span>
+      <span class="nav-cursor" aria-hidden="true">_</span>
+    </a>
   </nav>
 
   <span class="spacer"></span>
 
-  <!-- Palette picker -->
-  <button mat-icon-button [matMenuTriggerFor]="paletteMenu" matTooltip="Change palette">
-    <mat-icon>palette</mat-icon>
+  <!-- CV download -->
+  <a mat-stroked-button class="cv-btn" href="assets/cv.pdf" target="_blank" rel="noopener" download>
+    CV
+  </a>
+
+  <!-- Lang toggle -->
+  <button
+    mat-icon-button
+    class="lang-btn"
+    [matTooltip]="lang.t('Passer en français', 'Switch to English')"
+    (click)="lang.toggle()"
+  >
+    <span class="lang-label">{{ lang.t('FR', 'EN') }}</span>
   </button>
 
   <!-- Theme toggle -->
@@ -28,21 +53,21 @@
   </button>
 </mat-toolbar>
 
-<mat-menu #paletteMenu="matMenu">
-  <div class="palette-grid" (click)="$event.stopPropagation()">
-    @for (name of palettes; track name) {
-      <button
-        [class]="'swatch palette-' + name"
-        [class.active]="theme.palette() === name"
-        [matTooltip]="paletteName(name)"
-        matTooltipPosition="above"
-        (click)="theme.setPalette(name)"
-      ></button>
-    }
-  </div>
-</mat-menu>
-
 <mat-menu #mobileMenu="matMenu">
-  <a mat-menu-item routerLink="/showcase"> <mat-icon>grid_view</mat-icon> Showcase </a>
-  <a mat-menu-item routerLink="/example"> <mat-icon>view_list</mat-icon> Example </a>
+  <a mat-menu-item routerLink="/">
+    <mat-icon>home</mat-icon>
+    01 // {{ lang.t('home', 'accueil') }}
+  </a>
+  <a mat-menu-item routerLink="/projects">
+    <mat-icon>folder</mat-icon>
+    02 // {{ lang.t('projects', 'projets') }}
+  </a>
+  <a mat-menu-item href="assets/cv.pdf" target="_blank" rel="noopener" download>
+    <mat-icon>description</mat-icon>
+    CV
+  </a>
+  <button mat-menu-item (click)="lang.toggle()">
+    <mat-icon>translate</mat-icon>
+    {{ lang.t('Français', 'English') }}
+  </button>
 </mat-menu>

@@ -1,0 +1,25 @@
+<app-hero />
+
+<section class="section experience-section">
+  <div class="section-inner">
+    <h2 class="section-title">{{ lang.t('Experience', 'Expérience') }}</h2>
+    <div class="cards">
+      @for (exp of workExperiences; track exp.company) {
+        <app-experience-card [experience]="exp" />
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section extracurricular-section">
+  <div class="section-inner">
+    <h2 class="section-title">{{ lang.t('Extracurricular', 'Activités parascolaires') }}</h2>
+    <div class="cards">
+      @for (exp of extracurricularExperiences; track exp.company) {
+        <app-experience-card [experience]="exp" />
+      }
+    </div>
+  </div>
+</section>
+
+<app-skills-section />

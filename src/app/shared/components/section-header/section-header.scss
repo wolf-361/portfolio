@@ -1,0 +1,55 @@
+@use 'styles/sys' as sys;
+@use 'styles/spacing' as sp;
+
+:host {
+  display: block;
+}
+
+.section-header {
+  margin-bottom: sp.$xl;
+}
+
+// // 01. LABEL
+.eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: sp.$xs;
+  margin: 0 0 sp.$sm;
+  font-family: sys.$font-mono;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.eyebrow-comment {
+  color: sys.$on-surface-variant;
+  opacity: 0.5;
+}
+
+.eyebrow-index {
+  color: sys.$primary;
+}
+
+.eyebrow-label {
+  color: sys.$primary;
+}
+
+// Main title
+.title {
+  margin: 0 0 sp.$sm;
+  font: sys.$headline-large;
+  font-weight: 700;
+  color: sys.$on-surface;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+// Supporting subtitle
+.subtitle {
+  margin: 0;
+  font: sys.$body-large;
+  color: sys.$on-surface-variant;
+  line-height: 1.6;
+  max-width: 60ch;
+}

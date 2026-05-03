@@ -1,0 +1,57 @@
+@if (project) {
+  <div class="page">
+    <div class="page-inner">
+      <a mat-button routerLink="/projects" class="back-link">
+        <mat-icon>arrow_back</mat-icon>
+        {{ lang.t('Projects', 'Projets') }}
+      </a>
+
+      <header class="project-header">
+        <div class="meta">
+          <span class="subtitle">{{ project.subtitle }}</span>
+          @if (project.status) {
+            <span class="status-badge">{{ project.status }}</span>
+          }
+        </div>
+        <h1 class="title">{{ project.title }}</h1>
+        <mat-chip-set class="tags">
+          @for (tag of project.tags; track tag) {
+            <mat-chip>{{ tag }}</mat-chip>
+          }
+        </mat-chip-set>
+      </header>
+
+      <div class="sections">
+        @for (section of project.sections; track section.title.en) {
+          <section class="content-section">
+            <h2 class="section-title">{{ lang.t(section.title.en, section.title.fr) }}</h2>
+            @for (para of lang.t(section.body.en, section.body.fr).split('\n\n'); track $index) {
+              <p class="section-body">{{ para }}</p>
+            }
+            @if (section.diagram?.length) {
+              <pre class="diagram">{{ section.diagram!.join('\n') }}</pre>
+            }
+          </section>
+        }
+      </div>
+
+      @if (project.links?.length) {
+        <div class="links-row">
+          @for (link of project.links!; track link.label) {
+            <a mat-stroked-button [href]="link.url" target="_blank" rel="noopener">
+              @if (link.icon) {
+                <mat-icon>{{ link.icon }}</mat-icon>
+              }
+              {{ link.label }}
+            </a>
+          }
+        </div>
+      }
+    </div>
+  </div>
+} @else {
+  <div class="not-found">
+    <p>{{ lang.t('Project not found.', 'Projet introuvable.') }}</p>
+    <a mat-button routerLink="/projects">{{ lang.t('Back to Projects', 'Retour aux projets') }}</a>
+  </div>
+}

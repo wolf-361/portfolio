@@ -1,0 +1,28 @@
+<article [surface]="'surface-container-low'" class="card">
+  <header class="card-header">
+    <div class="card-meta">
+      <span class="company">{{ experience.company }}</span>
+      <span class="separator">·</span>
+      <span class="period">{{ experience.period }}</span>
+      <span class="separator">·</span>
+      <span class="location">{{ experience.location }}</span>
+    </div>
+    <h3 class="title">{{ lang.t(experience.title.en, experience.title.fr) }}</h3>
+  </header>
+
+  @if (experience.bullets.length) {
+    <ul class="bullets">
+      @for (bullet of experience.bullets; track bullet.en) {
+        <li>{{ lang.t(bullet.en, bullet.fr) }}</li>
+      }
+    </ul>
+  }
+
+  @if (experience.stack?.length) {
+    <mat-chip-set class="stack">
+      @for (tech of experience.stack!; track tech) {
+        <mat-chip>{{ tech }}</mat-chip>
+      }
+    </mat-chip-set>
+  }
+</article>

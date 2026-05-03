@@ -1,0 +1,53 @@
+@use 'styles/sys' as sys;
+
+.card {
+  border-radius: sys.$corner-medium;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  font: sys.$label-medium;
+  color: sys.$on-surface-variant;
+}
+
+.separator {
+  opacity: 0.5;
+}
+
+.title {
+  margin: 0;
+  font: sys.$title-medium;
+  font-weight: 600;
+  color: sys.$on-surface;
+}
+
+.bullets {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  li {
+    font: sys.$body-medium;
+    color: sys.$on-surface-variant;
+    line-height: 1.6;
+  }
+}
+
+.stack {
+  margin-top: 0.25rem;
+}

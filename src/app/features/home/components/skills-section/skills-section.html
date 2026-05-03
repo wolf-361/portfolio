@@ -1,0 +1,15 @@
+<section class="skills-section">
+  <h2 class="section-title">{{ lang.t('Skills', 'Compétences') }}</h2>
+  <div class="groups">
+    @for (group of groups; track group.label.en) {
+      <div class="group">
+        <h3 class="group-label">{{ lang.t(group.label.en, group.label.fr) }}</h3>
+        <mat-chip-set>
+          @for (skill of group.skills; track skill) {
+            <mat-chip>{{ skill }}</mat-chip>
+          }
+        </mat-chip-set>
+      </div>
+    }
+  </div>
+</section>

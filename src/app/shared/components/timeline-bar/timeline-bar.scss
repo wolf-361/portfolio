@@ -1,0 +1,168 @@
+@use 'styles/sys' as sys;
+@use 'styles/spacing' as sp;
+
+:host {
+  display: block;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+// ── Rows ───────────────────────────────────────────────────────────────────────
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: sp.$xs;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  height: 28px;
+}
+
+.row-label {
+  font-family: sys.$font-mono;
+  font-size: 0.6875rem; // 11px
+  font-weight: 500;
+  color: sys.$on-surface-variant;
+  text-align: right;
+  padding-right: sp.$sm;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ── Track + Bar ────────────────────────────────────────────────────────────────
+
+.track {
+  position: relative;
+  height: 20px;
+}
+
+.bar {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 18px;
+  border-radius: sys.$corner-extra-small;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 sp.$sm;
+  gap: sp.$xs;
+  min-width: 4px;
+  transition: filter 150ms ease;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+}
+
+.bar-label {
+  font-family: sys.$font-mono;
+  font-size: 0.625rem; // 10px
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.bar-star {
+  font-size: 0.625rem;
+  flex-shrink: 0;
+}
+
+// ── Bar variants — all M3 tokens ───────────────────────────────────────────────
+
+.bar-education {
+  background: sys.$primary;
+  color: sys.$on-primary;
+}
+
+.bar-work {
+  background: sys.$secondary;
+  color: sys.$on-secondary;
+}
+
+.bar-internship {
+  background: sys.$surface-container-highest;
+  color: sys.$on-surface-variant;
+  border: 1px solid sys.$outline-variant;
+}
+
+.bar-association {
+  background: sys.$surface-container-high;
+  color: sys.$on-surface-variant;
+}
+
+// ── Year axis ──────────────────────────────────────────────────────────────────
+
+.axis {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  margin-top: sp.$sm;
+  border-top: 1px solid sys.$outline-variant;
+  padding-top: sp.$xs;
+}
+
+.axis-spacer {
+  // Aligns with .row-label column
+}
+
+.axis-track {
+  position: relative;
+  height: 20px;
+}
+
+.tick {
+  position: absolute;
+  transform: translateX(-50%);
+  font-family: sys.$font-mono;
+  font-size: 0.625rem; // 10px
+  font-weight: 400;
+  color: sys.$on-surface-variant;
+  opacity: 0.6;
+  white-space: nowrap;
+
+  &.tick-current {
+    color: sys.$primary;
+    opacity: 1;
+    font-weight: 600;
+  }
+}
+
+// Thin vertical line marking "now" on the timeline
+.now-line {
+  position: absolute;
+  top: -sp.$sm;
+  width: 1px;
+  height: calc(100% + sp.$sm + sp.$xs);
+  background: sys.$primary;
+  opacity: 0.4;
+  transform: translateX(-50%);
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 600px) {
+  .row {
+    grid-template-columns: 80px 1fr;
+  }
+
+  .axis {
+    grid-template-columns: 80px 1fr;
+  }
+
+  .bar-label {
+    font-size: 0.5625rem;
+  }
+}

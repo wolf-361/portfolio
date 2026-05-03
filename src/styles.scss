@@ -1,16 +1,11 @@
 @use './styles/tokens' as t;
 @use './styles/material-theme';
 
-// Custom property aliases for non-Material tokens used in component styles
+// --font-mono is the only non-M3 CSS custom property in this app.
+// All colors, shape, and typography use --mat-sys-* tokens directly.
+// Spacing uses the SCSS-only _spacing.scss module (no runtime vars).
 :root {
-  --font-family: #{t.$font-family};
-  --font-size-base: #{t.$font-size-base};
-
-  --border-radius-xs: #{t.$border-radius-xs};
-  --border-radius-sm: #{t.$border-radius-sm};
-  --border-radius-md: #{t.$border-radius-md};
-  --border-radius-lg: #{t.$border-radius-lg};
-  --border-radius-xl: #{t.$border-radius-xl};
+  --font-mono: #{t.$font-family-mono};
 }
 
 *,
@@ -23,9 +18,15 @@ html,
 body {
   height: 100%;
   margin: 0;
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
+  font-family: #{t.$font-family};
+  font-size: #{t.$font-size-base};
   background-color: var(--mat-sys-background);
   color: var(--mat-sys-on-background);
   overflow-x: hidden;
+}
+
+// Utility class — apply JetBrains Mono anywhere without a directive.
+// Usage: <span class="mono">...</span>
+.mono {
+  font-family: var(--font-mono);
 }
