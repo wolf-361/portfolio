@@ -1,27 +1,28 @@
 @use 'styles/sys' as sys;
 @use 'styles/spacing' as sp;
 
+// ── Base — subtle surface, no border at rest, accent border on hover ──────────
+
 .card {
   border-radius: sys.$corner-medium;
   background: sys.$surface-container-low;
-  border: 1px solid sys.$outline-variant;
-  border-left: 3px solid sys.$outline-variant;
+  border: 1px solid transparent;
+  border-left: 3px solid transparent;
   padding: sp.$md sp.$lg;
   display: flex;
   flex-direction: column;
   gap: sp.$sm;
-}
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
 
-// ── Accent bar per kind ───────────────────────────────────────────────────────
-
-.kind-work {
-  border-left-color: sys.$primary;
-}
-.kind-internship {
-  border-left-color: sys.$secondary;
-}
-.kind-association {
-  border-left-color: sys.$outline;
+  &:hover {
+    border-color: color-mix(in srgb, sys.$outline-variant 60%, transparent);
+    border-left-color: sys.$primary;
+    box-shadow: 0 4px 24px color-mix(in srgb, sys.$primary 10%, transparent);
+    transform: translateY(-1px);
+  }
 }
 
 // ── Header ────────────────────────────────────────────────────────────────────
@@ -32,14 +33,11 @@
   gap: sp.$xs;
 }
 
-.card-top {
+.card-title-row {
   display: flex;
-  align-items: flex-start;
-  gap: sp.$sm;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: sp.$xs;
 }
-
-// ── Active dot ────────────────────────────────────────────────────────────────
 
 .active-dot {
   display: inline-block;
@@ -49,8 +47,6 @@
   background: sys.$primary;
   flex-shrink: 0;
   position: relative;
-  align-self: flex-start;
-  margin-top: 3px; // optical alignment with company text cap-height
 
   &::after {
     content: '';
@@ -73,60 +69,114 @@
   }
 }
 
-// ── Identity (left) ───────────────────────────────────────────────────────────
-
-.card-identity {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
+.card-title {
+  margin: 0;
+  font-family: sys.$font-mono;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: sys.$on-surface;
   flex: 1;
-  min-width: 0;
+  line-height: 1.2;
+}
+
+.card-period {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.6875rem;
+  font-family: sys.$font-mono;
+  color: sys.$on-surface-variant;
+  opacity: 0.6;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.active-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: sys.$primary;
+  flex-shrink: 0;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: sys.$primary;
+    animation: dot-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes dot-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.active-label {
+  color: sys.$primary;
+  opacity: 1;
+}
+
+// ── Company + role progression ────────────────────────────────────────────────
+
+.card-sub {
+  display: flex;
+  align-items: center;
+  gap: sp.$sm;
+  flex-wrap: wrap;
 }
 
 .company {
-  font-family: sys.$font-mono;
-  font-size: 0.8125rem; // 13px — company is the headline
-  font-weight: 700;
-  color: sys.$on-surface;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: sys.$primary;
   letter-spacing: 0.01em;
 }
 
-.title {
-  font-size: 0.75rem; // 12px — role is the descriptor
-  font-weight: 400;
-  color: sys.$on-surface-variant;
-  letter-spacing: 0;
-}
-
-// ── Meta right (period · location) ───────────────────────────────────────────
-
-.card-meta-right {
+.role-progression {
   display: flex;
-  align-items: baseline;
-  gap: 0.25rem;
-  font-family: sys.$font-mono;
-  font-size: 0.6875rem;
-  color: sys.$on-surface-variant;
-  flex-shrink: 0;
-  white-space: nowrap;
+  align-items: center;
+  gap: sp.$xs;
 }
 
-.sep {
+.role-chip {
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: sys.$on-surface-variant;
+  background: sys.$surface-container;
+  border: 1px solid sys.$outline-variant;
+  border-radius: sys.$corner-extra-small;
+  padding: 1px sp.$xs;
+  letter-spacing: 0.03em;
+}
+
+.role-arrow {
+  font-size: 0.625rem;
+  color: sys.$on-surface-variant;
   opacity: 0.4;
 }
-.period,
-.location {
-  opacity: 0.7;
+
+// ── Summary ───────────────────────────────────────────────────────────────────
+
+.summary {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: sys.$on-surface-variant;
 }
 
 // ── Bullets ───────────────────────────────────────────────────────────────────
-
-.single-bullet {
-  margin: 0;
-  font-size: 0.875rem;
-  color: sys.$on-surface-variant;
-  line-height: 1.65;
-}
 
 .bullets {
   margin: 0;

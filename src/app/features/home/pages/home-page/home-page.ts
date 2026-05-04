@@ -5,6 +5,7 @@ import { ExperienceCardComponent } from '../../components/experience-card/experi
 import { ProjectCardComponent } from '../../components/project-card/project-card';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header';
 import { TimelineBarComponent } from '../../../../shared/components/timeline-bar/timeline-bar';
+import { TagChipSetComponent } from '../../../../shared/components/tag-chip-set/tag-chip-set';
 import { TimelineRow } from '../../../../shared/components/timeline-bar/timeline-bar.model';
 import { LangService } from '../../../../core/lang/lang';
 import { Experience, Education } from '../../models/experience';
@@ -18,6 +19,7 @@ import { Project } from '../../models/project';
     ProjectCardComponent,
     SectionHeaderComponent,
     TimelineBarComponent,
+    TagChipSetComponent,
   ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
@@ -29,12 +31,18 @@ export class HomePageComponent {
 
   readonly workExperiences: Experience[] = [
     {
-      title: { en: 'Software Developer', fr: 'Développeur logiciel' },
+      title: { en: 'Software Developer (KMP)', fr: 'Développeur logiciel (KMP)' },
       company: 'Simaudio',
       period: { en: 'Apr. 2025 – Present', fr: 'Avr. 2025 – Présent' },
+      periodShort: { en: '2025 →', fr: '2025 →' },
       location: 'Montréal, QC',
       kind: 'work',
       active: true,
+      roleProgression: ['Entrepreneur', 'Stagiaire DUAL'],
+      summary: {
+        en: 'Multiplatform mobile development for high-end audio products. Architecture, hardware integration and delivery automation.',
+        fr: 'Développement mobile multiplateforme pour produits audio haut de gamme. Architecture, intégration matérielle et automatisation des livraisons.',
+      },
       bullets: [
         {
           en: 'Reverse-engineered an undocumented proprietary TCP protocol for the MiND1 hardware player — no documentation, no prior team — and implemented the command queue with mutex serialization and a keepalive coroutine on a dedicated dispatcher in Kotlin.',
@@ -49,17 +57,28 @@ export class HomePageComponent {
           fr: 'Restructuration de la suite de tests sur appareils physiques et contribution à la couverture de tests unitaires sur le module KMP partagé (patron AAA).',
         },
       ],
-      stack: ['Kotlin Multiplatform', 'Coroutines', 'Ktor', 'TeamCity', 'Firebase', 'TestFlight'],
+      stack: [
+        'Kotlin Multiplatform',
+        'Coroutines',
+        'Ktor',
+        'TeamCity',
+        'Firebase',
+        'TestFlight',
+        'CI/CD',
+        'TCP Reverse Eng.',
+      ],
     },
     {
-      title: {
-        en: 'Developer Intern — STI/IDEV Team',
-        fr: 'Stagiaire développeur — Équipe STI/IDEV',
-      },
-      company: 'UQTR',
+      title: { en: 'Developer Intern', fr: 'Stagiaire développeur' },
+      company: 'UQTR · STI / IDEV',
       period: { en: 'May – Aug 2024', fr: 'Mai – Août 2024' },
+      periodShort: { en: 'été 2024', fr: 'été 2024' },
       location: 'Trois-Rivières, QC',
       kind: 'internship',
+      summary: {
+        en: 'Web development internship for an internal management tool: Angular front, NestJS API and Atlassian Forge plugin integrated with Jira.',
+        fr: 'Stage de développement web pour un outil interne de gestion : front Angular, API NestJS et plugin Atlassian Forge intégré à Jira.',
+      },
       bullets: [
         {
           en: 'Designed and shipped a Jira plugin on Atlassian Forge for internal project tracking — ticket creation, assignment, and reporting.',
@@ -82,9 +101,10 @@ export class HomePageComponent {
 
   readonly associationExperiences: Experience[] = [
     {
-      title: { en: 'Programmer', fr: 'Programmeur' },
-      company: 'ASUQTR — RoboSub',
+      title: { en: 'Infra Programmer', fr: 'Programmeur infra' },
+      company: 'ASUQTR',
       period: { en: 'Sept 2023 – May 2024', fr: 'Sept 2023 – Mai 2024' },
+      periodShort: { en: '22–23', fr: '22–23' },
       location: 'Trois-Rivières, QC',
       kind: 'association',
       bullets: [
@@ -93,12 +113,13 @@ export class HomePageComponent {
           fr: "Système de vision (OpenCV/Python) + migration complète de l'infrastructure IT — serveurs, Nginx, Docker.",
         },
       ],
-      stack: ['Python', 'OpenCV', 'Docker', 'Nginx', 'Linux'],
+      stack: ['Proxmox', 'Linux'],
     },
     {
-      title: { en: 'VP Academic Affairs', fr: 'VP aux affaires académiques' },
-      company: 'AMI — UQTR',
+      title: { en: 'VP Academic Affairs', fr: 'VP aff. acad.' },
+      company: 'AMI-UQTR',
       period: { en: 'Sept 2023 – May 2024', fr: 'Sept 2023 – Mai 2024' },
+      periodShort: { en: '22–23', fr: '22–23' },
       location: 'Trois-Rivières, QC',
       kind: 'association',
       bullets: [
@@ -107,21 +128,45 @@ export class HomePageComponent {
           fr: "Déploiement et gestion des serveurs de l'association + livraison de deux apps web de production pour des événements étudiants.",
         },
       ],
-      stack: ['TypeScript', 'Angular', 'NestJS', 'PostgreSQL', 'Docker'],
+      stack: ['Leadership', 'Événements'],
     },
   ];
 
   // ── Education ──────────────────────────────────────────────────────────────
 
+  readonly educationEntries: Education[] = [
+    {
+      degree: { en: 'B.Sc. Computer Science', fr: 'Baccalauréat en informatique' },
+      institution: 'UQTR',
+      institutionFull: {
+        en: 'Université du Québec à Trois-Rivières',
+        fr: 'Université du Québec à Trois-Rivières',
+      },
+      period: '2022 – 2026',
+      location: 'Trois-Rivières, QC',
+      credits: 'B.Sc. · 90 crédits',
+      active: true,
+      deanYears: [2023, 2024, 2025],
+    },
+    {
+      degree: { en: 'B.Sc. Chemistry', fr: 'B.Sc. Chimie' },
+      institution: 'UQTR',
+      period: '2020 – 2022',
+      location: 'Trois-Rivières, QC',
+      credits: 'B.Sc. · partiel',
+      featured: false,
+    },
+  ];
+
   // ── Timeline ───────────────────────────────────────────────────────────────
   // Decimal year formula: year + (month - 1) / 12
-  // Jan = 0, May = 4/12, Sept = 8/12
+  // Jan = 0/12, May = 4/12, Aug = 7/12, Sept = 8/12, Apr = 3/12
 
   readonly timelineRows: TimelineRow[] = [
     {
-      label: 'UQTR · Informatique',
+      label: 'UQTR · Bac',
       barLabel: 'B.Sc. Informatique',
-      start: 2022, // unused — segments takes over
+      start: 2022,
       end: 2026,
       variant: 'education',
       ongoing: true,
@@ -132,50 +177,33 @@ export class HomePageComponent {
       ],
     },
     {
+      label: 'Simaudio',
+      barLabel: 'Développeur logiciel',
+      start: 2025 + 3 / 12,
+      end: new Date().getFullYear() + new Date().getMonth() / 12,
+      variant: 'work',
+      ongoing: true,
+    },
+    {
+      label: 'UQTR · STI',
+      barLabel: 'STI',
+      start: 2024 + 4 / 12,
+      end: 2024 + 7 / 12,
+      variant: 'internship',
+    },
+    {
       label: 'AMI · UQTR',
       barLabel: 'VP Académique',
-      start: 2023 + 8 / 12, // Sept 2023
-      end: 2024 + 4 / 12, // May 2024
+      start: 2023 + 8 / 12,
+      end: 2024 + 4 / 12,
       variant: 'association',
     },
     {
       label: 'ASUQTR',
       barLabel: 'Programmeur',
-      start: 2023 + 8 / 12, // Sept 2023
-      end: 2024 + 4 / 12, // May 2024
+      start: 2023 + 8 / 12,
+      end: 2024 + 4 / 12,
       variant: 'association',
-    },
-    {
-      label: 'UQTR · STI',
-      barLabel: 'STI',
-      start: 2024 + 4 / 12, // May 2024
-      end: 2024 + 7 / 12, // Aug 2024
-      variant: 'internship',
-    },
-    {
-      label: 'Simaudio',
-      barLabel: 'Développeur logiciel',
-      start: 2025 + 3 / 12, // April 2025
-      end: new Date().getFullYear() + new Date().getMonth() / 12,
-      variant: 'work',
-      ongoing: true,
-    },
-  ];
-
-  readonly educationEntries: Education[] = [
-    {
-      degree: { en: 'B.Sc. Computer Science', fr: 'B.Sc. Informatique' },
-      institution: 'UQTR',
-      period: '2022 – 2026',
-      location: 'Trois-Rivières, QC',
-      active: true,
-      badge: { en: "Dean's List 2023 & 2024", fr: 'Liste du recteur 2023 & 2024' },
-    },
-    {
-      degree: { en: 'B.Sc. Chemistry', fr: 'B.Sc. Chimie' },
-      institution: 'UQTR',
-      period: '2020 – 2022',
-      location: 'Trois-Rivières, QC',
     },
   ];
 

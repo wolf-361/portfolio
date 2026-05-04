@@ -1,36 +1,50 @@
 <article class="card" [class]="'kind-' + experience().kind">
   <header class="card-header">
-    <div class="card-top">
-      @if (experience().active) {
-        <span class="active-dot" aria-label="Currently active"></span>
-      }
-      <div class="card-identity">
-        <span class="company">{{ experience().company }}</span>
-        <span class="title">{{ lang.t(experience().title.en, experience().title.fr) }}</span>
-      </div>
-      <span class="card-meta-right">
-        <span class="period">{{ lang.t(experience().period.en, experience().period.fr) }}</span>
-        <span class="sep">·</span>
-        <span class="location">{{ experience().location }}</span>
+    <!-- Title row -->
+    <div class="card-title-row">
+      <h3 class="card-title">{{ lang.t(experience().title.en, experience().title.fr) }}</h3>
+      <span class="card-period mono">
+        {{
+          lang.t(
+            experience().periodShort?.en ?? experience().period.en,
+            experience().periodShort?.fr ?? experience().period.fr
+          )
+        }}
+        @if (experience().active) {
+          <span class="active-dot" aria-label="Currently active"></span>
+          <span class="active-label">{{ lang.t('présent', 'présent') }}</span>
+        }
       </span>
+    </div>
+
+    <!-- Company + role progression -->
+    <div class="card-sub">
+      <span class="company">{{ experience().company }}</span>
+      @if (experience().roleProgression?.length) {
+        <div class="role-progression">
+          @for (role of experience().roleProgression!; track role; let last = $last) {
+            <span class="role-chip mono">{{ role }}</span>
+            @if (!last) {
+              <span class="role-arrow" aria-hidden="true">→</span>
+            }
+          }
+        </div>
+      }
     </div>
   </header>
 
-  @if (!compact() && experience().bullets.length) {
-    @if (experience().bullets.length === 1) {
-      <p class="single-bullet">
-        {{ lang.t(experience().bullets[0].en, experience().bullets[0].fr) }}
-      </p>
-    } @else {
-      <ul class="bullets">
-        @for (bullet of experience().bullets; track bullet.en) {
-          <li>{{ lang.t(bullet.en, bullet.fr) }}</li>
-        }
-      </ul>
-    }
+  <!-- Bullets when expanded, summary as fallback when compact or no bullets -->
+  @if (!compact() && experience().bullets.length > 0) {
+    <ul class="bullets">
+      @for (bullet of experience().bullets; track bullet.en) {
+        <li>{{ lang.t(bullet.en, bullet.fr) }}</li>
+      }
+    </ul>
+  } @else if (experience().summary) {
+    <p class="summary">{{ lang.t(experience().summary!.en, experience().summary!.fr) }}</p>
   }
 
   @if (experience().stack?.length) {
-    <ui-tag-chip-set [tags]="experience().stack!" [accentFirst]="false" />
+    <ui-tag-chip-set [tags]="experience().stack!" [accentFirst]="true" />
   }
 </article>
