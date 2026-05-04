@@ -3,12 +3,14 @@ import { Component, inject } from '@angular/core';
 import { HeroComponent } from '../../components/hero/hero';
 import { ExperienceCardComponent } from '../../components/experience-card/experience-card';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header';
+import { TimelineBarComponent } from '../../../../shared/components/timeline-bar/timeline-bar';
+import { TimelineRow } from '../../../../shared/components/timeline-bar/timeline-bar.model';
 import { LangService } from '../../../../core/lang/lang';
 import { Experience, Education } from '../../models/experience';
 
 @Component({
   selector: 'app-home-page',
-  imports: [HeroComponent, ExperienceCardComponent, SectionHeaderComponent],
+  imports: [HeroComponent, ExperienceCardComponent, SectionHeaderComponent, TimelineBarComponent],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
@@ -21,7 +23,7 @@ export class HomePageComponent {
     {
       title: { en: 'Software Developer', fr: 'Développeur logiciel' },
       company: 'Simaudio',
-      period: { en: 'Sept 2023 – Present', fr: 'Sept 2023 – Présent' },
+      period: { en: 'Apr. 2025 – Present', fr: 'Avr. 2025 – Présent' },
       location: 'Montréal, QC',
       kind: 'work',
       active: true,
@@ -74,7 +76,7 @@ export class HomePageComponent {
     {
       title: { en: 'Programmer', fr: 'Programmeur' },
       company: 'ASUQTR — RoboSub',
-      period: { en: 'Sept 2022 – May 2023', fr: 'Sept 2022 – Mai 2023' },
+      period: { en: 'Sept 2023 – May 2024', fr: 'Sept 2023 – Mai 2024' },
       location: 'Trois-Rivières, QC',
       kind: 'association',
       bullets: [
@@ -88,7 +90,7 @@ export class HomePageComponent {
     {
       title: { en: 'VP Academic Affairs', fr: 'VP aux affaires académiques' },
       company: 'AMI — UQTR',
-      period: { en: 'Sept 2022 – May 2023', fr: 'Sept 2022 – Mai 2023' },
+      period: { en: 'Sept 2023 – May 2024', fr: 'Sept 2023 – Mai 2024' },
       location: 'Trois-Rivières, QC',
       kind: 'association',
       bullets: [
@@ -102,6 +104,55 @@ export class HomePageComponent {
   ];
 
   // ── Education ──────────────────────────────────────────────────────────────
+
+  // ── Timeline ───────────────────────────────────────────────────────────────
+  // Decimal year formula: year + (month - 1) / 12
+  // Jan = 0, May = 4/12, Sept = 8/12
+
+  readonly timelineRows: TimelineRow[] = [
+    {
+      label: 'UQTR · Informatique',
+      barLabel: 'B.Sc. Informatique',
+      start: 2022, // unused — segments takes over
+      end: 2026,
+      variant: 'education',
+      ongoing: true,
+      segments: [
+        { start: 2022, end: 2024 + 7 / 12, barLabel: 'B.Sc. Informatique', starred: true },
+        { start: 2024 + 7 / 12, end: 2025 + 3 / 12, barLabel: 'Congé', isGap: true },
+        { start: 2025 + 3 / 12, end: 2026, barLabel: 'B.Sc. Informatique' },
+      ],
+    },
+    {
+      label: 'AMI · UQTR',
+      barLabel: 'VP Académique',
+      start: 2023 + 8 / 12, // Sept 2023
+      end: 2024 + 4 / 12, // May 2024
+      variant: 'association',
+    },
+    {
+      label: 'ASUQTR',
+      barLabel: 'Programmeur',
+      start: 2023 + 8 / 12, // Sept 2023
+      end: 2024 + 4 / 12, // May 2024
+      variant: 'association',
+    },
+    {
+      label: 'UQTR · STI',
+      barLabel: 'STI',
+      start: 2024 + 4 / 12, // May 2024
+      end: 2024 + 7 / 12, // Aug 2024
+      variant: 'internship',
+    },
+    {
+      label: 'Simaudio',
+      barLabel: 'Développeur logiciel',
+      start: 2025 + 3 / 12, // April 2025
+      end: new Date().getFullYear() + new Date().getMonth() / 12,
+      variant: 'work',
+      ongoing: true,
+    },
+  ];
 
   readonly educationEntries: Education[] = [
     {

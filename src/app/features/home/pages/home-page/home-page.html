@@ -70,7 +70,7 @@
     <!-- Timeline — part of experiences section -->
     <div class="timeline-block">
       <p class="col-label mono">{{ lang.t('// timeline', '// chronologie') }}</p>
-      <!-- ui-timeline-bar wired in task #14 -->
+      <ui-timeline-bar [rows]="timelineRows" [startYear]="2022" [endYear]="2027" />
     </div>
   </div>
 </section>

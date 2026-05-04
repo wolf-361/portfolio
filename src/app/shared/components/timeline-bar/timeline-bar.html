@@ -1,22 +1,44 @@
 <div class="timeline">
-  <!-- Rows -->
   <div class="rows">
     @for (row of rows(); track row.label) {
       <div class="row">
         <span class="row-label">{{ row.label }}</span>
         <div class="track">
-          <div
-            class="bar"
-            [class]="'bar-' + row.variant"
-            [style.left]="barLeft(row)"
-            [style.width]="barWidth(row)"
-            [attr.aria-label]="row.barLabel"
-          >
-            @if (row.starred) {
-              <span class="bar-star" aria-label="Dean's List">★</span>
+          @if (row.segments) {
+            <!-- Multi-segment mode: multiple bars on one track -->
+            @for (seg of row.segments; track seg.start) {
+              <div
+                class="bar"
+                [class]="seg.isGap ? 'bar-gap' : 'bar-' + row.variant"
+                [style.left]="segLeft(seg)"
+                [style.width]="segWidth(seg)"
+                [attr.aria-label]="seg.barLabel"
+              >
+                @if (!seg.isGap && showSegLabel(seg)) {
+                  @if (seg.starred) {
+                    <span class="bar-star" aria-label="Dean's List">★</span>
+                  }
+                  <span class="bar-label">{{ seg.barLabel }}</span>
+                }
+              </div>
             }
-            <span class="bar-label">{{ row.barLabel }}</span>
-          </div>
+          } @else {
+            <!-- Single bar mode -->
+            <div
+              class="bar"
+              [class]="'bar-' + row.variant"
+              [style.left]="barLeft(row)"
+              [style.width]="barWidth(row)"
+              [attr.aria-label]="row.barLabel"
+            >
+              @if (showLabel(row)) {
+                @if (row.starred) {
+                  <span class="bar-star" aria-label="Dean's List">★</span>
+                }
+                <span class="bar-label">{{ row.barLabel }}</span>
+              }
+            </div>
+          }
         </div>
       </div>
     }
@@ -34,7 +56,6 @@
           >{{ tick }}</span
         >
       }
-      <!-- Current position indicator -->
       <span class="now-line" [style.left]="currentYearLeft()"></span>
     </div>
   </div>
