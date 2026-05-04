@@ -82,8 +82,17 @@
       index="02"
       [label]="lang.t('PROJECTS', 'PROJETS')"
       [title]="lang.t('Selected work', 'Travaux sélectionnés')"
+      [subtitle]="lang.t('Side projects & open-source work.', 'Projets personnels & open-source.')"
     />
-    <!-- bento grid wired in task #15 -->
+    <div class="bento-grid">
+      @for (project of projects; track project.title.en) {
+        <app-project-card
+          [project]="project"
+          [class.bento-featured]="project.size === 'featured'"
+          [class.bento-small]="project.size === 'small'"
+        />
+      }
+    </div>
   </div>
 </section>
 

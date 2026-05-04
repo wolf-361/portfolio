@@ -1,0 +1,135 @@
+<a
+  class="card"
+  [class.card--featured]="project().size === 'featured'"
+  [class.card--small]="project().size === 'small'"
+  [href]="project().url ?? null"
+  [attr.target]="project().url ? '_blank' : null"
+  [attr.rel]="project().url ? 'noopener noreferrer' : null"
+  [attr.aria-label]="lang.t(project().title.en, project().title.fr)"
+>
+  <!-- Content — always left-aligned -->
+  <div class="card-content">
+    <div class="card-top">
+      <span class="card-tag-dot" aria-hidden="true"></span>
+      @if (project().tag) {
+        <span class="card-tag mono">{{ lang.t(project().tag!.en, project().tag!.fr) }}</span>
+      }
+      @if (project().wip) {
+        <span class="wip-badge mono">WIP</span>
+      }
+    </div>
+
+    <div class="card-body">
+      <h3 class="card-title">{{ lang.t(project().title.en, project().title.fr) }}</h3>
+      <p class="card-desc">{{ lang.t(project().description.en, project().description.fr) }}</p>
+      @if (project().size === 'featured' && project().details) {
+        <p class="card-details">{{ lang.t(project().details!.en, project().details!.fr) }}</p>
+      }
+    </div>
+
+    <div class="card-footer">
+      <ui-tag-chip-set [tags]="project().stack" [accentFirst]="project().accentFirst !== false" />
+      @if (project().url) {
+        <span class="card-link mono" aria-hidden="true">
+          {{ lang.t(project().urlLabel?.en ?? 'View →', project().urlLabel?.fr ?? 'Voir →') }}
+        </span>
+      }
+    </div>
+  </div>
+
+  <!-- Terminal block — full-width cards only -->
+  @if (project().terminal) {
+    <div class="card-terminal" aria-hidden="true">
+      <div class="terminal-prompt">
+        <span class="terminal-dollar mono">$</span>
+        <span class="terminal-cmd mono">{{ project().terminal!.command }}</span>
+      </div>
+      <div class="terminal-nodes">
+        @for (node of project().terminal!.nodes; track node.name) {
+          <div class="terminal-node">
+            <span
+              class="node-dot"
+              [class.node-dot--online]="node.status === 'online'"
+              [class.node-dot--backup]="node.status === 'backup'"
+              [class.node-dot--offline]="node.status === 'offline'"
+            ></span>
+            <span class="node-name mono">{{ node.name }}</span>
+            <span class="node-uptime mono">{{ node.uptime }}</span>
+            <span class="node-cpu mono">{{ node.cpu }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Phone bleed — featured cards only, bleeds off right edge -->
+  @if (project().size === 'featured') {
+    <div class="card-phone-bleed" aria-hidden="true">
+      @if (project().visual) {
+        <img
+          [src]="'/assets/projects/' + project().visual!.src"
+          [alt]="lang.t(project().visual!.alt.en, project().visual!.alt.fr)"
+          class="phone-img"
+        />
+      } @else {
+        <!-- CSS iOS-style app mockup -->
+        <div class="phone-frame">
+          <div class="phone-island"></div>
+
+          <!-- Status bar -->
+          <div class="phone-status-bar">
+            <span class="phone-time">9:41</span>
+            <div class="phone-status-icons">
+              <div class="phone-status-icon"></div>
+            </div>
+          </div>
+
+          <!-- App content -->
+          <div class="phone-scroll">
+            <!-- Greeting -->
+            <div class="app-greeting">
+              <span class="app-greeting-sub">Mon, May 4</span>
+              <span class="app-greeting-name">Hello, Luc!</span>
+            </div>
+
+            <!-- Semester pill -->
+            <div class="app-semester-card">
+              <span class="app-semester-name">Summer 2026</span>
+              <span class="app-semester-days">119 days left</span>
+            </div>
+
+            <!-- Today's schedule -->
+            <div class="app-section-header">
+              <span class="app-section-title">Today's Schedule</span>
+              <span class="app-section-action">📅</span>
+            </div>
+            <div class="app-empty-state">No classes today! Take a break.</div>
+
+            <!-- Up Next -->
+            <div class="app-section-header">
+              <span class="app-section-title">Up Next</span>
+              <span class="app-section-action">See all</span>
+            </div>
+            <div class="app-task-list">
+              <div class="app-task">
+                <span class="task-badge">Today</span>
+                <span class="task-name">Lab Report: Gravity</span>
+                <span class="task-course">PHY101</span>
+              </div>
+              <div class="app-task">
+                <span class="task-badge">Today</span>
+                <span class="task-name">Derivatives Problem Set</span>
+                <span class="task-course">MAT+101</span>
+              </div>
+              <div class="app-task">
+                <span class="task-badge">Today</span>
+                <span class="task-name">Reading Reflection</span>
+                <span class="task-course">LIT390</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</a>

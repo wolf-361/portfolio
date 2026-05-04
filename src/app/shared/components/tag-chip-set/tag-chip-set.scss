@@ -9,6 +9,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: sp.$xs;
+  align-items: center;
 }
 
 .chip {
@@ -16,20 +17,23 @@
   align-items: center;
   height: 22px;
   padding: 0 sp.$sm;
-  border-radius: sys.$corner-extra-small; // 4px — sharp, terminal aesthetic
-  background: sys.$surface-container-high;
+  border-radius: sys.$corner-extra-small;
+  background: transparent;
   color: sys.$on-surface-variant;
-  border: 1px solid sys.$outline-variant;
+  border: 1px solid color-mix(in srgb, sys.$outline-variant 60%, transparent);
   font-family: sys.$font-mono;
-  font-size: 0.625rem; // 10px
-  font-weight: 600;
-  letter-spacing: 0.07em;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   white-space: nowrap;
+  opacity: 0.65;
 
   &.accent {
-    background: sys.$primary-container;
-    color: sys.$on-primary-container;
-    border-color: transparent;
+    background: transparent;
+    color: sys.$primary;
+    border-color: sys.$primary;
+    opacity: 1;
+    font-weight: 600;
   }
 }

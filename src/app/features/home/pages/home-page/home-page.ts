@@ -2,15 +2,23 @@ import { Component, inject } from '@angular/core';
 
 import { HeroComponent } from '../../components/hero/hero';
 import { ExperienceCardComponent } from '../../components/experience-card/experience-card';
+import { ProjectCardComponent } from '../../components/project-card/project-card';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header';
 import { TimelineBarComponent } from '../../../../shared/components/timeline-bar/timeline-bar';
 import { TimelineRow } from '../../../../shared/components/timeline-bar/timeline-bar.model';
 import { LangService } from '../../../../core/lang/lang';
 import { Experience, Education } from '../../models/experience';
+import { Project } from '../../models/project';
 
 @Component({
   selector: 'app-home-page',
-  imports: [HeroComponent, ExperienceCardComponent, SectionHeaderComponent, TimelineBarComponent],
+  imports: [
+    HeroComponent,
+    ExperienceCardComponent,
+    ProjectCardComponent,
+    SectionHeaderComponent,
+    TimelineBarComponent,
+  ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
@@ -168,6 +176,78 @@ export class HomePageComponent {
       institution: 'UQTR',
       period: '2020 – 2022',
       location: 'Trois-Rivières, QC',
+    },
+  ];
+
+  // ── Projects ───────────────────────────────────────────────────────────────
+
+  readonly projects: Project[] = [
+    {
+      size: 'featured',
+      tag: { en: 'mobile · featured', fr: 'mobile · featured' },
+      title: { en: 'Planific', fr: 'Planific' },
+      description: {
+        en: 'Cross-platform student planner for Android and iOS. The shared KMP module owns 100% of domain logic, state, and data — only the UI is platform-specific.',
+        fr: "Agenda étudiant multiplateforme pour Android et iOS. Le module KMP partagé détient 100 % de la logique métier, l'état et les données — seule l'interface est spécifique à chaque plateforme.",
+      },
+      details: {
+        en: 'Strict MVI unidirectional flow — Native UI → ViewModel (shared StateFlow) → UseCase → Repository → Room KMP / Ktor. Swift interop via SKIE, exposing Kotlin Flows as native AsyncSequence.',
+        fr: 'Flux MVI unidirectionnel strict — UI native → ViewModel (StateFlow partagé) → UseCase → Repository → Room KMP / Ktor. Interop Swift via SKIE, exposant les Flows Kotlin en AsyncSequence native.',
+      },
+      stack: [
+        'Kotlin Multiplatform',
+        'Jetpack Compose',
+        'SwiftUI',
+        'Ktor',
+        'Room KMP',
+        'SKIE',
+        'Koin',
+        'MVI',
+      ],
+      wip: true,
+    },
+    {
+      size: 'small',
+      tag: { en: 'mobile · game', fr: 'mobile · jeu' },
+      title: { en: 'Waystone', fr: 'Waystone' },
+      description: {
+        en: 'Companion app for open-world game maps — track locations, pins, and progress across sessions.',
+        fr: 'Application compagnon pour cartes de jeux open-world — suivez vos emplacements, épingles et progression.',
+      },
+      stack: ['Kotlin Multiplatform', 'Compose Multiplatform', 'SQLDelight'],
+      wip: true,
+    },
+    {
+      size: 'small',
+      tag: { en: 'open source', fr: 'open source' },
+      accentFirst: false,
+      title: { en: 'Starter Templates', fr: 'Templates de démarrage' },
+      description: {
+        en: 'Production-ready starters for KMP, Angular 21, and Spring Boot — enforced architecture, full quality gate out of the box.',
+        fr: 'Starters prêts pour la production : KMP, Angular 21 et Spring Boot — architecture imposée, qualité intégrée.',
+      },
+      stack: ['Kotlin Multiplatform', 'Angular 21', 'Spring Boot', 'Bun', 'Vitest', 'Playwright'],
+      url: 'https://github.com/wolf-361',
+      urlLabel: { en: 'GitHub →', fr: 'GitHub →' },
+    },
+    {
+      size: 'small',
+      tag: { en: 'infra · self-hosted', fr: 'infra · self-hosted' },
+      title: { en: 'Home Ops', fr: 'Home Ops' },
+      description: {
+        en: '3-node bare-metal Debian cluster provisioned end-to-end with Ansible. Coolify orchestration, NetBird mesh VPN, Cloudflare Zero Trust tunnels, and custom Go services.',
+        fr: 'Cluster bare-metal 3 nœuds Debian provisionné intégralement avec Ansible. Orchestration Coolify, VPN mesh NetBird, tunnels Cloudflare Zero Trust et services Go maison.',
+      },
+      stack: ['Ansible', 'Docker', 'Coolify', 'NetBird', 'Cloudflare', 'Go', 'Debian'],
+      terminal: {
+        command: 'cluster status --watch',
+        nodes: [
+          { name: 'firenze', status: 'online', uptime: '12d', cpu: '38%' },
+          { name: 'roma', status: 'online', uptime: '12d', cpu: '22%' },
+          { name: 'milano', status: 'backup', uptime: '—', cpu: '—' },
+          { name: 'edge-01', status: 'online', uptime: '2h', cpu: '11%' },
+        ],
+      },
     },
   ];
 }

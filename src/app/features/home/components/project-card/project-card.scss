@@ -1,0 +1,475 @@
+@use 'styles/sys' as sys;
+@use 'styles/spacing' as sp;
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Base card ─────────────────────────────────────────────────────────────────
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: sys.$corner-large;
+  background: sys.$surface-container-low;
+  border: 1px solid sys.$outline-variant;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  flex: 1;
+  transition:
+    box-shadow 200ms ease,
+    transform 200ms ease;
+
+  &:hover {
+    box-shadow: 0 4px 32px color-mix(in srgb, sys.$primary 12%, transparent);
+    transform: translateY(-2px);
+  }
+
+  &.card--featured {
+    flex-direction: row;
+    min-height: 340px;
+  }
+}
+
+// ── Content pane ──────────────────────────────────────────────────────────────
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: sp.$md;
+  padding: sp.$lg;
+  flex: 1;
+  min-width: 0;
+
+  .card--featured & {
+    max-width: 52%;
+    padding: sp.$xl;
+    gap: sp.$lg;
+  }
+}
+
+// ── Top row ───────────────────────────────────────────────────────────────────
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: sp.$sm;
+  min-height: 18px;
+}
+
+.card-tag-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: sys.$primary;
+  flex-shrink: 0;
+}
+
+.card-tag {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: sys.$on-surface-variant;
+  opacity: 0.7;
+  flex: 1;
+}
+
+.wip-badge {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px sp.$xs;
+  border-radius: sys.$corner-extra-small;
+  border: 1px solid sys.$outline-variant;
+  color: sys.$on-surface-variant;
+  opacity: 0.5;
+}
+
+// ── Body ─────────────────────────────────────────────────────────────────────
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: sp.$sm;
+  flex: 1;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: sys.$on-surface;
+  line-height: 1.25;
+
+  .card--featured & {
+    font-size: 1.75rem;
+  }
+}
+
+.card-desc {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: sys.$on-surface-variant;
+}
+
+.card-details {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: sys.$on-surface-variant;
+  opacity: 0.7;
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────────
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: sp.$sm;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: sp.$sm;
+}
+
+.card-link {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: sys.$primary;
+  opacity: 0.8;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
+  transition: opacity 150ms ease;
+
+  .card:hover & {
+    opacity: 1;
+  }
+}
+
+// ── Phone bleed — right half of featured card, absolutely positioned ──────────
+
+.card-phone-bleed {
+  position: absolute;
+  right: -24px;
+  top: -12%;
+  width: 220px;
+  height: 124%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+// Real screenshot
+.phone-img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(-12px 0 48px color-mix(in srgb, sys.$primary 20%, transparent));
+  border-radius: 36px;
+  transform: rotate(4deg);
+}
+
+// ── CSS Phone mockup — renders when no visual asset is set ────────────────────
+
+.phone-frame {
+  width: 178px;
+  height: 356px;
+  border-radius: 38px;
+  // iOS-style near-black, independent of theme
+  background: #1c1c1e;
+  border: 1.5px solid rgba(255 255 255 / 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+  position: relative; // for phone-island absolute positioning
+  box-shadow:
+    -20px 8px 72px color-mix(in srgb, sys.$primary 22%, transparent),
+    0 24px 48px rgba(0 0 0 / 0.5);
+  transform: rotate(8deg) translateY(-4px);
+  flex-shrink: 0;
+}
+
+// Status bar area
+.phone-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px 0;
+  flex-shrink: 0;
+}
+
+.phone-time {
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: rgba(255 255 255 / 0.85);
+  letter-spacing: 0.02em;
+}
+
+.phone-island {
+  width: 52px;
+  height: 14px;
+  border-radius: 999px;
+  background: #000;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.phone-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.phone-status-icon {
+  width: 12px;
+  height: 6px;
+  border-radius: 1px;
+  border: 1px solid rgba(255 255 255 / 0.6);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    right: 3px;
+    background: rgba(255 255 255 / 0.6);
+    border-radius: 0.5px;
+  }
+}
+
+// App scroll content
+.phone-scroll {
+  flex: 1;
+  overflow: hidden;
+  padding: 12px 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+// Greeting
+.app-greeting {
+  flex-shrink: 0;
+}
+
+.app-greeting-sub {
+  font-size: 0.45rem;
+  color: rgba(255 255 255 / 0.5);
+  margin-bottom: 2px;
+  display: block;
+}
+
+.app-greeting-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  display: block;
+}
+
+// Semester pill card
+.app-semester-card {
+  background: #2d5a27;
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.app-semester-name {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: #b8f0b0;
+}
+
+.app-semester-days {
+  font-size: 0.45rem;
+  color: rgba(184 240 176 / 0.7);
+  font-family: sys.$font-mono;
+}
+
+// Schedule section
+.app-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.app-section-title {
+  font-size: 0.5rem;
+  font-weight: 600;
+  color: rgba(255 255 255 / 0.7);
+}
+
+.app-section-action {
+  font-size: 0.42rem;
+  color: #30d158;
+}
+
+.app-empty-state {
+  background: #2c2c2e;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 0.45rem;
+  color: rgba(255 255 255 / 0.4);
+  flex-shrink: 0;
+}
+
+// Up Next list
+.app-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.app-task {
+  background: #2c2c2e;
+  border-radius: 10px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.task-badge {
+  font-size: 0.38rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #7dba78;
+  margin-bottom: 1px;
+}
+
+.task-name {
+  font-size: 0.52rem;
+  font-weight: 600;
+  color: rgba(255 255 255 / 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-course {
+  font-size: 0.42rem;
+  color: rgba(255 255 255 / 0.4);
+  font-family: sys.$font-mono;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// ── Responsive: hide bleed on small screens ───────────────────────────────────
+
+@media (max-width: 860px) {
+  .card-phone-bleed {
+    display: none;
+  }
+
+  .card--featured .card-content {
+    max-width: 100%;
+    padding: sp.$lg;
+  }
+}
+
+// ── Terminal block — Home Ops full-width card ─────────────────────────────────
+
+.card-terminal {
+  border-top: 1px solid sys.$outline-variant;
+  padding: sp.$md sp.$lg;
+  display: flex;
+  flex-direction: column;
+  gap: sp.$sm;
+  background: color-mix(in srgb, sys.$surface 60%, sys.$surface-container 40%);
+  flex-shrink: 0;
+}
+
+.terminal-prompt {
+  display: flex;
+  align-items: center;
+  gap: sp.$xs;
+}
+
+.terminal-dollar {
+  color: sys.$primary;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.terminal-cmd {
+  font-size: 0.75rem;
+  color: sys.$on-surface-variant;
+  opacity: 0.7;
+}
+
+.terminal-nodes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: sp.$xs sp.$xl;
+}
+
+.terminal-node {
+  display: flex;
+  align-items: center;
+  gap: sp.$xs;
+}
+
+.node-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &--online {
+    background: sys.$primary;
+  }
+  &--backup {
+    background: sys.$on-surface-variant;
+    opacity: 0.4;
+  }
+  &--offline {
+    background: sys.$error;
+  }
+}
+
+.node-name {
+  font-size: 0.6875rem;
+  color: sys.$on-surface;
+  min-width: 60px;
+}
+
+.node-uptime {
+  font-size: 0.625rem;
+  color: sys.$on-surface-variant;
+  opacity: 0.6;
+  margin-left: auto;
+}
+
+.node-cpu {
+  font-size: 0.625rem;
+  color: sys.$on-surface-variant;
+  opacity: 0.6;
+  min-width: 30px;
+  text-align: right;
+}
+
+// ── Mono util ─────────────────────────────────────────────────────────────────
+
+.mono {
+  font-family: sys.$font-mono;
+}
