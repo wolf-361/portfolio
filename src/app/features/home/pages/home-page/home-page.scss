@@ -1,28 +1,180 @@
 @use 'styles/sys' as sys;
+@use 'styles/spacing' as sp;
 
-.section {
-  padding: 4rem 2rem;
-}
+// ── Page sections ─────────────────────────────────────────────────────────────
 
-.section:nth-of-type(even) {
-  background: sys.$surface-container-low;
+.page-section {
+  padding: sp.$xl-2 sp.$lg;
+
+  &--alt {
+    background: sys.$surface-container-low;
+  }
 }
 
 .section-inner {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   width: 100%;
 }
 
-.section-title {
-  margin: 0 0 2rem;
-  font: sys.$headline-medium;
-  font-weight: 700;
-  color: sys.$on-surface;
+// ── Experiences two-column layout ─────────────────────────────────────────────
+
+.exp-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: sp.$xl;
+  margin-top: sp.$xl;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    gap: sp.$lg;
+  }
+}
+
+.exp-col {
+  display: flex;
+  flex-direction: column;
+  gap: sp.$md;
+}
+
+.col-label {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: sys.$primary;
+  opacity: 0.7;
 }
 
 .cards {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: sp.$md;
+}
+
+// ── Education card ────────────────────────────────────────────────────────────
+
+.edu-card {
+  border-radius: sys.$corner-medium;
+  background: sys.$surface-container-low;
+  border: 1px solid sys.$outline-variant;
+  border-left: 3px solid sys.$outline-variant;
+  padding: sp.$md sp.$lg;
+  display: flex;
+  flex-direction: column;
+  gap: sp.$xs;
+  transition: border-left-color 200ms ease;
+
+  &.active {
+    border-left-color: sys.$primary;
+  }
+}
+
+.edu-top {
+  display: flex;
+  align-items: first baseline;
+  gap: sp.$sm;
+  flex-wrap: wrap;
+}
+
+.edu-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: sys.$primary;
+  flex-shrink: 0;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: sys.$primary;
+    animation: edu-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes edu-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.edu-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.edu-institution {
+  font-family: sys.$font-mono;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: sys.$on-surface;
+  flex-shrink: 0;
+  letter-spacing: 0.01em;
+}
+
+.edu-degree {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: sys.$on-surface-variant;
+}
+
+.edu-meta-right {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  font-family: sys.$font-mono;
+  font-size: 0.6875rem;
+  color: sys.$on-surface-variant;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.edu-sep {
+  opacity: 0.4;
+}
+.edu-period,
+.edu-location {
+  opacity: 0.7;
+}
+
+.edu-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px sp.$sm;
+  border-radius: sys.$corner-extra-small;
+  background: sys.$tertiary-container;
+  color: sys.$on-tertiary-container;
+  font-family: sys.$font-mono;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.timeline-block {
+  margin-top: sp.$xl;
+  display: flex;
+  flex-direction: column;
+  gap: sp.$md;
+  padding-top: sp.$lg;
+  border-top: 1px solid sys.$outline-variant;
+}
+
+.mono {
+  font-family: sys.$font-mono;
 }

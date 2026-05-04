@@ -1,28 +1,36 @@
-<article [surface]="'surface-container-low'" class="card">
+<article class="card" [class]="'kind-' + experience().kind">
   <header class="card-header">
-    <div class="card-meta">
-      <span class="company">{{ experience.company }}</span>
-      <span class="separator">·</span>
-      <span class="period">{{ experience.period }}</span>
-      <span class="separator">·</span>
-      <span class="location">{{ experience.location }}</span>
+    <div class="card-top">
+      @if (experience().active) {
+        <span class="active-dot" aria-label="Currently active"></span>
+      }
+      <div class="card-identity">
+        <span class="company">{{ experience().company }}</span>
+        <span class="title">{{ lang.t(experience().title.en, experience().title.fr) }}</span>
+      </div>
+      <span class="card-meta-right">
+        <span class="period">{{ lang.t(experience().period.en, experience().period.fr) }}</span>
+        <span class="sep">·</span>
+        <span class="location">{{ experience().location }}</span>
+      </span>
     </div>
-    <h3 class="title">{{ lang.t(experience.title.en, experience.title.fr) }}</h3>
   </header>
 
-  @if (experience.bullets.length) {
-    <ul class="bullets">
-      @for (bullet of experience.bullets; track bullet.en) {
-        <li>{{ lang.t(bullet.en, bullet.fr) }}</li>
-      }
-    </ul>
+  @if (!compact() && experience().bullets.length) {
+    @if (experience().bullets.length === 1) {
+      <p class="single-bullet">
+        {{ lang.t(experience().bullets[0].en, experience().bullets[0].fr) }}
+      </p>
+    } @else {
+      <ul class="bullets">
+        @for (bullet of experience().bullets; track bullet.en) {
+          <li>{{ lang.t(bullet.en, bullet.fr) }}</li>
+        }
+      </ul>
+    }
   }
 
-  @if (experience.stack?.length) {
-    <mat-chip-set class="stack">
-      @for (tech of experience.stack!; track tech) {
-        <mat-chip>{{ tech }}</mat-chip>
-      }
-    </mat-chip-set>
+  @if (experience().stack?.length) {
+    <ui-tag-chip-set [tags]="experience().stack!" [accentFirst]="false" />
   }
 </article>

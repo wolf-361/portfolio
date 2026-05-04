@@ -17,12 +17,9 @@ import { FooterComponent } from './core/layout/footer/footer';
   styles: [
     `
       :host {
-        display: flex;
-        flex-direction: column;
-        min-height: 100dvh;
+        display: block;
       }
       main {
-        flex: 1;
         display: flex;
         flex-direction: column;
       }

@@ -1,53 +1,143 @@
 @use 'styles/sys' as sys;
+@use 'styles/spacing' as sp;
 
 .card {
   border-radius: sys.$corner-medium;
-  padding: 1.5rem;
+  background: sys.$surface-container-low;
+  border: 1px solid sys.$outline-variant;
+  border-left: 3px solid sys.$outline-variant;
+  padding: sp.$md sp.$lg;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: sp.$sm;
 }
+
+// ── Accent bar per kind ───────────────────────────────────────────────────────
+
+.kind-work {
+  border-left-color: sys.$primary;
+}
+.kind-internship {
+  border-left-color: sys.$secondary;
+}
+.kind-association {
+  border-left-color: sys.$outline;
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
 
 .card-header {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: sp.$xs;
 }
 
-.card-meta {
+.card-top {
   display: flex;
+  align-items: flex-start;
+  gap: sp.$sm;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0.375rem;
-  font: sys.$label-medium;
-  color: sys.$on-surface-variant;
 }
 
-.separator {
-  opacity: 0.5;
+// ── Active dot ────────────────────────────────────────────────────────────────
+
+.active-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: sys.$primary;
+  flex-shrink: 0;
+  position: relative;
+  align-self: flex-start;
+  margin-top: 3px; // optical alignment with company text cap-height
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: sys.$primary;
+    animation: dot-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes dot-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+// ── Identity (left) ───────────────────────────────────────────────────────────
+
+.card-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.company {
+  font-family: sys.$font-mono;
+  font-size: 0.8125rem; // 13px — company is the headline
+  font-weight: 700;
+  color: sys.$on-surface;
+  letter-spacing: 0.01em;
 }
 
 .title {
+  font-size: 0.75rem; // 12px — role is the descriptor
+  font-weight: 400;
+  color: sys.$on-surface-variant;
+  letter-spacing: 0;
+}
+
+// ── Meta right (period · location) ───────────────────────────────────────────
+
+.card-meta-right {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  font-family: sys.$font-mono;
+  font-size: 0.6875rem;
+  color: sys.$on-surface-variant;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.sep {
+  opacity: 0.4;
+}
+.period,
+.location {
+  opacity: 0.7;
+}
+
+// ── Bullets ───────────────────────────────────────────────────────────────────
+
+.single-bullet {
   margin: 0;
-  font: sys.$title-medium;
-  font-weight: 600;
-  color: sys.$on-surface;
+  font-size: 0.875rem;
+  color: sys.$on-surface-variant;
+  line-height: 1.65;
 }
 
 .bullets {
   margin: 0;
-  padding-left: 1.25rem;
+  padding-left: sp.$md;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: sp.$xs;
 
   li {
-    font: sys.$body-medium;
+    font-size: 0.875rem;
     color: sys.$on-surface-variant;
-    line-height: 1.6;
+    line-height: 1.65;
   }
-}
-
-.stack {
-  margin-top: 0.25rem;
 }

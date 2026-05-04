@@ -1,17 +1,16 @@
-import { Component, Input, inject } from '@angular/core';
-import { MatChipsModule } from '@angular/material/chips';
-import { SurfaceDirective } from '../../../../shared/directives/surface/surface';
+import { Component, input, inject } from '@angular/core';
+import { TagChipSetComponent } from '../../../../shared/components/tag-chip-set/tag-chip-set';
 import { LangService } from '../../../../core/lang/lang';
 import { Experience } from '../../models/experience';
 
 @Component({
   selector: 'app-experience-card',
-  imports: [MatChipsModule, SurfaceDirective],
+  imports: [TagChipSetComponent],
   templateUrl: './experience-card.html',
   styleUrl: './experience-card.scss',
 })
 export class ExperienceCardComponent {
-  @Input({ required: true }) experience!: Experience;
-
+  readonly experience = input.required<Experience>();
+  readonly compact = input<boolean>(false); // hides bullets, shows only header + chips
   readonly lang = inject(LangService);
 }

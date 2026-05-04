@@ -11,24 +11,25 @@
   gap: sp.$xs;
 }
 
-// Override MatChip defaults to match the portfolio's mono/compact aesthetic
-.tag-chip {
-  font-family: sys.$font-mono !important;
-  font-size: 0.6875rem !important; // 11px
-  font-weight: 500 !important;
-  letter-spacing: 0.06em !important;
-  text-transform: uppercase !important;
-  height: 24px !important;
-  padding: 0 sp.$sm !important;
-  border-radius: sys.$corner-extra-small !important;
-  background: sys.$surface-container-high !important;
-  color: sys.$on-surface-variant !important;
-  border: 1px solid sys.$outline-variant !important;
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 sp.$sm;
+  border-radius: sys.$corner-extra-small; // 4px — sharp, terminal aesthetic
+  background: sys.$surface-container-high;
+  color: sys.$on-surface-variant;
+  border: 1px solid sys.$outline-variant;
+  font-family: sys.$font-mono;
+  font-size: 0.625rem; // 10px
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
 
-  // Accent variant — first chip when accentFirst=true
   &.accent {
-    background: sys.$primary-container !important;
-    color: sys.$on-primary-container !important;
-    border-color: transparent !important;
+    background: sys.$primary-container;
+    color: sys.$on-primary-container;
+    border-color: transparent;
   }
 }

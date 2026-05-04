@@ -14,9 +14,12 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html {
   height: 100%;
+}
+
+body {
+  min-height: 100%;
   margin: 0;
   font-family: #{t.$font-family};
   font-size: #{t.$font-size-base};

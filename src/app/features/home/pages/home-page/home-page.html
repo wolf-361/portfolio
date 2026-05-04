@@ -1,25 +1,100 @@
-<app-hero />
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+<section id="hero">
+  <app-hero />
+</section>
 
-<section class="section experience-section">
+<!-- ── Experiences ──────────────────────────────────────────────────────── -->
+<section id="experiences" class="page-section">
   <div class="section-inner">
-    <h2 class="section-title">{{ lang.t('Experience', 'Expérience') }}</h2>
-    <div class="cards">
-      @for (exp of workExperiences; track exp.company) {
-        <app-experience-card [experience]="exp" />
-      }
+    <ui-section-header
+      index="01"
+      [label]="lang.t('EXPERIENCES', 'EXPÉRIENCES')"
+      [title]="lang.t('Professional background', 'Parcours professionnel')"
+      [subtitle]="
+        lang.t(
+          'Contractor & intern in parallel with a full Computer Science degree.',
+          'Entrepreneur & stagiaire en parallèle d\'un baccalauréat en informatique.'
+        )
+      "
+    />
+
+    <div class="exp-columns">
+      <!-- Pro column -->
+      <div class="exp-col">
+        <p class="col-label mono">{{ lang.t('// work', '// travail') }}</p>
+        <div class="cards">
+          @for (exp of workExperiences; track exp.company) {
+            <app-experience-card [experience]="exp" />
+          }
+        </div>
+      </div>
+
+      <!-- Education + associations column -->
+      <div class="exp-col">
+        <p class="col-label mono">{{ lang.t('// education', '// formation') }}</p>
+        <div class="cards">
+          @for (edu of educationEntries; track edu.institution + edu.period) {
+            <div class="edu-card" [class.active]="edu.active">
+              <div class="edu-top">
+                @if (edu.active) {
+                  <span class="edu-dot" aria-hidden="true"></span>
+                }
+                <div class="edu-identity">
+                  <span class="edu-institution">{{ edu.institution }}</span>
+                  <h3 class="edu-degree">{{ lang.t(edu.degree.en, edu.degree.fr) }}</h3>
+                </div>
+                <span class="edu-meta-right">
+                  <span class="edu-period">{{ edu.period }}</span>
+                  <span class="edu-sep">·</span>
+                  <span class="edu-location">{{ edu.location }}</span>
+                </span>
+              </div>
+              @if (edu.badge) {
+                <span class="edu-badge">{{ lang.t(edu.badge.en, edu.badge.fr) }}</span>
+              }
+            </div>
+          }
+        </div>
+
+        <p class="col-label mono" style="margin-top: 2rem">
+          {{ lang.t('// associations', '// associations') }}
+        </p>
+        <div class="cards">
+          @for (exp of associationExperiences; track exp.company) {
+            <app-experience-card [experience]="exp" />
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline — part of experiences section -->
+    <div class="timeline-block">
+      <p class="col-label mono">{{ lang.t('// timeline', '// chronologie') }}</p>
+      <!-- ui-timeline-bar wired in task #14 -->
     </div>
   </div>
 </section>
 
-<section class="section extracurricular-section">
+<!-- ── Projects ──────────────────────────────────────────────────────────── -->
+<section id="projects" class="page-section page-section--alt">
   <div class="section-inner">
-    <h2 class="section-title">{{ lang.t('Extracurricular', 'Activités parascolaires') }}</h2>
-    <div class="cards">
-      @for (exp of extracurricularExperiences; track exp.company) {
-        <app-experience-card [experience]="exp" />
-      }
-    </div>
+    <ui-section-header
+      index="02"
+      [label]="lang.t('PROJECTS', 'PROJETS')"
+      [title]="lang.t('Selected work', 'Travaux sélectionnés')"
+    />
+    <!-- bento grid wired in task #15 -->
   </div>
 </section>
 
-<app-skills-section />
+<!-- ── Contact ───────────────────────────────────────────────────────────── -->
+<section id="contact" class="page-section">
+  <div class="section-inner">
+    <ui-section-header
+      index="03"
+      [label]="lang.t('CONTACT', 'CONTACT')"
+      [title]="lang.t('Let\'s build something.', 'Construisons quelque chose.')"
+    />
+    <!-- contact CTA wired in task #16 -->
+  </div>
+</section>
