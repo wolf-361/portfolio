@@ -1,0 +1,24 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: sunday
+    groups:
+      angular:
+        patterns: [ "@angular*", "@angular-devkit*", "@schematics*" ]
+      angular-material:
+        patterns: [ "@angular/material*", "@angular/cdk*" ]
+      typescript:
+        patterns: [ "typescript", "ts-*" ]
+      testing:
+        patterns: [ "@vitest*", "vitest*", "@playwright*", "playwright*" ]
+      linting:
+        patterns: [ "eslint*", "@typescript-eslint*", "prettier*" ]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: sunday
