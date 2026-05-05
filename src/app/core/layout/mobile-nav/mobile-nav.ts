@@ -1,5 +1,6 @@
 import { Component, inject, output } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -35,6 +36,7 @@ interface NavItem {
 })
 export class MobileNavComponent {
   readonly lang = inject(LangService);
+  private readonly router = inject(Router);
 
   /** Emitted when the user navigates or closes the overlay */
   readonly closed = output<void>();
@@ -49,6 +51,8 @@ export class MobileNavComponent {
     const el = document.getElementById(fragment);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      this.router.navigate(['/'], { fragment });
     }
     this.closed.emit();
   }

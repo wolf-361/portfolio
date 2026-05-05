@@ -28,6 +28,8 @@ export interface Project {
   /** Extended description shown only on featured cards */
   details?: I18n;
   stack: string[];
+  /** Route slug for internal detail page — takes priority over url */
+  slug?: string;
   /** Optional GitHub or live URL */
   url?: string;
   urlLabel?: I18n;

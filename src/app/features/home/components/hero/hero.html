@@ -1,5 +1,26 @@
 <section class="hero">
   <div class="hero-layout">
+    <!-- Left: headline + CTA -->
+    <div class="hero-copy">
+      <h1 class="hero-headline">
+        {{ lang.t('Clean code,', 'Code propre,') }}<br />
+        {{ lang.t('built to scale.', 'conçu pour durer.') }}
+      </h1>
+      <p class="hero-sub">
+        {{
+          lang.t(
+            'Full-Stack & Mobile engineer. Specialised in Kotlin Multiplatform, clean architecture and distributed infrastructure.',
+            'Développeur Full-Stack & Mobile. Spécialisé en Kotlin Multiplatform, architecture propre et infrastructures distribuées.'
+          )
+        }}
+      </p>
+      <a class="hero-cta" href="#projects">
+        {{ lang.t('View projects', 'Voir les projets') }}
+        <span class="hero-cta-arr" aria-hidden="true">↓</span>
+      </a>
+    </div>
+
+    <!-- Right: terminal -->
     <div
       class="terminal"
       role="region"
@@ -101,30 +122,6 @@
           </div>
         }
       </div>
-    </div>
-
-    <!-- CTA row -->
-    <div class="cta-row">
-      <a mat-flat-button routerLink="/projects">
-        {{ lang.t('View Projects', 'Voir les projets') }}
-      </a>
-      <a mat-stroked-button href="https://github.com/wolf-361" target="_blank" rel="noopener">
-        <mat-icon>open_in_new</mat-icon>
-        GitHub
-      </a>
-      <a
-        mat-stroked-button
-        href="https://www.linkedin.com/in/wolf361/"
-        target="_blank"
-        rel="noopener"
-      >
-        <mat-icon>link</mat-icon>
-        LinkedIn
-      </a>
-      <a mat-stroked-button href="assets/cv.pdf" target="_blank" rel="noopener" download>
-        <mat-icon>description</mat-icon>
-        {{ lang.t('CV', 'CV') }}
-      </a>
     </div>
   </div>
 </section>

@@ -8,9 +8,7 @@ import {
   ElementRef,
   viewChild,
 } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { LangService, Lang } from '../../../../core/lang/lang';
 import { P10kPromptComponent } from './p10k-prompt';
 
@@ -24,6 +22,7 @@ export interface TermLine {
   logoChunk?: string;
   infoChunk?: string;
   infoStyle?: string;
+  infoUrl?: string; // makes the info chunk a clickable link
 }
 
 const ARCH_LOGO_LINES = [
@@ -52,7 +51,6 @@ const S_HEADER = 'color:#7dd3fc;font-weight:700';
 const S_SEP = 'color:#4b5563';
 const S_VALUE = 'color:#cdd6f4';
 const S_DIM = 'color:#6b7280';
-const S_LINK = 'color:#86efac';
 
 function buildNeofetchLines(lang: Lang): TermLine[] {
   const en = lang === 'en';
@@ -64,20 +62,18 @@ function buildNeofetchLines(lang: Lang): TermLine[] {
       text: en ? 'Role:   Mobile Engineer · KMP' : 'Rôle:   Ingénieur Mobile · KMP',
       style: S_VALUE,
     },
-    { text: en ? 'Bio:    Explicit contracts,' : 'Bio:    Contrats explicites,', style: S_VALUE },
-    { text: en ? '        zero ambiguity.' : '        zéro ambiguïté.', style: S_DIM },
+    { text: en ? 'Bio:    Clean code,' : 'Bio:    Code propre,', style: S_VALUE },
+    { text: en ? '        built to scale.' : '        conçu pour durer.', style: S_DIM },
     { text: '', style: '' },
     { text: en ? 'OS:     Arch Linux x86_64' : 'OS :    Arch Linux x86_64', style: S_VALUE },
-    { text: en ? 'Host:   portfolio.luc.dev' : 'Hôte:   portfolio.luc.dev', style: S_VALUE },
+    { text: en ? 'Host:   wolf-361.github.io' : 'Hôte:   wolf-361.github.io', style: S_VALUE },
     { text: 'Shell:  zsh + powerlevel10k', style: S_VALUE },
     { text: '', style: '' },
     { text: 'Mobile: KMP · Compose', style: S_VALUE },
-    { text: 'BE:     Spring · Ktor · gRPC', style: S_VALUE },
-    { text: 'Infra:  Docker · Terraform', style: S_VALUE },
+    { text: 'API:    Ktor · Spring Boot', style: S_VALUE },
+    { text: 'Infra:  Docker · Ansible · CI/CD', style: S_VALUE },
     { text: 'Web:    Angular · TypeScript', style: S_VALUE },
     { text: '', style: '' },
-    { text: 'GitHub:   /wolf-361', style: S_LINK },
-    { text: 'LinkedIn: /in/wolf361', style: S_LINK },
     { text: '■ ■ ■ ■ ■ ■ ■ ■', style: S_VALUE },
   ];
 
@@ -239,7 +235,7 @@ function runCommand(raw: string, lang: Lang): CommandResult {
 
 @Component({
   selector: 'app-hero',
-  imports: [RouterLink, MatButtonModule, MatIconModule, P10kPromptComponent],
+  imports: [P10kPromptComponent],
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
 })

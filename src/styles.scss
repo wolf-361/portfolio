@@ -33,3 +33,53 @@ body {
 .mono {
   font-family: var(--font-mono);
 }
+
+// ── Fade-in animation — used by [uiFadeIn] directive ─────────────────────────
+.fade-in-target {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 600ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+// ── Inline emphasis inside [innerHTML] sec-body content ──────────────────────
+// These cannot be in component SCSS (ViewEncapsulation strips them).
+.sec-body {
+  mark {
+    background: none;
+    color: var(--mat-sys-primary);
+    font-weight: 500;
+  }
+
+  strong {
+    font-weight: 600;
+    color: var(--mat-sys-on-surface);
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  li {
+    line-height: 1.65;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    color: var(--mat-sys-primary);
+    background: color-mix(in srgb, var(--mat-sys-primary) 10%, transparent);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+}

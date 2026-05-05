@@ -2,6 +2,7 @@ import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,6 +29,7 @@ interface NavItem {
 export class NavbarComponent implements OnInit {
   readonly theme = inject(ThemeService);
   readonly lang = inject(LangService);
+  private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
 
   readonly mobileNavOpen = signal(false);
@@ -51,20 +53,32 @@ export class NavbarComponent implements OnInit {
   }
 
   private updateActiveSection(): void {
-    const scrollY = window.scrollY + 80; // offset for sticky navbar height
+    const scrollY = window.scrollY;
+    const viewportH = window.innerHeight;
+    const triggerY = scrollY + 120;
+
     let active = '';
-    for (const item of this.navItems) {
+    this.navItems.forEach((item, i) => {
       const el = document.getElementById(item.fragment);
-      if (el && el.offsetTop <= scrollY) {
+      if (!el) return;
+      const isLast = i === this.navItems.length - 1;
+      // For the last section activate as soon as its top is within the viewport
+      const threshold = isLast ? scrollY + viewportH : triggerY;
+      if (el.offsetTop <= threshold) {
         active = item.fragment;
       }
-    }
+    });
     this.activeFragment.set(active);
   }
 
   scrollTo(fragment: string): void {
     const el = document.getElementById(fragment);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      // Not on home page — navigate home then scroll to fragment
+      this.router.navigate(['/'], { fragment });
+    }
   }
 
   isActive(fragment: string): boolean {

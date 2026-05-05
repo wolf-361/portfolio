@@ -1,4 +1,14 @@
 <article [surface]="'surface-container-low'" class="card" [class.featured]="project.featured">
+  @if (project.slug) {
+    <!-- Full-card click target — sits behind all interactive children -->
+    <a
+      class="card-link"
+      [routerLink]="['/projects', project.slug]"
+      aria-hidden="true"
+      tabindex="-1"
+    ></a>
+  }
+
   <header class="card-header">
     <div class="card-meta">
       <span class="subtitle">{{ project.subtitle }}</span>
@@ -19,13 +29,13 @@
 
   <div class="links">
     @if (project.slug) {
-      <a mat-flat-button [routerLink]="['/projects', project.slug]">
+      <a class="card-cta" mat-flat-button [routerLink]="['/projects', project.slug]">
         {{ lang.t('View Details', 'Voir les détails') }}
         <mat-icon iconPositionEnd>arrow_forward</mat-icon>
       </a>
     }
     @for (link of project.links ?? []; track link.label) {
-      <a mat-stroked-button [href]="link.url" target="_blank" rel="noopener">
+      <a class="card-cta" mat-stroked-button [href]="link.url" target="_blank" rel="noopener">
         @if (link.icon) {
           <mat-icon>{{ link.icon }}</mat-icon>
         }

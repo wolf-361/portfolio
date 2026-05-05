@@ -220,21 +220,26 @@
       <!-- Right: email + copy + hint -->
       <div class="contact-email-block">
         <div class="contact-row">
-          <a class="contact-email" href="mailto:wolf361.it@gmail.com">wolf361.it&#64;gmail.com</a>
-          <button
-            class="contact-copy mono"
-            type="button"
-            (click)="copyEmail()"
-            [attr.data-copied]="emailCopied"
-            [attr.aria-label]="lang.t('Copier l\'adresse', 'Copier l\'adresse')"
-          >
-            <span class="copy-ico" aria-hidden="true">⧉</span>
-            <span>{{
-              emailCopied
-                ? lang.t('Copié !', 'Copié !')
-                : lang.t("Copier l'adresse", "Copier l'adresse")
-            }}</span>
-          </button>
+          <a class="contact-email" href="mailto:wolf-361@hotmail.com">wolf-361&#64;hotmail.com</a>
+          <span class="copy-wrap">
+            <button
+              class="contact-copy mono"
+              type="button"
+              (click)="copyEmail()"
+              [attr.data-copied]="emailCopied"
+              [attr.aria-label]="lang.t('Copier l\'adresse', 'Copier l\'adresse')"
+            >
+              <span class="copy-ico" aria-hidden="true">⧉</span>
+              <span>{{
+                emailCopied
+                  ? lang.t('Copié !', 'Copié !')
+                  : lang.t("Copier l'adresse", "Copier l'adresse")
+              }}</span>
+            </button>
+            <span #copyToast class="copy-toast" role="status" aria-live="polite"
+              >✓ {{ lang.t('Adresse copiée !', 'Address copied!') }}</span
+            >
+          </span>
         </div>
         <p class="contact-hint mono">
           {{ lang.t('// réponse sous', '// réponse sous') }}

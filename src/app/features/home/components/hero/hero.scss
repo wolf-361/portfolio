@@ -9,12 +9,69 @@
 }
 
 .hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  align-items: start;
+  gap: 3rem;
+  max-width: 1100px;
+  width: 100%;
+}
+
+// ── Left copy ──────────────────────────────────────────────────────────────────
+
+.hero-copy {
   display: flex;
   flex-direction: column;
+  gap: 1.25rem;
+}
+
+.hero-headline {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: sys.$on-surface;
+}
+
+.hero-sub {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: sys.$on-surface-variant;
+  max-width: 38ch;
+}
+
+.hero-cta {
+  display: inline-flex;
   align-items: center;
-  gap: 2rem;
-  max-width: 720px;
-  width: 100%;
+  gap: 0.5rem;
+  align-self: flex-start;
+  padding: 0.625rem 1.25rem;
+  border-radius: 999px;
+  background: sys.$primary;
+  color: sys.$on-primary;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+
+  &:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+}
+
+.hero-cta-arr {
+  font-size: 1rem;
+  transition: transform 300ms ease;
+
+  .hero-cta:hover & {
+    transform: translateY(3px);
+  }
 }
 
 // ── Terminal window ────────────────────────────────────────────────────────────
@@ -170,6 +227,18 @@
   white-space: nowrap;
 }
 
+.t-info-link {
+  color: #86efac; // S_LINK green
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+
+  &:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+  }
+}
+
 // ── Interactive input ──────────────────────────────────────────────────────────
 
 .t-input-line {
@@ -197,29 +266,42 @@
   outline: none;
 }
 
-// ── CTA ────────────────────────────────────────────────────────────────────────
+// ── Tablet: stack terminal below copy ─────────────────────────────────────────
 
-.cta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
+@media (max-width: 860px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+    // Terminal first visually on mobile — swap order via order
+  }
+
+  .hero-copy {
+    order: 2;
+  }
+
+  .terminal {
+    order: 1;
+  }
+
+  .hero-sub {
+    max-width: unset;
+  }
+
+  .hero-cta {
+    align-self: flex-start;
+  }
 }
 
 // ── Mobile ─────────────────────────────────────────────────────────────────────
 
 @media (max-width: 599px) {
   .hero {
-    padding: 2rem 0.75rem;
-    // Don't force full viewport height on mobile — let content breathe
+    padding: 2rem 0.75rem 3rem;
     min-height: unset;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
   }
 
   .terminal-body {
     padding: 0.75rem 0.875rem 1rem;
-    max-height: 420px;
+    max-height: 380px;
   }
 
   .t-line {
@@ -230,8 +312,7 @@
     padding-top: 0.35rem;
   }
 
-  // Neofetch: hide the ASCII logo entirely — it's 40 chars wide and will
-  // overflow any narrow viewport. The info column becomes full-width.
+  // Neofetch: hide ASCII logo on narrow viewports
   .t-logo {
     display: none;
   }

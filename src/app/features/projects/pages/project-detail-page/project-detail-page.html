@@ -1,57 +1,187 @@
-@if (project) {
-  <div class="page">
-    <div class="page-inner">
-      <a mat-button routerLink="/projects" class="back-link">
-        <mat-icon>arrow_back</mat-icon>
-        {{ lang.t('Projects', 'Projets') }}
-      </a>
-
-      <header class="project-header">
-        <div class="meta">
-          <span class="subtitle">{{ project.subtitle }}</span>
-          @if (project.status) {
-            <span class="status-badge">{{ project.status }}</span>
-          }
-        </div>
-        <h1 class="title">{{ project.title }}</h1>
-        <mat-chip-set class="tags">
-          @for (tag of project.tags; track tag) {
-            <mat-chip>{{ tag }}</mat-chip>
-          }
-        </mat-chip-set>
-      </header>
-
-      <div class="sections">
-        @for (section of project.sections; track section.title.en) {
-          <section class="content-section">
-            <h2 class="section-title">{{ lang.t(section.title.en, section.title.fr) }}</h2>
-            @for (para of lang.t(section.body.en, section.body.fr).split('\n\n'); track $index) {
-              <p class="section-body">{{ para }}</p>
-            }
-            @if (section.diagram?.length) {
-              <pre class="diagram">{{ section.diagram!.join('\n') }}</pre>
-            }
-          </section>
-        }
+@if (project; as p) {
+  <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+  <div class="cs-hero">
+    <div class="cs-container">
+      <!-- Back + breadcrumb -->
+      <div class="cs-nav mono">
+        <a class="back-link" routerLink="/" fragment="projects">
+          <span class="back-arr">←</span>
+        </a>
+        <span class="crumb-sep">/</span>
+        <span class="crumb">{{ lang.t('projects', 'projets') }}</span>
+        <span class="crumb-sep">/</span>
+        <span class="crumb crumb-active">{{ p.title }}</span>
       </div>
 
-      @if (project.links?.length) {
-        <div class="links-row">
-          @for (link of project.links!; track link.label) {
-            <a mat-stroked-button [href]="link.url" target="_blank" rel="noopener">
-              @if (link.icon) {
-                <mat-icon>{{ link.icon }}</mat-icon>
-              }
-              {{ link.label }}
+      <!-- Headline -->
+      <h1 class="cs-title">{{ p.title }}</h1>
+      @if (p.description) {
+        <p class="cs-subtitle">{{ lang.t(p.description.en, p.description.fr) }}</p>
+      }
+
+      <!-- CTA row -->
+      <div class="cs-cta-row">
+        @if (p.links?.length) {
+          @for (link of p.links!; track link.label) {
+            <a
+              class="cs-btn"
+              [class.cs-btn--primary]="$first"
+              [href]="link.url"
+              target="_blank"
+              rel="noopener"
+            >
+              {{ link.label }} <span class="btn-arr">↗</span>
             </a>
           }
-        </div>
-      }
+        }
+        @if (p.status) {
+          <span class="cs-status-badge mono">{{ p.status }}</span>
+        }
+      </div>
     </div>
   </div>
+
+  <!-- ── Two-column layout ──────────────────────────────────────────────────── -->
+  <div
+    class="cs-container cs-layout"
+    [uiScrollSpy]="sectionIds"
+    (activeSection)="onActiveSection($event)"
+  >
+    <!-- Sidebar -->
+    <aside class="cs-sidebar">
+      <div class="cs-sidebar-inner">
+        <!-- Meta grid -->
+        @if (p.meta) {
+          <div class="meta-grid">
+            <div class="meta-block">
+              <span class="meta-label mono">{{ lang.t('Role', 'Rôle') }}</span>
+              <span class="meta-value">{{ lang.t(p.meta.role.en, p.meta.role.fr) }}</span>
+              @if (p.meta.roleDetail) {
+                <span class="meta-sub">{{
+                  lang.t(p.meta.roleDetail.en, p.meta.roleDetail.fr)
+                }}</span>
+              }
+            </div>
+            <div class="meta-block">
+              <span class="meta-label mono">{{ lang.t('Duration', 'Durée') }}</span>
+              <span class="meta-value">{{ lang.t(p.meta.duration.en, p.meta.duration.fr) }}</span>
+            </div>
+            <div class="meta-block">
+              <span class="meta-label mono">{{ lang.t('Team', 'Équipe') }}</span>
+              <span class="meta-value">{{ lang.t(p.meta.team.en, p.meta.team.fr) }}</span>
+            </div>
+            <div class="meta-block">
+              <span class="meta-label mono">Stack</span>
+              <ui-tag-chip-set [tags]="p.tags" [accentFirst]="true" />
+            </div>
+            @if (p.meta.url) {
+              <div class="meta-block">
+                <span class="meta-label mono">{{ lang.t('Production', 'Production') }}</span>
+                <a class="meta-link" [href]="p.meta.url" target="_blank" rel="noopener">
+                  {{ p.meta.urlLabel ?? p.meta.url }} ↗
+                </a>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- TOC -->
+        <nav class="toc" aria-label="Table of contents">
+          <span class="toc-header mono">{{ lang.t('Summary', 'Sommaire') }}</span>
+          @for (section of p.sections; track section.id) {
+            <a
+              class="toc-item"
+              [class.toc-item--active]="activeSection() === section.id"
+              [href]="'#' + section.id"
+            >
+              <span class="toc-num mono">0{{ $index + 1 }}.</span>
+              {{ lang.t(section.tocLabel.en, section.tocLabel.fr) }}
+            </a>
+          }
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="cs-content">
+      @for (section of p.sections; track section.id) {
+        <article class="cs-section" [id]="section.id" uiFadeIn>
+          <p class="sec-eyebrow mono">
+            <span class="sec-eyebrow-num">0{{ $index + 1 }}.</span>
+            {{ lang.t(section.tocLabel.en, section.tocLabel.fr) | uppercase }}
+          </p>
+          <h2 class="sec-title">{{ lang.t(section.title.en, section.title.fr) }}</h2>
+
+          @for (para of bodyParagraphs(lang.t(section.body.en, section.body.fr)); track $index) {
+            <p class="sec-body" [innerHTML]="para"></p>
+          }
+
+          @if (section.highlight) {
+            <blockquote class="sec-highlight">
+              <span class="sec-highlight-quote">"</span>
+              <p class="sec-highlight-text">
+                {{ lang.t(section.highlight.text.en, section.highlight.text.fr) }}
+              </p>
+              @if (section.highlight.attribution) {
+                <footer class="sec-highlight-attr mono">
+                  — {{ lang.t(section.highlight.attribution.en, section.highlight.attribution.fr) }}
+                </footer>
+              }
+            </blockquote>
+          }
+
+          @if (section.svgDiagram || section.diagram?.length) {
+            <div class="arch-frame">
+              <div class="arch-bar">
+                <span class="arch-dot arch-dot--r"></span>
+                <span class="arch-dot arch-dot--y"></span>
+                <span class="arch-dot arch-dot--g"></span>
+                <span class="arch-bar-label mono">~/architecture/planific.svg</span>
+              </div>
+              @if (section.svgDiagram) {
+                <div class="arch-svg-canvas" [innerHTML]="sanitize(section.svgDiagram)"></div>
+              } @else {
+                <pre class="arch-canvas">{{ section.diagram!.join('\n') }}</pre>
+              }
+            </div>
+          }
+
+          @if (section.stats?.length) {
+            <div class="stats-grid">
+              @for (stat of section.stats!; track stat.value) {
+                <ui-stat-card [stat]="stat" />
+              }
+            </div>
+          }
+        </article>
+      }
+    </main>
+  </div>
+
+  <!-- ── Pager ─────────────────────────────────────────────────────────────── -->
+  @if (p.pager) {
+    <div class="cs-container cs-pager">
+      @if (p.pager.prevSlug) {
+        <a class="pager-card pager-card--prev" [routerLink]="['/projects', p.pager.prevSlug]">
+          <span class="pager-dir mono">← {{ lang.t('Previous', 'Précédent') }}</span>
+          <span class="pager-title">{{ p.pager.prevTitle }}</span>
+        </a>
+      } @else {
+        <div></div>
+      }
+      @if (p.pager.nextSlug) {
+        <a class="pager-card pager-card--next" [routerLink]="['/projects', p.pager.nextSlug]">
+          <span class="pager-dir mono">{{ lang.t('Next', 'Suivant') }} →</span>
+          <span class="pager-title">{{ p.pager.nextTitle }}</span>
+        </a>
+      }
+    </div>
+  }
 } @else {
-  <div class="not-found">
+  <div class="cs-not-found">
     <p>{{ lang.t('Project not found.', 'Projet introuvable.') }}</p>
-    <a mat-button routerLink="/projects">{{ lang.t('Back to Projects', 'Retour aux projets') }}</a>
+    <a routerLink="/" fragment="projects">{{
+      lang.t('← Back to projects', '← Retour aux projets')
+    }}</a>
   </div>
 }

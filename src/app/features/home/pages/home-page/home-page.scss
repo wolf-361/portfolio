@@ -530,6 +530,66 @@
   font-size: 0.75rem;
 }
 
+.copy-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.copy-toast {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  white-space: nowrap;
+  font-family: sys.$font-mono;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: sys.$on-primary;
+  background: sys.$primary;
+  border-radius: sys.$corner-extra-small;
+  padding: 4px 10px;
+  pointer-events: none;
+  opacity: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: sys.$primary;
+  }
+
+  &--visible {
+    animation: toast-lifecycle 2000ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+}
+
+@keyframes toast-lifecycle {
+  // slide up in
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px);
+  }
+  // fully visible — hold
+  8% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  // start fading at 70% of 2s = 1.4s
+  70% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  // gone at 100% = 2s (Angular removes the element)
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+}
+
 .contact-hint {
   margin: 0;
   font-size: 0.6875rem;

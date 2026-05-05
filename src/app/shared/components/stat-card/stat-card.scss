@@ -1,0 +1,37 @@
+@use 'styles/sys' as sys;
+@use 'styles/spacing' as sp;
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: sp.$xs;
+  padding: sp.$lg;
+  border-radius: sys.$corner-medium;
+  background: sys.$surface-container-low;
+  border: 1px solid sys.$outline-variant;
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, sys.$primary 40%, sys.$outline-variant);
+    box-shadow: 0 0 40px -10px color-mix(in srgb, sys.$primary 35%, transparent);
+  }
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: sys.$primary;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: sys.$on-surface-variant;
+  opacity: 0.7;
+  letter-spacing: 0.02em;
+}

@@ -1,16 +1,48 @@
 @use 'styles/sys' as sys;
 
 .card {
+  position: relative;
   border-radius: sys.$corner-medium;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  transition: box-shadow 200ms ease;
+  transition:
+    box-shadow 200ms ease,
+    transform 200ms ease;
+  cursor: pointer;
+
+  &:has(.card-link):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px -8px color-mix(in srgb, sys.$primary 20%, transparent);
+  }
 
   &.featured {
     border: 1px solid sys.$primary-container;
   }
+}
+
+/* Full-card click overlay — behind all interactive children */
+.card-link {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+/* Lift interactive elements above the card-link overlay */
+.card-header,
+.description,
+.tags,
+.links {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure external links sit above the overlay */
+.card-cta {
+  position: relative;
+  z-index: 1;
 }
 
 .card-header {

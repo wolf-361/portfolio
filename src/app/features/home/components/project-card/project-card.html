@@ -2,9 +2,10 @@
   class="card"
   [class.card--featured]="project().size === 'featured'"
   [class.card--small]="project().size === 'small'"
-  [href]="project().url ?? null"
-  [attr.target]="project().url ? '_blank' : null"
-  [attr.rel]="project().url ? 'noopener noreferrer' : null"
+  [routerLink]="project().slug ? ['/projects', project().slug] : null"
+  [href]="!project().slug && project().url ? project().url : null"
+  [attr.target]="!project().slug && project().url ? '_blank' : null"
+  [attr.rel]="!project().slug && project().url ? 'noopener noreferrer' : null"
   [attr.aria-label]="lang.t(project().title.en, project().title.fr)"
 >
   <!-- Content — always left-aligned -->
@@ -29,7 +30,7 @@
 
     <div class="card-footer">
       <ui-tag-chip-set [tags]="project().stack" [accentFirst]="project().accentFirst !== false" />
-      @if (project().url) {
+      @if (project().slug || project().url) {
         <span class="card-link mono" aria-hidden="true">
           {{ lang.t(project().urlLabel?.en ?? 'View →', project().urlLabel?.fr ?? 'Voir →') }}
         </span>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, viewChild } from '@angular/core';
 
 import { HeroComponent } from '../../components/hero/hero';
 import { ExperienceCardComponent } from '../../components/experience-card/experience-card';
@@ -30,13 +30,6 @@ export class HomePageComponent {
   // ── Contact ───────────────────────────────────────────────────────────────
 
   emailCopied = false;
-
-  copyEmail(): void {
-    navigator.clipboard.writeText('wolf361.it@gmail.com').then(() => {
-      this.emailCopied = true;
-      setTimeout(() => (this.emailCopied = false), 2000);
-    });
-  }
 
   // ── Professional experience ────────────────────────────────────────────────
 
@@ -243,6 +236,8 @@ export class HomePageComponent {
         'Koin',
         'MVI',
       ],
+      slug: 'planific',
+      urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
       wip: true,
     },
     {
@@ -254,6 +249,8 @@ export class HomePageComponent {
         fr: 'Application compagnon pour cartes de jeux open-world — suivez vos emplacements, épingles et progression.',
       },
       stack: ['Kotlin Multiplatform', 'Compose Multiplatform', 'SQLDelight'],
+      slug: 'waystone',
+      urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
       wip: true,
     },
     {
@@ -289,4 +286,27 @@ export class HomePageComponent {
       },
     },
   ];
+
+  // ── Methods ────────────────────────────────────────────────────────────────
+
+  private readonly copyToastEl = viewChild<ElementRef<HTMLSpanElement>>('copyToast');
+  private copyTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  copyEmail(): void {
+    // Copy to clipboard — fire and forget, don't gate the UI on the promise
+    navigator.clipboard.writeText('wolf-361@hotmail.com').catch(() => null);
+
+    // Update button label
+    this.emailCopied = true;
+    if (this.copyTimeout) clearTimeout(this.copyTimeout);
+    this.copyTimeout = setTimeout(() => (this.emailCopied = false), 2000);
+
+    // Restart toast animation imperatively — no Angular binding involved
+    const el = this.copyToastEl()?.nativeElement;
+    if (el) {
+      el.classList.remove('copy-toast--visible');
+      void el.offsetWidth; // force reflow so browser registers the class removal
+      el.classList.add('copy-toast--visible');
+    }
+  }
 }
