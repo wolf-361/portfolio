@@ -165,13 +165,14 @@ export class ProjectsService {
       subtitle: 'Studio Drave · Android & iOS',
       status: 'Architecting',
       description: {
-        en: 'KMP companion engine for non-linear open-world games. Custom map renderer on Compose Canvas with viewport culling and zoom-level tile management. Offline-first community sync via Supabase.',
-        fr: 'Moteur compagnon KMP pour les jeux non-linéaires à monde ouvert. Moteur de carte custom sur Compose Canvas avec viewport culling et gestion des tuiles par niveau de zoom. Synchronisation communautaire offline-first via Supabase.',
+        en: 'Spoiler-safe companion app for non-linear open-world games. Photograph any map, pin locations, track progress — free and fully local. Curated maps with fog-of-war reveal mechanics and community sync are the paid tier.',
+        fr: "Application compagnon sans spoilers pour les jeux non-linéaires. Photographiez n'importe quelle carte, épinglez des emplacements, suivez votre progression — gratuit et 100% local. Les cartes curées avec brouillard de guerre et synchronisation communautaire forment le palier payant.",
       },
-      tags: ['Kotlin Multiplatform', 'Compose Canvas', 'SQLDelight', 'Supabase', 'Offline-First'],
+      tags: ['Kotlin Multiplatform', 'Compose Canvas', 'SQLDelight', 'Supabase', 'Freemium'],
       featured: true,
       meta: {
-        role: { en: 'Lead Mobile', fr: 'Lead Mobile' },
+        role: { en: 'Founder · Sole Engineer', fr: 'Fondateur · Ingénieur solo' },
+        roleDetail: { en: 'Architecture, Product, Design', fr: 'Architecture, Produit, Design' },
         duration: { en: 'Ongoing · 2025', fr: 'En cours · 2025' },
         team: { en: 'Solo', fr: 'Solo' },
       },
@@ -179,46 +180,73 @@ export class ProjectsService {
         {
           id: 'problem',
           title: {
-            en: 'Community knowledge, scattered.',
-            fr: 'La connaissance communautaire, éparpillée.',
+            en: 'Every guide is a spoiler.',
+            fr: 'Chaque guide est un spoiler.',
           },
           tocLabel: { en: 'The Problem', fr: 'Le Problème' },
           body: {
-            en: 'Non-linear open-world games generate enormous amounts of community knowledge: where to find things, hidden paths, puzzle solutions. That knowledge lives in wikis, Discord servers, and YouTube videos.\n\nIt should live in a companion app that works offline, on any platform, and lets the community contribute directly.',
-            fr: "Les jeux non-linéaires à monde ouvert génèrent d'énormes quantités de connaissances communautaires : où trouver les choses, les chemins cachés, les solutions de puzzles. Ces connaissances vivent dans des wikis, des serveurs Discord et des vidéos YouTube.\n\nElles devraient vivre dans une application compagnon qui fonctionne hors ligne, sur n'importe quelle plateforme, et qui permet à la communauté de contribuer directement.",
+            en: 'Non-linear games like <strong>Hollow Knight: Silksong</strong> are built around discovery. The moment you search for help, a wiki dumps the entire map, every item, every secret — all at once. There is no middle ground between "completely lost" and "everything ruined."\n\nExisting companion apps are either too generic (photo notes, no spatial context) or too revealing (full community maps with every pin visible by default). Neither respects the pacing of discovery that makes these games worth playing.',
+            fr: "Les jeux non-linéaires comme <strong>Hollow Knight : Silksong</strong> sont construits autour de la découverte. Dès que vous cherchez de l'aide, un wiki déverse la carte complète, chaque objet, chaque secret — d'un seul coup. Il n'existe pas de juste milieu entre « complètement perdu » et « tout gâché ».\n\nLes applications compagnon existantes sont soit trop génériques (notes photo, sans contexte spatial), soit trop révélatrices (cartes communautaires avec toutes les épingles visibles par défaut). Aucune ne respecte le rythme de la découverte.",
           },
           highlight: {
             text: {
-              en: 'The app must be fully functional with no network connection.',
-              fr: "L'application doit être pleinement fonctionnelle sans connexion réseau.",
+              en: 'How do you give players exactly the help they asked for — and nothing more?',
+              fr: "Comment donner aux joueurs exactement l'aide demandée — et rien de plus ?",
             },
-            attribution: { en: 'non-negotiable constraint', fr: 'contrainte non négociable' },
+            attribution: {
+              en: 'founding constraint of the product',
+              fr: 'contrainte fondatrice du produit',
+            },
           },
         },
         {
-          id: 'map-engine',
-          title: { en: 'Custom map engine.', fr: 'Moteur de carte custom.' },
-          tocLabel: { en: 'Map Engine', fr: 'Moteur de carte' },
+          id: 'design',
+          title: { en: 'The world stays visible.', fr: 'Le monde reste visible.' },
+          tocLabel: { en: 'Design System', fr: 'Système de design' },
           body: {
-            en: 'Built on Compose Canvas with a custom spatial coordinate system — not a wrapped mapping SDK. This means implementing viewport culling, zoom-level tile management, and coordinate projection from scratch.\n\nThe payoff is full control over how community-contributed markers and annotations are layered and rendered at any resolution. KMP file handling manages the underlying high-res map assets — large image segmentation, tile caching, and lazy loading happen in the shared module so the strategy is identical on both platforms.',
-            fr: 'Construit sur Compose Canvas avec un système de coordonnées spatiales custom — pas un SDK de cartographie encapsulé. Cela signifie implémenter le viewport culling, la gestion des tuiles par niveau de zoom, et la projection de coordonnées from scratch.\n\nLe résultat : un contrôle total sur la façon dont les marqueurs et annotations sont superposés et rendus. La gestion de fichiers KMP gère les assets haute résolution dans le module partagé — stratégie identique sur les deux plateformes.',
+            en: 'The core UI constraint: <strong>the map is always the primary surface</strong>. Search bars, filter strips, bottom sheets, and FABs all sit on 24px backdrop-blur glass panels — the cartography underneath never disappears.\n\nThe palette is built for dark environments: deep <mark>#08000F</mark> base, warm <mark>Burfoo</mark> surface, amber accent. Pins follow a strict 5-category taxonomy, each with a diamond glyph and a dedicated color role:\n\n<ul><li><strong style="color:#e8472a">Obstacle</strong> — crimson. Blocks or hazards that gate progress.</li><li><strong style="color:#f5a623">Quest</strong> — gold. Story and objective markers.</li><li><strong style="color:#4caf50">Loot</strong> — jade. Collectibles and items.</li><li><strong style="color:#9c27b0">Secret</strong> — violet. Hidden or off-path discoveries.</li><li><strong style="color:#f44336">Enemy</strong> — red. Threat markers.</li></ul>\n\nUndiscovered pins render at 65% opacity — present but muted. Revealed pins snap to full color. The visual language communicates reveal state without any additional UI chrome.',
+            fr: "La contrainte UI centrale : <strong>la carte est toujours la surface primaire</strong>. Barres de recherche, filtres, bottom sheets et FAB sont posés sur des panneaux en verre avec 24px de backdrop-blur — la cartographie ne disparaît jamais.\n\nLa palette est conçue pour les environnements sombres : base <mark>#08000F</mark>, surface <mark>Burfoo</mark> chaude, accent ambre. Les épingles suivent une taxonomie stricte à 5 catégories, chacune avec un glyphe losange et un rôle couleur dédié :\n\n<ul><li><strong style='color:#e8472a'>Obstacle</strong> — cramoisi. Blocages ou dangers qui conditionnent la progression.</li><li><strong style='color:#f5a623'>Quête</strong> — or. Marqueurs d'objectifs et de scénario.</li><li><strong style='color:#4caf50'>Butin</strong> — jade. Collectibles et objets.</li><li><strong style='color:#9c27b0'>Secret</strong> — violet. Découvertes cachées ou hors-chemin.</li><li><strong style='color:#f44336'>Ennemi</strong> — rouge. Marqueurs de menace.</li></ul>\n\nLes épingles non découvertes s'affichent à 65% d'opacité — présentes mais atténuées. Les épingles révélées passent à pleine couleur. Le langage visuel communique l'état de révélation sans chrome UI supplémentaire.",
           },
         },
         {
-          id: 'sync',
-          title: { en: 'Offline-first sync.', fr: 'Synchronisation offline-first.' },
-          tocLabel: { en: 'Sync Strategy', fr: 'Stratégie de sync' },
+          id: 'model',
+          title: {
+            en: 'Free forever, paid for depth.',
+            fr: 'Gratuit pour toujours, payant pour la profondeur.',
+          },
+          tocLabel: { en: 'Product Model', fr: 'Modèle produit' },
           body: {
-            en: 'Community sync is offline-first via Supabase. The local SQLDelight database is the source of truth; Supabase handles conflict resolution and propagation when connectivity is restored. Users can contribute markers, routes, and annotations without an internet connection — sync happens in the background.',
-            fr: 'La synchronisation communautaire est offline-first via Supabase. La base de données SQLDelight locale est la source de vérité ; Supabase gère la résolution de conflits et la propagation quand la connectivité est rétablie. Les utilisateurs peuvent contribuer des marqueurs, routes et annotations sans connexion internet — la synchronisation se fait en arrière-plan.',
+            en: "The free tier is fully functional with no account required. Photograph any map — the game box, a hand-drawn dungeon layout, a screenshot — and Waystone converts it into a pinnable spatial canvas. Drop markers across all 5 categories, write notes, track what you've cleared. Everything stays on-device.\n\nThe paid tier unlocks <strong>curated maps</strong>: official high-res layouts for specific games, pre-loaded with community-contributed points of interest. This is where the spoiler problem becomes an engineering problem.\n\n<strong>Fog-of-war reveal system:</strong>\n\n<ul><li><strong>All pins hidden by default.</strong> The map looks clean — no information you didn't earn.</li><li><strong>Long-press any spot</strong> to reveal that a pin exists there, without showing what it is. Mark it visited without being spoiled.</li><li><strong>Act-scoped unlocks</strong> — reveal all pins for a completed zone when you want a completeness check.</li><li><strong>Hint-first reveals</strong> — tap a hidden pin for a cryptic clue. One more tap to see the full annotation.</li></ul>",
+            fr: "Le palier gratuit est pleinement fonctionnel sans compte requis. Photographiez n'importe quelle carte et Waystone la convertit en canevas spatial épinglable. Posez des marqueurs dans les 5 catégories, rédigez des notes, suivez votre progression. Tout reste sur l'appareil.\n\nLe palier payant débloque les <strong>cartes curées</strong> : mises en page officielles haute résolution pré-chargées avec les points d'intérêt communautaires. C'est là que le problème de spoilers devient un problème d'ingénierie.\n\n<strong>Système de révélation brouillard de guerre :</strong>\n\n<ul><li><strong>Toutes les épingles cachées par défaut.</strong> La carte est propre — aucune info non gagnée.</li><li><strong>Appui long sur un spot</strong> pour révéler qu'une épingle existe, sans montrer ce que c'est.</li><li><strong>Déverrouillages par acte</strong> — révélez toutes les épingles d'une zone complétée pour vérifier la complétion.</li><li><strong>Révélations par indice</strong> — appuyez sur une épingle cachée pour un indice cryptique. Un appui de plus pour l'annotation complète.</li></ul>",
+          },
+        },
+        {
+          id: 'architecture',
+          title: {
+            en: 'Local-first, sync as a feature.',
+            fr: 'Local-first, sync comme fonctionnalité.',
+          },
+          tocLabel: { en: 'Architecture', fr: "L'Architecture" },
+          body: {
+            en: 'The free tier must work with <strong>zero network calls</strong>. This is a hard constraint that shapes every layer.\n\n<strong>Shared KMP module (commonMain):</strong>\n\n<ul><li><strong>SQLDelight</strong> — typed queries at compile time, single schema shared across Android and iOS. The <code>RevealState</code> enum (<code>HIDDEN → HINTED → REVEALED → COMPLETED</code>) is persisted per pin.</li><li><strong>Camera → tile pipeline</strong> — photos are segmented into tiles in commonMain, stored locally, rendered by the Compose Canvas engine with viewport culling and zoom-level management.</li><li><strong>Supabase sync</strong> (paid) — delta sync on reconnect, last-write-wins conflict resolution per pin. Community contributions go through a moderation queue before entering the curated dataset.</li></ul>',
+            fr: "Le palier gratuit doit fonctionner avec <strong>zéro appel réseau</strong>. C'est une contrainte ferme qui structure chaque couche.\n\n<strong>Module KMP partagé (commonMain) :</strong>\n\n<ul><li><strong>SQLDelight</strong> — requêtes typées à la compilation, schéma unique partagé entre Android et iOS. L'enum <code>RevealState</code> (<code>HIDDEN → HINTED → REVEALED → COMPLETED</code>) est persisté par épingle.</li><li><strong>Pipeline caméra → tuiles</strong> — les photos sont segmentées en tuiles dans commonMain, stockées localement, rendues par le moteur Compose Canvas avec viewport culling et gestion par niveau de zoom.</li><li><strong>Sync Supabase</strong> (payant) — sync delta à la reconnexion, last-write-wins par épingle. Les contributions communautaires passent par une file de modération.</li></ul>",
           },
           stats: [
             {
-              value: 'Offline',
-              label: { en: 'First — always functional', fr: 'First — toujours fonctionnel' },
+              value: '0',
+              label: { en: 'Network calls — free tier', fr: 'Appels réseau — free tier' },
             },
-            { value: 'KMP', label: { en: 'Shared map engine', fr: 'Moteur de carte partagé' } },
-            { value: 'CRDT', label: { en: 'Conflict-free sync', fr: 'Sync sans conflits' } },
+            {
+              value: '5',
+              label: {
+                en: 'Pin categories + reveal states',
+                fr: 'Catégories + états de révélation',
+              },
+            },
+            {
+              value: 'KMP',
+              label: { en: 'Camera + map engine shared', fr: 'Caméra + moteur partagés' },
+            },
           ],
         },
       ],
