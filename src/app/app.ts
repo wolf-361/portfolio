@@ -2,17 +2,15 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { NavbarComponent } from './core/layout/navbar/navbar';
-import { FooterComponent } from './core/layout/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, FooterComponent],
+  imports: [RouterOutlet, NavbarComponent],
   template: `
     <app-navbar />
     <main>
       <router-outlet />
     </main>
-    <app-footer />
   `,
   styles: [
     `

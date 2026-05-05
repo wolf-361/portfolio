@@ -27,6 +27,17 @@ import { Project } from '../../models/project';
 export class HomePageComponent {
   readonly lang = inject(LangService);
 
+  // ── Contact ───────────────────────────────────────────────────────────────
+
+  emailCopied = false;
+
+  copyEmail(): void {
+    navigator.clipboard.writeText('wolf361.it@gmail.com').then(() => {
+      this.emailCopied = true;
+      setTimeout(() => (this.emailCopied = false), 2000);
+    });
+  }
+
   // ── Professional experience ────────────────────────────────────────────────
 
   readonly workExperiences: Experience[] = [

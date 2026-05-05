@@ -348,6 +348,268 @@
   font-family: sys.$font-mono;
 }
 
+// ── Contact section ───────────────────────────────────────────────────────────
+
+.contact-section {
+  padding-bottom: sp.$xl-2;
+}
+
+.contact-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: sp.$xs;
+  margin: 0 0 sp.$lg;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.contact-eyebrow-num {
+  color: sys.$primary;
+  font-weight: 600;
+}
+
+.contact-status {
+  display: inline-flex;
+  align-items: center;
+  gap: sp.$xs;
+  padding: sp.$xs sp.$md;
+  border-radius: 999px;
+  border: 1px solid sys.$outline-variant;
+  background: sys.$surface-container-low;
+  font-size: 0.6875rem;
+  color: sys.$on-surface-variant;
+  margin-bottom: sp.$xl;
+}
+
+.status-led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: sys.$primary;
+  flex-shrink: 0;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: sys.$primary;
+    animation: dot-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes dot-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.status-text strong {
+  color: sys.$on-surface;
+}
+
+.status-sep {
+  opacity: 0.4;
+}
+
+.status-modes {
+  opacity: 0.6;
+}
+
+.contact-split {
+  display: flex;
+  flex-direction: column;
+  gap: sp.$xl;
+  margin-bottom: sp.$xl;
+}
+
+.contact-cta {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: sys.$on-surface;
+}
+
+.contact-email-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: sp.$xs;
+
+  @media (max-width: 720px) {
+    align-items: flex-start;
+  }
+}
+
+.contact-accent {
+  color: sys.$primary;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.contact-dot {
+  color: sys.$primary;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: sp.$md;
+  flex-wrap: wrap;
+}
+
+.contact-email {
+  font-size: clamp(1rem, 2.5vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: sys.$on-surface;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 3px;
+  transition: color 200ms ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: sys.$primary;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  &:hover {
+    color: sys.$primary;
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.contact-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: sp.$xs;
+  font-family: sys.$font-mono;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: sys.$on-surface-variant;
+  background: transparent;
+  border: 1px solid sys.$outline-variant;
+  border-radius: 999px;
+  padding: sp.$xs sp.$md;
+  cursor: pointer;
+  transition: all 200ms ease;
+
+  &:hover {
+    color: sys.$primary;
+    border-color: sys.$primary;
+    background: color-mix(in srgb, sys.$primary 8%, transparent);
+  }
+
+  &[data-copied='true'] {
+    color: sys.$primary;
+    border-color: color-mix(in srgb, sys.$primary 50%, transparent);
+    background: color-mix(in srgb, sys.$primary 10%, transparent);
+  }
+}
+
+.copy-ico {
+  font-size: 0.75rem;
+}
+
+.contact-hint {
+  margin: 0;
+  font-size: 0.6875rem;
+  color: sys.$on-surface-variant;
+  opacity: 0.5;
+  letter-spacing: 0.02em;
+}
+
+.hint-accent {
+  color: sys.$primary;
+  opacity: 1;
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────────
+
+.site-footer {
+  border-top: 1px solid sys.$outline-variant;
+}
+
+.footer-inner {
+  padding-top: sp.$lg;
+  padding-bottom: sp.$lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: sp.$lg;
+  flex-wrap: wrap;
+  font-size: 0.6875rem;
+  color: sys.$on-surface-variant;
+}
+
+.footer-links {
+  display: flex;
+  gap: sp.$lg;
+
+  a {
+    color: sys.$on-surface-variant;
+    text-decoration: none;
+    opacity: 0.6;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition:
+      color 150ms ease,
+      opacity 150ms ease;
+
+    &:hover {
+      color: sys.$primary;
+      opacity: 1;
+    }
+  }
+}
+
+.footer-arr {
+  font-size: 0.625rem;
+  transition: transform 200ms ease;
+
+  a:hover & {
+    transform: translate(2px, -2px);
+  }
+}
+
+.footer-meta {
+  margin: 0;
+  opacity: 0.45;
+  letter-spacing: 0.02em;
+
+  strong {
+    color: sys.$on-surface-variant;
+    font-weight: 500;
+    opacity: 1;
+  }
+}
+
+.footer-accent {
+  color: sys.$primary;
+  font-weight: 500;
+  opacity: 1;
+}
+
 // ── Bento grid ────────────────────────────────────────────────────────────────
 
 .bento-grid {

@@ -185,13 +185,84 @@
 </section>
 
 <!-- ── Contact ───────────────────────────────────────────────────────────── -->
-<section id="contact" class="page-section">
+<section id="contact" class="page-section contact-section">
   <div class="section-inner">
-    <ui-section-header
-      index="03"
-      [label]="lang.t('CONTACT', 'CONTACT')"
-      [title]="lang.t('Let\'s build something.', 'Construisons quelque chose.')"
-    />
-    <!-- contact CTA wired in task #16 -->
+    <!-- Eyebrow -->
+    <p class="contact-eyebrow mono">
+      <span class="col-label-comment">// </span>
+      <span class="contact-eyebrow-num">03.</span>
+      <span class="col-label-tag">CONTACT</span>
+    </p>
+
+    <!-- Availability status -->
+    <div class="contact-status mono" role="status">
+      <span class="status-led" aria-hidden="true"></span>
+      <span class="status-text">
+        <strong>{{ lang.t('Disponible', 'Disponible') }}</strong>
+        {{ lang.t('pour de nouveaux défis', 'pour de nouveaux défis') }}
+      </span>
+      <span class="status-sep">·</span>
+      <span class="status-modes">{{
+        lang.t('temps plein · contrats', 'temps plein · contrats')
+      }}</span>
+    </div>
+
+    <!-- CTA + email split row -->
+    <div class="contact-split">
+      <!-- Left: CTA heading -->
+      <h2 class="contact-cta">
+        {{ lang.t("Let's build", 'Construisons') }}<br />
+        {{ lang.t('something ', 'quelque chose ')
+        }}<em class="contact-accent">{{ lang.t('solid', 'solide') }}</em
+        ><span class="contact-dot">.</span>
+      </h2>
+
+      <!-- Right: email + copy + hint -->
+      <div class="contact-email-block">
+        <div class="contact-row">
+          <a class="contact-email" href="mailto:wolf361.it@gmail.com">wolf361.it&#64;gmail.com</a>
+          <button
+            class="contact-copy mono"
+            type="button"
+            (click)="copyEmail()"
+            [attr.data-copied]="emailCopied"
+            [attr.aria-label]="lang.t('Copier l\'adresse', 'Copier l\'adresse')"
+          >
+            <span class="copy-ico" aria-hidden="true">⧉</span>
+            <span>{{
+              emailCopied
+                ? lang.t('Copié !', 'Copié !')
+                : lang.t("Copier l'adresse", "Copier l'adresse")
+            }}</span>
+          </button>
+        </div>
+        <p class="contact-hint mono">
+          {{ lang.t('// réponse sous', '// réponse sous') }}
+          <span class="hint-accent">~24h</span>
+          {{ lang.t('· fuseau ET (UTC−5)', '· fuseau ET (UTC−5)') }}
+        </p>
+      </div>
+    </div>
   </div>
 </section>
+
+<!-- ── Footer ────────────────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="footer-inner section-inner">
+    <div class="footer-links mono">
+      <a href="https://github.com/wolf-361" target="_blank" rel="noopener noreferrer">
+        GitHub <span class="footer-arr">↗</span>
+      </a>
+      <a href="https://linkedin.com/in/luc-allaire" target="_blank" rel="noopener noreferrer">
+        LinkedIn <span class="footer-arr">↗</span>
+      </a>
+    </div>
+    <p class="footer-meta mono">
+      {{ lang.t('Conçu avec', 'Conçu avec') }}
+      <strong>Angular</strong> &amp; <strong>Figma</strong>
+      {{ lang.t('· déployé sur', '· déployé sur') }}
+      <span class="footer-accent">GitHub Pages</span>.
+    </p>
+    <p class="footer-meta mono">© 2026 — Luc Allaire</p>
+  </div>
+</footer>
