@@ -3,7 +3,7 @@
   [class.card--featured]="project().size === 'featured'"
   [class.card--small]="project().size === 'small'"
   [routerLink]="project().slug ? ['/projects', project().slug] : null"
-  [href]="!project().slug && project().url ? project().url : null"
+  [attr.href]="!project().slug && project().url ? project().url : null"
   [attr.target]="!project().slug && project().url ? '_blank' : null"
   [attr.rel]="!project().slug && project().url ? 'noopener noreferrer' : null"
   [attr.aria-label]="lang.t(project().title.en, project().title.fr)"

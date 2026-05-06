@@ -12,7 +12,7 @@ export interface ProjectMeta {
   duration: I18n;
   team: I18n;
   url?: string; // production / live link
-  urlLabel?: string; // e.g. "planific.app ↗"
+  urlLabel?: I18n; // e.g. { en: 'GitHub →', fr: 'GitHub →' }
 }
 
 export interface ProjectPager {

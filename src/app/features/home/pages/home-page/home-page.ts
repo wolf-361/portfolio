@@ -259,22 +259,24 @@ export class HomePageComponent {
       accentFirst: false,
       title: { en: 'Starter Templates', fr: 'Templates de démarrage' },
       description: {
-        en: 'Production-ready starters for KMP, Angular 21, and Spring Boot — enforced architecture, full quality gate out of the box.',
-        fr: 'Starters prêts pour la production : KMP, Angular 21 et Spring Boot — architecture imposée, qualité intégrée.',
+        en: 'Production-ready starters for KMP, Angular 21, and Spring Boot (identity + core). Each stands alone — all compose over a shared Bearer JWT contract.',
+        fr: 'Starters prêts pour la production : KMP, Angular 21 et Spring Boot (identité + core). Chacun fonctionne seul — tous se composent via Bearer JWT.',
       },
       stack: ['Kotlin Multiplatform', 'Angular 21', 'Spring Boot', 'Bun', 'Vitest', 'Playwright'],
-      url: 'https://github.com/wolf-361',
-      urlLabel: { en: 'GitHub →', fr: 'GitHub →' },
+      slug: 'templates',
+      urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
     },
     {
       size: 'small',
       tag: { en: 'infra · self-hosted', fr: 'infra · self-hosted' },
       title: { en: 'Home Ops', fr: 'Home Ops' },
       description: {
-        en: '3-node bare-metal Debian cluster provisioned end-to-end with Ansible. Coolify orchestration, NetBird mesh VPN, Cloudflare Zero Trust tunnels, and custom Go services.',
-        fr: 'Cluster bare-metal 3 nœuds Debian provisionné intégralement avec Ansible. Orchestration Coolify, VPN mesh NetBird, tunnels Cloudflare Zero Trust et services Go maison.',
+        en: '3-node bare-metal Debian cluster. 12 Ansible roles, dual-path network (NetBird VPN + Cloudflare tunnels), mTLS + Authelia SSO, full Prometheus/Grafana/Loki observability.',
+        fr: 'Cluster bare-metal 3 nœuds. 12 rôles Ansible, réseau dual-path (VPN NetBird + tunnels Cloudflare), mTLS + Authelia SSO, observabilité Prometheus/Grafana/Loki complète.',
       },
-      stack: ['Ansible', 'Docker', 'Coolify', 'NetBird', 'Cloudflare', 'Go', 'Debian'],
+      stack: ['Ansible', 'Docker', 'Traefik', 'NetBird', 'Cloudflare', 'Authelia', 'Debian'],
+      slug: 'home-ops',
+      urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
       terminal: {
         command: 'cluster status --watch',
         nodes: [
@@ -284,6 +286,19 @@ export class HomePageComponent {
           { name: 'edge-01', status: 'online', uptime: '2h', cpu: '11%' },
         ],
       },
+    },
+    {
+      size: 'small',
+      tag: { en: 'open source · infra', fr: 'open source · infra' },
+      accentFirst: false,
+      title: { en: 'Traefik Mesh Companion', fr: 'Traefik Mesh Companion' },
+      description: {
+        en: 'Docker-label-driven sidecar that auto-manages Uptime Kuma monitors, Cloudflare DNS, and NetBird DNS on container start/stop. Built for Home Ops, published as a standalone image.',
+        fr: 'Sidecar piloté par labels Docker qui gère automatiquement les monitors Uptime Kuma, DNS Cloudflare et DNS NetBird au démarrage/arrêt des conteneurs. Conçu pour Home Ops, publié en image autonome.',
+      },
+      stack: ['Go', 'Docker', 'Traefik', 'Uptime Kuma', 'Cloudflare', 'NetBird'],
+      slug: 'mesh-companion',
+      urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
     },
   ];
 
