@@ -59,6 +59,7 @@ export class ProjectsService {
             en: 'We chose <strong>Kotlin Multiplatform</strong> for the business layer: models, validation, sync, caching. Each platform keeps its native renderer — <mark>Jetpack Compose</mark> on Android, <mark>SwiftUI</mark> on iOS — both driven by the same <mark>StateFlow</mark>-based ViewModel.\n\n<strong>Shared module (commonMain) — 10 features, Feature-First:</strong>\n\n<ul><li><strong>Business layer (~95% of non-UI code shared)</strong> — domain models, UseCases, Repository interfaces, sync engine, iCal parsers.</li><li><strong>Persistence</strong> — <mark>Room KMP</mark> for a typed, shared schema with migration support from common code.</li><li><strong>Networking</strong> — <mark>Ktor</mark> client with interceptors, typed error handling via a custom <mark>AppResult&lt;T&gt;</mark> DSL.</li><li><strong>DI</strong> — <mark>Koin</mark> modules declared once in shared, platform apps just call <code>startKoin{}</code>.</li><li><strong>Swift bridge</strong> — <mark>SKIE</mark> (Touchlab) exposes Kotlin Flows as native <code>AsyncSequence</code> — zero wrapper classes on the iOS side.</li></ul>',
             fr: "Nous avons choisi <strong>Kotlin Multiplatform</strong> pour la couche métier : modèles, validation, synchronisation, cache. Chaque plateforme garde son moteur de rendu natif — <mark>Jetpack Compose</mark> sur Android, <mark>SwiftUI</mark> sur iOS — pilotés par un même ViewModel basé sur <mark>StateFlow</mark>.\n\n<strong>Module partagé (commonMain) — 10 features, Feature-First :</strong>\n\n<ul><li><strong>Couche métier (~95% du code non-UI mutualisé)</strong> — modèles domaine, UseCases, interfaces Repository, moteur de sync, parseurs iCal.</li><li><strong>Persistance</strong> — <mark>Room KMP</mark> pour un schéma typé, partagé, et migrable depuis le code commun.</li><li><strong>Réseau</strong> — client <mark>Ktor</mark> avec intercepteurs, gestion d'erreurs typée via un DSL <mark>AppResult&lt;T&gt;</mark> maison.</li><li><strong>DI</strong> — modules <mark>Koin</mark> déclarés une fois dans shared, les apps plateformes appellent juste <code>startKoin{}</code>.</li><li><strong>Bridge Swift</strong> — <mark>SKIE</mark> (Touchlab) expose les Kotlin Flows comme des <code>AsyncSequence</code> Swift natifs — zéro classe wrapper côté iOS.</li></ul>",
           },
+          diagramLabel: 'planific-architecture.svg',
           svgDiagram: `<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="12">
   <defs>
     <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
@@ -395,8 +396,8 @@ export class ProjectsService {
           title: { en: '12 roles, one command.', fr: '12 rôles, une commande.' },
           tocLabel: { en: 'Architecture', fr: "L'Architecture" },
           body: {
-            en: '<code>make cluster</code> runs <code>site.yml</code> across all nodes in a single Ansible execution. Roles apply in strict dependency order — base hardening first, networking second, orchestration last. Two playbook passes: one for all cluster nodes, one scoped to the manager only.\n\n<strong>Role breakdown — all nodes:</strong>\n<ul><li><strong>common</strong> — UFW default-deny, Fail2Ban, root login disabled, unattended security upgrades, <code>svc-runner</code> service account, UDP buffer tuning for WireGuard.</li><li><strong>netbird</strong> — WireGuard mesh VPN. Each node gets a stable <code>wt0</code> IP (100.x range). Inter-node traffic never leaves the VPN. New nodes register by setup key and report their <code>wt0</code> IP back as an Ansible fact.</li><li><strong>docker</strong> — Engine + log rotation config.</li><li><strong>traefik</strong> — Reverse proxy. Generates local Root CA + client certificates for mTLS. Runs the mesh-companion sidecar for automatic DNS/monitor registration.</li><li><strong>cloudflared</strong> — Outbound-only Cloudflare tunnel daemon. No inbound firewall rules required.</li><li><strong>monitoring-agent</strong> — cAdvisor (container metrics) + Promtail (log shipping to Loki).</li><li><strong>cockpit</strong> — Node management UI, internal only.</li><li><strong>dev-tools</strong> — NvChad, shell utilities for the <code>wolf361</code> user.</li><li><strong>backup</strong> — Automated volume backup jobs.</li></ul>\n\n<strong>Manager-only roles:</strong>\n<ul><li><strong>identity</strong> — Authelia (SSO/ForwardAuth) + LLDAP (LDAP directory). All internal services route through ForwardAuth before serving a response.</li><li><strong>coolify</strong> — Control plane on <code>firenze</code>. Workers register via their <code>wt0</code> NetBird IP — never a public address.</li><li><strong>monitoring-hub</strong> — Prometheus, Grafana, Loki, Uptime Kuma. Receives metrics and logs from all agents.</li></ul>',
-            fr: "<code>make cluster</code> exécute <code>site.yml</code> sur tous les nœuds en une seule exécution Ansible. Les rôles s'appliquent dans un ordre de dépendance strict — durcissement d'abord, réseau ensuite, orchestration en dernier. Deux passes de playbook : une pour tous les nœuds, une scoped au manager uniquement.\n\n<strong>Répartition des rôles — tous les nœuds :</strong>\n<ul><li><strong>common</strong> — UFW deny par défaut, Fail2Ban, login root désactivé, mises à jour de sécurité automatiques, compte <code>svc-runner</code>, tuning des buffers UDP pour WireGuard.</li><li><strong>netbird</strong> — VPN mesh WireGuard. Chaque nœud obtient une IP <code>wt0</code> stable (plage 100.x). Le trafic inter-nœuds ne quitte jamais le VPN. Les nouveaux nœuds s'enregistrent par setup key et remontent leur IP <code>wt0</code> comme fact Ansible.</li><li><strong>docker</strong> — Engine + config de rotation des logs.</li><li><strong>traefik</strong> — Reverse proxy. Génère un Root CA local + certificats clients pour le mTLS. Lance le sidecar mesh-companion pour l'enregistrement automatique DNS/monitors.</li><li><strong>cloudflared</strong> — Tunnel Cloudflare sortant uniquement. Aucune règle de pare-feu entrante requise.</li><li><strong>monitoring-agent</strong> — cAdvisor (métriques conteneurs) + Promtail (envoi de logs vers Loki).</li><li><strong>cockpit</strong> — UI de gestion des nœuds, interne uniquement.</li><li><strong>dev-tools</strong> — NvChad, utilitaires shell pour l'utilisateur <code>wolf361</code>.</li><li><strong>backup</strong> — Jobs de sauvegarde automatisés des volumes.</li></ul>\n\n<strong>Rôles manager uniquement :</strong>\n<ul><li><strong>identity</strong> — Authelia (SSO/ForwardAuth) + LLDAP (annuaire LDAP). Tous les services internes passent par ForwardAuth avant de répondre.</li><li><strong>coolify</strong> — Control plane sur <code>firenze</code>. Les workers s'enregistrent via leur IP <code>wt0</code> NetBird — jamais une adresse publique.</li><li><strong>monitoring-hub</strong> — Prometheus, Grafana, Loki, Uptime Kuma. Reçoit métriques et logs de tous les agents.</li></ul>",
+            en: '<code>make cluster</code> runs <code>site.yml</code> across all nodes in a single Ansible execution. Roles apply in strict dependency order — base hardening first, networking second, orchestration last. Two playbook passes: one for all cluster nodes, one scoped to the manager only.\n\n<strong>Role breakdown — all nodes:</strong>\n<ul><li><strong>common</strong> — UFW default-deny, Fail2Ban, root login disabled, unattended security upgrades, <code>svc-runner</code> service account, UDP buffer tuning for WireGuard.</li><li><strong>netbird</strong> — WireGuard mesh VPN. Each node gets a stable <code>wt0</code> IP (100.x range). Inter-node traffic never leaves the VPN. New nodes register by setup key and report their <code>wt0</code> IP back as an Ansible fact.</li><li><strong>docker</strong> — Engine + log rotation config.</li><li><strong>traefik</strong> — Reverse proxy with dual-path entrypoints (internal on <code>wt0</code>, public via Cloudflare tunnel). Runs the mesh-companion sidecar for automatic DNS/monitor registration.</li><li><strong>cloudflared</strong> — Outbound-only Cloudflare tunnel daemon. No inbound firewall rules required.</li><li><strong>monitoring-agent</strong> — cAdvisor (container metrics) + Promtail (log shipping to Loki).</li><li><strong>cockpit</strong> — Node management UI, internal only.</li><li><strong>dev-tools</strong> — NvChad, shell utilities for the <code>wolf361</code> user.</li><li><strong>backup</strong> — Incremental backups via <strong>Restic</strong>, running nightly in staggered cron jobs. First a database pre-dump at 2:45 AM, then two concurrent targets: cross-node over SFTP to a partner node (7 daily / 4 weekly / 6 monthly retention), and Cloudflare R2 object storage (7 daily / 2 weekly / 1 monthly, with automated size monitoring against the 10 GB free tier cap).</li></ul>\n\n<strong>Manager-only roles:</strong>\n<ul><li><strong>identity</strong> — Authelia (SSO/ForwardAuth) + LLDAP (LDAP directory). All internal services route through ForwardAuth before serving a response.</li><li><strong>coolify</strong> — Control plane on <code>firenze</code>. Workers register via their <code>wt0</code> NetBird IP — never a public address.</li><li><strong>monitoring-hub</strong> — Prometheus, Grafana, Loki, Uptime Kuma. Receives metrics and logs from all agents.</li></ul>',
+            fr: "<code>make cluster</code> exécute <code>site.yml</code> sur tous les nœuds en une seule exécution Ansible. Les rôles s'appliquent dans un ordre de dépendance strict — durcissement d'abord, réseau ensuite, orchestration en dernier. Deux passes de playbook : une pour tous les nœuds, une scoped au manager uniquement.\n\n<strong>Répartition des rôles — tous les nœuds :</strong>\n<ul><li><strong>common</strong> — UFW deny par défaut, Fail2Ban, login root désactivé, mises à jour de sécurité automatiques, compte <code>svc-runner</code>, tuning des buffers UDP pour WireGuard.</li><li><strong>netbird</strong> — VPN mesh WireGuard. Chaque nœud obtient une IP <code>wt0</code> stable (plage 100.x). Le trafic inter-nœuds ne quitte jamais le VPN. Les nouveaux nœuds s'enregistrent par setup key et remontent leur IP <code>wt0</code> comme fact Ansible.</li><li><strong>docker</strong> — Engine + config de rotation des logs.</li><li><strong>traefik</strong> — Reverse proxy avec entrypoints dual-path (interne sur <code>wt0</code>, public via tunnel Cloudflare). Lance le sidecar mesh-companion pour l'enregistrement automatique DNS/monitors.</li><li><strong>cloudflared</strong> — Tunnel Cloudflare sortant uniquement. Aucune règle de pare-feu entrante requise.</li><li><strong>monitoring-agent</strong> — cAdvisor (métriques conteneurs) + Promtail (envoi de logs vers Loki).</li><li><strong>cockpit</strong> — UI de gestion des nœuds, interne uniquement.</li><li><strong>dev-tools</strong> — NvChad, utilitaires shell pour l'utilisateur <code>wolf361</code>.</li><li><strong>backup</strong> — Sauvegardes incrémentales via <strong>Restic</strong>, en crons nocturnes décalés. Pré-dump de bases de données à 2h45, puis deux cibles : cross-nœud via SFTP vers un nœud partenaire (7 quotidiens / 4 hebdomadaires / 6 mensuels), et stockage objet Cloudflare R2 (7 quotidiens / 2 hebdomadaires / 1 mensuel, avec surveillance automatisée de la taille vis-à-vis du plafond gratuit de 10 Go).</li></ul>\n\n<strong>Rôles manager uniquement :</strong>\n<ul><li><strong>identity</strong> — Authelia (SSO/ForwardAuth) + LLDAP (annuaire LDAP). Tous les services internes passent par ForwardAuth avant de répondre.</li><li><strong>coolify</strong> — Control plane sur <code>firenze</code>. Les workers s'enregistrent via leur IP <code>wt0</code> NetBird — jamais une adresse publique.</li><li><strong>monitoring-hub</strong> — Prometheus, Grafana, Loki, Uptime Kuma. Reçoit métriques et logs de tous les agents.</li></ul>",
           },
           stats: [
             { value: '12', label: { en: 'Ansible roles', fr: 'Rôles Ansible' } },
@@ -421,73 +422,103 @@ export class ProjectsService {
             en: "Every service lives under <code>*.wolf-361.ca</code> — but whether you reach it over the VPN or the public internet, Traefik routes you differently based on which entrypoint received the connection.\n\n<strong>Traefik has two TLS entrypoints:</strong>\n<ul><li><code>:443</code> (<code>internal</code>) — bound to the node's NetBird IP (<code>wt0</code>). Only reachable if you're on the VPN. Admin dashboards, Grafana, Prometheus, Cockpit, and all management UIs live here exclusively.</li><li><code>:8443</code> (<code>https</code>) — reached via the Cloudflare tunnel. The tunnel daemon maintains a persistent outbound connection to Cloudflare — no inbound port is ever opened. Public-facing services (status page, portfolio) route here.</li></ul>\n\nTraefik's DNS resolver is set to the node's own NetBird IP first, then <code>1.1.1.1</code>. On VPN, <code>*.wolf-361.ca</code> resolves to a <code>wt0</code> address — traffic stays fully internal. Off VPN, the same hostname resolves via Cloudflare DNS to the tunnel. <strong>Same domain name, two completely different traffic paths, zero port exposure.</strong>\n\n<strong>Inter-service traffic:</strong> When a service on the same node calls another (e.g. Promtail → Loki), it goes directly over the Docker <code>coolify</code> network — no VPN hop, no round-trip through Traefik. Cross-node traffic (e.g. agent → monitoring hub) goes over the NetBird WireGuard tunnel between <code>wt0</code> addresses. The VPN is the inter-node fabric; Docker networks are the intra-node fabric.\n\nAdding a new node: <code>make worker</code> — Ansible provisions, NetBird assigns <code>wt0</code>, the IP surfaces as an Ansible fact, Coolify registers the node via that internal address.",
             fr: "Chaque service vit sous <code>*.wolf-361.ca</code> — mais que vous y accédiez via le VPN ou l'internet public, Traefik vous route différemment selon l'entrypoint qui a reçu la connexion.\n\n<strong>Traefik a deux entrypoints TLS :</strong>\n<ul><li><code>:443</code> (<code>internal</code>) — lié à l'IP NetBird du nœud (<code>wt0</code>). Accessible uniquement si vous êtes sur le VPN. Les tableaux de bord admin, Grafana, Prometheus, Cockpit et toutes les UIs de gestion vivent ici exclusivement.</li><li><code>:8443</code> (<code>https</code>) — atteint via le tunnel Cloudflare. Le daemon tunnel maintient une connexion sortante persistante vers Cloudflare — aucun port entrant n'est jamais ouvert. Les services publics (status page, portfolio) passent par ici.</li></ul>\n\nLe résolveur DNS de Traefik pointe d'abord sur l'IP NetBird propre du nœud, puis sur <code>1.1.1.1</code>. Sur le VPN, <code>*.wolf-361.ca</code> résout vers une adresse <code>wt0</code> — le trafic reste entièrement interne. Hors VPN, le même hostname résout via le DNS Cloudflare vers le tunnel. <strong>Même nom de domaine, deux chemins de trafic complètement différents, zéro exposition de port.</strong>\n\n<strong>Trafic inter-services :</strong> Quand un service sur le même nœud appelle un autre (ex: Promtail → Loki), le trafic passe directement par le réseau Docker <code>coolify</code> — aucun saut VPN, aucun aller-retour par Traefik. Le trafic cross-nœud (ex: agent → monitoring hub) transite par le tunnel WireGuard NetBird entre les adresses <code>wt0</code>. Le VPN est le fabric inter-nœuds ; les réseaux Docker sont le fabric intra-nœud.\n\nAjouter un nœud : <code>make worker</code> — Ansible provisionne, NetBird assigne le <code>wt0</code>, l'IP remonte comme fact Ansible, Coolify enregistre le nœud via cette adresse interne.",
           },
-          svgDiagram: `<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
+          diagramLabel: 'home-ops-network.svg',
+          svgDiagram: `<svg viewBox="0 0 820 310" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
   <defs>
-    <marker id="arr-ho" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-outline-variant)"/>
-    </marker>
-    <marker id="arr-pub" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+    <marker id="arr-pub" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
       <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-primary)"/>
     </marker>
-    <marker id="arr-vpn" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+    <marker id="arr-vpn" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
       <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-tertiary)"/>
     </marker>
   </defs>
 
-  <!-- Left: external browser -->
-  <rect x="10" y="30" width="110" height="40" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-outline-variant)" stroke-width="1"/>
-  <text x="65" y="47" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Browser</text>
-  <text x="65" y="61" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">off VPN · public</text>
+  <!-- Browser (top-left) -->
+  <rect x="10" y="90" width="115" height="40" rx="6"
+        fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-outline-variant)" stroke-width="1"/>
+  <text x="67" y="107" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Browser</text>
+  <text x="67" y="121" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">off VPN · public</text>
 
-  <!-- Left: VPN client -->
-  <rect x="10" y="120" width="110" height="40" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-tertiary)" stroke-width="1"/>
-  <text x="65" y="137" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">VPN Client</text>
-  <text x="65" y="151" text-anchor="middle" fill="var(--mat-sys-tertiary)" font-size="9">NetBird · wt0</text>
+  <!-- VPN Client (bottom-left) -->
+  <rect x="10" y="200" width="115" height="40" rx="6"
+        fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-tertiary)" stroke-width="1"/>
+  <text x="67" y="217" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">VPN Client</text>
+  <text x="67" y="231" text-anchor="middle" fill="var(--mat-sys-tertiary)" font-size="9">NetBird · wt0</text>
 
-  <!-- Center: Cloudflare -->
-  <rect x="200" y="16" width="130" height="56" rx="6" fill="color-mix(in srgb, var(--mat-sys-primary) 10%, var(--mat-sys-surface-container))" stroke="var(--mat-sys-primary)" stroke-width="1"/>
-  <text x="265" y="36" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Cloudflare</text>
-  <text x="265" y="50" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">DNS + Zero-Trust</text>
-  <text x="265" y="63" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">tunnel outbound only</text>
+  <!-- Cloudflare (center) -->
+  <rect x="210" y="80" width="135" height="58" rx="6"
+        fill="color-mix(in srgb, var(--mat-sys-primary) 10%, var(--mat-sys-surface-container))"
+        stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <text x="277" y="101" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Cloudflare</text>
+  <text x="277" y="116" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">DNS + Zero-Trust</text>
+  <text x="277" y="129" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">tunnel outbound only</text>
 
-  <!-- Traefik node -->
-  <rect x="450" y="60" width="210" height="130" rx="8" fill="var(--mat-sys-surface-container)" stroke="var(--mat-sys-outline-variant)" stroke-width="1"/>
-  <text x="555" y="80" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="12">Traefik · firenze</text>
+  <!-- Traefik outer box -->
+  <rect x="460" y="70" width="225" height="145" rx="8"
+        fill="var(--mat-sys-surface-container)" stroke="var(--mat-sys-outline-variant)" stroke-width="1"/>
+  <text x="572" y="90" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="12">Traefik · firenze</text>
 
-  <rect x="466" y="90" width="178" height="34" rx="4" fill="color-mix(in srgb, var(--mat-sys-primary) 12%, var(--mat-sys-surface-container-high))" stroke="var(--mat-sys-primary)" stroke-width="1"/>
-  <text x="555" y="105" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">:8443  entrypoint https</text>
-  <text x="555" y="118" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">public services · Cloudflare</text>
+  <!-- :8443 entrypoint box -->
+  <rect x="476" y="98" width="193" height="38" rx="4"
+        fill="color-mix(in srgb, var(--mat-sys-primary) 12%, var(--mat-sys-surface-container-high))"
+        stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <text x="572" y="114" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">:8443  entrypoint https</text>
+  <text x="572" y="128" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">public services · Cloudflare</text>
 
-  <rect x="466" y="132" width="178" height="34" rx="4" fill="color-mix(in srgb, var(--mat-sys-tertiary) 12%, var(--mat-sys-surface-container-high))" stroke="var(--mat-sys-tertiary)" stroke-width="1"/>
-  <text x="555" y="147" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">:443  entrypoint internal</text>
-  <text x="555" y="160" text-anchor="middle" fill="var(--mat-sys-tertiary)" font-size="9">wt0 only · admin + dashboards</text>
+  <!-- :443 entrypoint box -->
+  <rect x="476" y="148" width="193" height="38" rx="4"
+        fill="color-mix(in srgb, var(--mat-sys-tertiary) 12%, var(--mat-sys-surface-container-high))"
+        stroke="var(--mat-sys-tertiary)" stroke-width="1"/>
+  <text x="572" y="164" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">:443  entrypoint internal</text>
+  <text x="572" y="178" text-anchor="middle" fill="var(--mat-sys-tertiary)" font-size="9">wt0 only · admin + dashboards</text>
 
-  <!-- Services row -->
-  <rect x="450" y="220" width="95" height="36" rx="5" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-primary)" stroke-width="1"/>
-  <text x="498" y="237" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">Portfolio</text>
-  <text x="498" y="249" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">public</text>
+  <!-- Portfolio (right of :8443, vertically centered on it) -->
+  <rect x="700" y="98" width="110" height="38" rx="5"
+        fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <text x="755" y="115" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">Portfolio</text>
+  <text x="755" y="128" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">public</text>
 
-  <rect x="565" y="220" width="95" height="36" rx="5" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-tertiary)" stroke-width="1"/>
-  <text x="613" y="237" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">Grafana</text>
-  <text x="613" y="249" text-anchor="middle" fill="var(--mat-sys-tertiary)" font-size="9">internal only</text>
+  <!-- Grafana (right of :443, vertically centered on it) -->
+  <rect x="700" y="148" width="110" height="38" rx="5"
+        fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-tertiary)" stroke-width="1"/>
+  <text x="755" y="165" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">Grafana</text>
+  <text x="755" y="178" text-anchor="middle" fill="var(--mat-sys-tertiary)" font-size="9">internal only</text>
 
-  <!-- Arrows -->
+  <!-- ── Arrows ── -->
+
   <!-- Browser → Cloudflare -->
-  <path d="M120,50 L198,50" stroke="var(--mat-sys-primary)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-pub)" fill="none"/>
-  <!-- Cloudflare → Traefik :8443 -->
-  <path d="M330,44 Q390,44 448,107" stroke="var(--mat-sys-primary)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-pub)" fill="none"/>
-  <!-- VPN client → Traefik :443 -->
-  <path d="M120,140 Q290,140 448,149" stroke="var(--mat-sys-tertiary)" stroke-width="1.5" marker-end="url(#arr-vpn)" fill="none"/>
-  <!-- :8443 → portfolio -->
-  <line x1="498" y1="124" x2="498" y2="218" stroke="var(--mat-sys-primary)" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arr-pub)"/>
-  <!-- :443 → grafana -->
-  <line x1="613" y1="166" x2="613" y2="218" stroke="var(--mat-sys-tertiary)" stroke-width="1" marker-end="url(#arr-vpn)"/>
+  <line x1="125" y1="110" x2="208" y2="110"
+        stroke="var(--mat-sys-primary)" stroke-width="1.5" stroke-dasharray="5,3"
+        marker-end="url(#arr-pub)"/>
 
-  <!-- Legend -->
-  <line x1="10" y1="295" x2="35" y2="295" stroke="var(--mat-sys-primary)" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <text x="40" y="299" fill="var(--mat-sys-on-surface-variant)" font-size="10">Public path (Cloudflare tunnel)</text>
-  <line x1="220" y1="295" x2="245" y2="295" stroke="var(--mat-sys-tertiary)" stroke-width="1.5"/>
-  <text x="250" y="299" fill="var(--mat-sys-on-surface-variant)" font-size="10">Internal path (NetBird VPN)</text>
+  <!-- Cloudflare → :8443 -->
+  <path d="M345,109 C400,109 430,117 474,117"
+        fill="none" stroke="var(--mat-sys-primary)" stroke-width="1.5" stroke-dasharray="5,3"
+        marker-end="url(#arr-pub)"/>
+
+  <!-- VPN Client → :443 -->
+  <path d="M125,220 C300,220 360,167 474,167"
+        fill="none" stroke="var(--mat-sys-tertiary)" stroke-width="1.5"
+        marker-end="url(#arr-vpn)"/>
+
+  <!-- :8443 → Portfolio -->
+  <line x1="669" y1="117" x2="698" y2="117"
+        stroke="var(--mat-sys-primary)" stroke-width="1" stroke-dasharray="4,3"
+        marker-end="url(#arr-pub)"/>
+
+  <!-- :443 → Grafana -->
+  <line x1="669" y1="167" x2="698" y2="167"
+        fill="none" stroke="var(--mat-sys-tertiary)" stroke-width="1"
+        marker-end="url(#arr-vpn)"/>
+
+  <!-- ── Legend ── -->
+  <line x1="10" y1="314" x2="38" y2="314"
+        stroke="var(--mat-sys-primary)" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="44" y="318" fill="var(--mat-sys-on-surface-variant)" font-size="10">Public path (Cloudflare tunnel)</text>
+
+  <line x1="252" y1="314" x2="280" y2="314"
+        stroke="var(--mat-sys-tertiary)" stroke-width="1.5"/>
+  <text x="286" y="318" fill="var(--mat-sys-on-surface-variant)" font-size="10">Internal path (NetBird VPN)</text>
 </svg>`,
         },
         {
@@ -595,10 +626,11 @@ export class ProjectsService {
           title: { en: 'Three pipelines, one binary.', fr: 'Trois pipelines, un binaire.' },
           tocLabel: { en: 'Architecture', fr: "L'Architecture" },
           body: {
-            en: "The companion is a statically linked Go binary running in a distroless <code>scratch</code> container (10.2 MB). It runs a background sync loop (<code>SYNC_INTERVAL</code>, default 1m) and reacts to Docker events in real time. All integrations implement a single <code>Processor</code> interface — adding a new provider means implementing two methods.\n\n<strong>Three concurrent pipelines:</strong>\n<ul><li><strong>Internal pipeline (NetBird DNS)</strong> — filters Traefik routers on the <code>internal</code> entrypoint. Creates NetBird DNS entries pointing to the node's <code>wt0</code> IP. Drives split-horizon resolution: VPN clients resolve <code>*.wolf-361.ca</code> to a private address.</li><li><strong>External pipeline (Cloudflare DNS)</strong> — filters routers on the <code>https</code> entrypoint. Creates CNAME records pointing to the Cloudflare tunnel UUID. Public clients resolve to the tunnel without any node IP ever being exposed.</li><li><strong>Monitoring pipeline (Uptime Kuma)</strong> — discovers all routers, groups them by container, deduplicates identical URLs, and creates monitors with names, tags, groups, check intervals, and status page bindings — all from labels.</li></ul>\n\n<strong>Pure-Go rule parser:</strong> Instead of importing Traefik's internal packages (which would couple the binary to Traefik's release cycle), the companion ships a custom regex-based AST parser that extracts hosts from <code>Host()</code>, <code>PathPrefix()</code>, <code>&&</code>, and <code>||</code> expressions. The binary stays small and immune to upstream breaking changes.\n\n<strong>Coordinator/agent model:</strong> Uptime Kuma's Socket.io API has a race condition when multiple nodes write Status Page UI state simultaneously. One instance runs as <code>KUMA_COORDINATOR_MODE: server</code> and owns a sequential queue. All others are clients — they provision their monitors locally but forward UI layout instructions to the coordinator. No duplicate monitors, no conflicting writes.",
-            fr: "Le companion est un binaire Go statiquement lié tournant dans un conteneur <code>scratch</code> distroless (10,2 Mo). Il exécute une boucle de sync en arrière-plan (<code>SYNC_INTERVAL</code>, défaut 1m) et réagit aux événements Docker en temps réel. Toutes les intégrations implémentent une interface <code>Processor</code> unique — ajouter un nouveau provider revient à implémenter deux méthodes.\n\n<strong>Trois pipelines concurrents :</strong>\n<ul><li><strong>Pipeline interne (DNS NetBird)</strong> — filtre les routers Traefik sur l'entrypoint <code>internal</code>. Crée des entrées DNS NetBird pointant vers l'IP <code>wt0</code> du nœud. Pilote la résolution split-horizon : les clients VPN résolvent <code>*.wolf-361.ca</code> vers une adresse privée.</li><li><strong>Pipeline externe (DNS Cloudflare)</strong> — filtre les routers sur l'entrypoint <code>https</code>. Crée des enregistrements CNAME pointant vers l'UUID du tunnel Cloudflare. Les clients publics résolvent vers le tunnel sans jamais exposer une IP de nœud.</li><li><strong>Pipeline monitoring (Uptime Kuma)</strong> — découvre tous les routers, les groupe par conteneur, déduplique les URLs identiques, et crée des monitors avec noms, tags, groupes, intervalles et bindings de pages de statut — tout depuis les labels.</li></ul>\n\n<strong>Parseur de règles Go pur :</strong> Plutôt que d'importer les packages internes de Traefik (ce qui couplerait le binaire au cycle de release de Traefik), le companion embarque un parseur AST custom basé sur des regex qui extrait les hosts des expressions <code>Host()</code>, <code>PathPrefix()</code>, <code>&&</code> et <code>||</code>. Le binaire reste léger et immunisé aux breaking changes upstream.\n\n<strong>Modèle coordinateur/agent :</strong> L'API Socket.io d'Uptime Kuma a une race condition quand plusieurs nœuds écrivent l'état UI de la Status Page simultanément. Une instance tourne en <code>KUMA_COORDINATOR_MODE: server</code> et détient une file séquentielle. Toutes les autres sont clientes — elles provisionnent leurs monitors localement mais transmettent les instructions UI au coordinateur. Aucun monitor en double, aucun conflit d'écriture.",
+            en: "The companion is a statically linked Go binary running in a distroless <code>scratch</code> container (10.2 MB). It runs a background sync loop (<code>SYNC_INTERVAL</code>, default 1m) and reacts to Docker events in real time. All integrations implement a single <code>Processor</code> interface — adding a new provider means implementing two methods.\n\n<strong>Three concurrent pipelines:</strong>\n<ul><li><strong>Internal pipeline (NetBird DNS)</strong> — filters Traefik routers on the <code>internal</code> entrypoint. Creates NetBird DNS entries pointing to the node's <code>wt0</code> IP. Drives split-horizon resolution: VPN clients resolve <code>*.wolf-361.ca</code> to a private address.</li><li><strong>External pipeline (Cloudflare DNS)</strong> — filters routers on the <code>https</code> entrypoint. Creates CNAME records pointing to the Cloudflare tunnel UUID. Public clients resolve to the tunnel without any node IP ever being exposed.</li><li><strong>Monitoring pipeline (Uptime Kuma)</strong> — discovers all routers, groups them by container, deduplicates identical URLs. Creates and maintains two distinct Kuma objects per service: a <strong>monitor</strong> (the uptime check itself) and a <strong>public status page entry</strong> (which page the service appears on, its display order, and its group). Both are fully label-driven — no manual Kuma UI work, no config drift.</li></ul>\n\n<strong>Pure-Go rule parser:</strong> Instead of importing Traefik's internal packages (which would couple the binary to Traefik's release cycle), the companion ships a custom regex-based AST parser that extracts hosts from <code>Host()</code>, <code>PathPrefix()</code>, <code>&&</code>, and <code>||</code> expressions. The binary stays small and immune to upstream breaking changes.\n\n<strong>Coordinator/agent model:</strong> Uptime Kuma's Socket.io API has a race condition when multiple nodes write Status Page UI state simultaneously. One instance runs as <code>KUMA_COORDINATOR_MODE: server</code> and owns a sequential queue. All others are clients — they provision their monitors locally but forward UI layout instructions to the coordinator. No duplicate monitors, no conflicting writes.",
+            fr: "Le companion est un binaire Go statiquement lié tournant dans un conteneur <code>scratch</code> distroless (10,2 Mo). Il exécute une boucle de sync en arrière-plan (<code>SYNC_INTERVAL</code>, défaut 1m) et réagit aux événements Docker en temps réel. Toutes les intégrations implémentent une interface <code>Processor</code> unique — ajouter un nouveau provider revient à implémenter deux méthodes.\n\n<strong>Trois pipelines concurrents :</strong>\n<ul><li><strong>Pipeline interne (DNS NetBird)</strong> — filtre les routers Traefik sur l'entrypoint <code>internal</code>. Crée des entrées DNS NetBird pointant vers l'IP <code>wt0</code> du nœud. Pilote la résolution split-horizon : les clients VPN résolvent <code>*.wolf-361.ca</code> vers une adresse privée.</li><li><strong>Pipeline externe (DNS Cloudflare)</strong> — filtre les routers sur l'entrypoint <code>https</code>. Crée des enregistrements CNAME pointant vers l'UUID du tunnel Cloudflare. Les clients publics résolvent vers le tunnel sans jamais exposer une IP de nœud.</li><li><strong>Pipeline monitoring (Uptime Kuma)</strong> — découvre tous les routers, les groupe par conteneur, déduplique les URLs identiques. Crée et maintient deux objets Kuma distincts par service : un <strong>monitor</strong> (la vérification de disponibilité) et une <strong>entrée de page de statut publique</strong> (quelle page, l'ordre d'affichage, le groupe). Les deux sont entièrement pilotés par labels — aucune manipulation manuelle dans l'UI Kuma, aucune dérive de configuration.</li></ul>\n\n<strong>Parseur de règles Go pur :</strong> Plutôt que d'importer les packages internes de Traefik (ce qui couplerait le binaire au cycle de release de Traefik), le companion embarque un parseur AST custom basé sur des regex qui extrait les hosts des expressions <code>Host()</code>, <code>PathPrefix()</code>, <code>&&</code> et <code>||</code>. Le binaire reste léger et immunisé aux breaking changes upstream.\n\n<strong>Modèle coordinateur/agent :</strong> L'API Socket.io d'Uptime Kuma a une race condition quand plusieurs nœuds écrivent l'état UI de la Status Page simultanément. Une instance tourne en <code>KUMA_COORDINATOR_MODE: server</code> et détient une file séquentielle. Toutes les autres sont clientes — elles provisionnent leurs monitors localement mais transmettent les instructions UI au coordinateur. Aucun monitor en double, aucun conflit d'écriture.",
           },
-          svgDiagram: `<svg viewBox="0 0 680 310" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
+          diagramLabel: 'mesh-companion-architecture.svg',
+          svgDiagram: `<svg viewBox="0 0 680 306" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
   <defs>
     <marker id="arr-mc2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
       <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-outline-variant)"/>
@@ -629,7 +661,7 @@ export class ProjectsService {
   <line x1="120" y1="120" x2="158" y2="120" stroke="var(--mat-sys-outline-variant)" stroke-width="1.5" marker-end="url(#arr-mc2)"/>
 
   <!-- Uptime Kuma -->
-  <rect x="400" y="16" width="155" height="44" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <rect x="390" y="16" width="175" height="44" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-primary)" stroke-width="1"/>
   <text x="477" y="35" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Uptime Kuma</text>
   <text x="477" y="49" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">monitors · status pages · tags</text>
 
@@ -644,13 +676,13 @@ export class ProjectsService {
   <text x="477" y="217" text-anchor="middle" fill="var(--mat-sys-tertiary)" font-size="9">A record → wt0 IP</text>
 
   <!-- Arrows -->
-  <path d="M335,100 Q365,100 365,38 L398,38" stroke="var(--mat-sys-primary)" stroke-width="1.5" fill="none" marker-end="url(#arr-mc2-p)"/>
+  <path d="M335,100 Q365,100 365,38 L388,38" stroke="var(--mat-sys-primary)" stroke-width="1.5" fill="none" marker-end="url(#arr-mc2-p)"/>
   <line x1="335" y1="120" x2="398" y2="120" stroke="var(--mat-sys-primary)" stroke-width="1.5" marker-end="url(#arr-mc2-p)"/>
   <path d="M335,140 Q365,140 365,206 L398,206" stroke="var(--mat-sys-tertiary)" stroke-width="1.5" fill="none" marker-end="url(#arr-mc2-t)"/>
 
   <!-- Cleanup note -->
-  <rect x="400" y="260" width="270" height="28" rx="4" fill="color-mix(in srgb, var(--mat-sys-error) 8%, var(--mat-sys-surface-container))"/>
-  <text x="535" y="276" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">on container stop → orphan cleanup (all 3 providers)</text>
+  <rect x="10" y="268" width="660" height="26" rx="4" fill="color-mix(in srgb, var(--mat-sys-error) 8%, var(--mat-sys-surface-container))"/>
+  <text x="340" y="284" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">on container stop → orphan cleanup (all 3 providers)</text>
 </svg>`,
         },
         {

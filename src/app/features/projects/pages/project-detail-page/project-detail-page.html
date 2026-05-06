@@ -139,7 +139,9 @@
                 <span class="arch-dot arch-dot--r"></span>
                 <span class="arch-dot arch-dot--y"></span>
                 <span class="arch-dot arch-dot--g"></span>
-                <span class="arch-bar-label mono">~/architecture/planific.svg</span>
+                <span class="arch-bar-label mono"
+                  >~/architecture/{{ section.diagramLabel ?? 'architecture.svg' }}</span
+                >
               </div>
               @if (section.svgDiagram) {
                 <div class="arch-svg-canvas" [innerHTML]="sanitize(section.svgDiagram)"></div>
