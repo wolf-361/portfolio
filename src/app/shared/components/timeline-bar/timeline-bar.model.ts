@@ -1,3 +1,5 @@
+export type FloatAnchor = 'top' | 'center' | 'bottom';
+
 export interface TimelineSegment {
   start: number;
   end: number;

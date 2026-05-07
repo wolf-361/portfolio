@@ -1,11 +1,11 @@
 <div class="timeline">
-  <div class="rows">
+  <!-- Horizontal layout (desktop) -->
+  <div class="rows desktop-only">
     @for (row of rows(); track row.label) {
       <div class="row">
         <span class="row-label">{{ row.label }}</span>
         <div class="track">
           @if (row.segments) {
-            <!-- Multi-segment mode: multiple bars on one track -->
             @for (seg of row.segments; track seg.start) {
               <div
                 class="bar"
@@ -23,7 +23,6 @@
               </div>
             }
           } @else {
-            <!-- Single bar mode -->
             <div
               class="bar"
               [class]="'bar-' + row.variant"
@@ -44,8 +43,8 @@
     }
   </div>
 
-  <!-- Year axis -->
-  <div class="axis">
+  <!-- Horizontal year axis (desktop) -->
+  <div class="axis desktop-only">
     <span class="axis-spacer"></span>
     <div class="axis-track">
       @for (tick of axisTicks(); track tick) {
@@ -57,6 +56,48 @@
         >
       }
       <span class="now-line" [style.left]="currentYearLeft()"></span>
+    </div>
+  </div>
+
+  <!-- Vertical Gantt layout (mobile) -->
+  <div class="v-timeline mobile-only">
+    <!-- Left: year axis -->
+    <div class="v-axis">
+      @for (tick of axisTicks(); track tick) {
+        <span
+          class="v-tick"
+          [class.v-tick-current]="isCurrentYear(tick)"
+          [style.top]="toPercent(tick) + '%'"
+          >{{ tick }}</span
+        >
+      }
+      <span class="v-now-line" [style.top]="currentYearLeft()"></span>
+    </div>
+
+    <!-- Right: single track, bars positioned by time with inset for containment -->
+    <div class="v-track">
+      @for (vr of verticalRows(); track vr.row.label) {
+        <div
+          class="v-bar"
+          [class]="'bar-' + vr.row.variant"
+          [style.top]="toPercent(rowStart(vr.row)) + '%'"
+          [style.height]="toPercent(rowEnd(vr.row)) - toPercent(rowStart(vr.row)) + '%'"
+          [style.left.px]="vr.inset"
+          [style.right.px]="vr.inset"
+          [attr.aria-label]="vr.row.label"
+        >
+          <span
+            class="v-bar-label"
+            [class.v-bar-label--float-top]="isShortBar(vr.row) && vr.floatAnchor === 'top'"
+            [class.v-bar-label--float-center]="isShortBar(vr.row) && vr.floatAnchor === 'center'"
+            [class.v-bar-label--float-bottom]="isShortBar(vr.row) && vr.floatAnchor === 'bottom'"
+            >{{ vr.row.label }}</span
+          >
+          @if (vr.row.barLabel && !isShortBar(vr.row)) {
+            <span class="v-bar-sublabel">{{ vr.row.barLabel }}</span>
+          }
+        </div>
+      }
     </div>
   </div>
 </div>
