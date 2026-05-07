@@ -59,7 +59,7 @@ function buildNeofetchLines(lang: Lang): TermLine[] {
     { text: '──────────────────────────────', style: S_SEP },
     { text: en ? 'Name:   Luc Allaire' : 'Nom:    Luc Allaire', style: S_VALUE },
     {
-      text: en ? 'Role:   Mobile Engineer · KMP' : 'Rôle:   Ingénieur Mobile · KMP',
+      text: en ? 'Role:   Software Developer · KMP' : 'Rôle:   Développeur logiciel · KMP',
       style: S_VALUE,
     },
     { text: en ? 'Bio:    Clean code,' : 'Bio:    Code propre,', style: S_VALUE },
@@ -158,8 +158,8 @@ function runCommand(raw: string, lang: Lang): CommandResult {
             kind: 'output',
             text:
               lang === 'en'
-                ? 'Mobile Engineer · KMP Specialist · Infrastructure-Aware'
-                : 'Ingénieur mobile · Spécialiste KMP · Infrastructure-First',
+                ? 'Software Developer · KMP Specialist · Infrastructure-Aware'
+                : 'Développeur logiciel · Spécialiste KMP · Infrastructure-First',
           },
         ];
       if (file === 'bio.txt')

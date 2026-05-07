@@ -143,25 +143,6 @@
 
 // ── Right-side controls ───────────────────────────────────────────────────────
 
-.cv-btn {
-  margin-right: sp.$xs;
-  font-size: 0.6875rem !important; // 11px
-  font-weight: 700 !important;
-  font-family: var(--font-mono) !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase !important;
-  border-color: sys.$outline-variant !important;
-  color: sys.$on-surface-variant !important;
-  transition:
-    border-color 120ms ease,
-    color 120ms ease !important;
-
-  &:hover {
-    border-color: sys.$primary !important;
-    color: sys.$primary !important;
-  }
-}
-
 .lang-btn {
   font-family: var(--font-mono) !important;
   font-size: 0.6875rem !important;
@@ -218,9 +199,5 @@
 
   .hamburger {
     display: inline-flex;
-  }
-
-  .cv-btn {
-    display: none;
   }
 }
