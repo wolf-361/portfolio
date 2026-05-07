@@ -12,7 +12,7 @@ export interface Project {
   description: I18n;
   tags: string[];
   links?: ProjectLink[];
-  status?: string;
+  status?: I18n;
   featured?: boolean;
   slug?: string;
 }

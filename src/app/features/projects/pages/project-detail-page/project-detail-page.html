@@ -8,7 +8,7 @@
           <span class="back-arr">←</span>
         </a>
         <span class="crumb-sep">/</span>
-        <span class="crumb">{{ lang.t('projects', 'projets') }}</span>
+        <a class="crumb" routerLink="/" fragment="projects">{{ lang.t('projects', 'projets') }}</a>
         <span class="crumb-sep">/</span>
         <span class="crumb crumb-active">{{ p.title }}</span>
       </div>
@@ -35,7 +35,7 @@
           }
         }
         @if (p.status) {
-          <span class="cs-status-badge mono">{{ p.status }}</span>
+          <span class="cs-status-badge mono">{{ lang.t(p.status!.en, p.status!.fr) }}</span>
         }
       </div>
     </div>
@@ -92,14 +92,15 @@
         <nav class="toc" aria-label="Table of contents">
           <span class="toc-header mono">{{ lang.t('Summary', 'Sommaire') }}</span>
           @for (section of p.sections; track section.id) {
-            <a
+            <button
               class="toc-item"
+              type="button"
               [class.toc-item--active]="activeSection() === section.id"
-              [href]="'#' + section.id"
+              (click)="scrollToSection(section.id)"
             >
               <span class="toc-num mono">0{{ $index + 1 }}.</span>
               {{ lang.t(section.tocLabel.en, section.tocLabel.fr) }}
-            </a>
+            </button>
           }
         </nav>
       </div>
@@ -144,7 +145,14 @@
                 >
               </div>
               @if (section.svgDiagram) {
-                <div class="arch-svg-canvas" [innerHTML]="sanitize(section.svgDiagram)"></div>
+                <div
+                  class="arch-svg-canvas"
+                  [innerHTML]="sanitize(section.svgDiagram)"
+                  (click)="openDiagram(section.svgDiagram)"
+                  role="button"
+                  tabindex="0"
+                  aria-label="Tap to expand diagram"
+                ></div>
               } @else {
                 <pre class="arch-canvas">{{ section.diagram!.join('\n') }}</pre>
               }
@@ -180,6 +188,19 @@
           <span class="pager-title">{{ p.pager.nextTitle }}</span>
         </a>
       }
+    </div>
+  }
+  <!-- ── SVG zoom modal ─────────────────────────────────────────────────────── -->
+  @if (zoomedDiagram()) {
+    <div class="diagram-modal" (click)="closeDiagram()" role="dialog" aria-modal="true">
+      <div
+        class="diagram-modal-inner"
+        [innerHTML]="sanitize(zoomedDiagram()!)"
+        (click)="$event.stopPropagation()"
+      ></div>
+      <button class="diagram-modal-close" type="button" (click)="closeDiagram()" aria-label="Close">
+        ✕
+      </button>
     </div>
   }
 } @else {

@@ -1,6 +1,7 @@
 <a
   class="card"
   [class.card--featured]="project().size === 'featured'"
+  [class.card--featured-terminal]="project().size === 'featured' && !!project().terminal"
   [class.card--small]="project().size === 'small'"
   [routerLink]="project().slug ? ['/projects', project().slug] : null"
   [attr.href]="!project().slug && project().url ? project().url : null"
@@ -63,8 +64,8 @@
     </div>
   }
 
-  <!-- Phone bleed — featured cards only, bleeds off right edge -->
-  @if (project().size === 'featured') {
+  <!-- Phone bleed — featured cards with no terminal widget only -->
+  @if (project().size === 'featured' && !project().terminal) {
     <div class="card-phone-bleed" aria-hidden="true">
       @if (project().visual) {
         <img

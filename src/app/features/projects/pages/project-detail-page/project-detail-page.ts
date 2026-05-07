@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, HostListener, inject, input, signal } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -39,9 +39,25 @@ export class ProjectDetailPageComponent {
   }
 
   readonly activeSection = signal<string>('');
+  readonly zoomedDiagram = signal<string | null>(null);
 
   onActiveSection(id: string): void {
     this.activeSection.set(id);
+  }
+
+  openDiagram(svg: string): void {
+    this.zoomedDiagram.set(svg);
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeDiagram(): void {
+    this.zoomedDiagram.set(null);
+    document.body.style.overflow = '';
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.zoomedDiagram()) this.closeDiagram();
   }
 
   /** Split body on double-newline and sanitize each paragraph (supports <strong> and <mark>) */
@@ -52,5 +68,13 @@ export class ProjectDetailPageComponent {
   /** Sanitize raw SVG/HTML for use with [innerHTML] */
   sanitize(html: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  scrollToSection(id: string): void {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const offset = 112; // account for sticky top-nav (~96px) + breathing room
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
   }
 }

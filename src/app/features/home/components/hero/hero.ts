@@ -291,7 +291,7 @@ export class HeroComponent implements OnDestroy {
   }
 
   focusInput(): void {
-    if (this.isDone()) this.inputEl()?.nativeElement.focus();
+    if (this.isDone()) this.inputEl()?.nativeElement.focus({ preventScroll: true });
   }
 
   onKeydown(e: KeyboardEvent): void {
@@ -453,7 +453,7 @@ export class HeroComponent implements OnDestroy {
       this.partialText.set('');
       this.isDone.set(true);
       this.clearInterval();
-      setTimeout(() => this.inputEl()?.nativeElement.focus(), 50);
+      setTimeout(() => this.inputEl()?.nativeElement.focus({ preventScroll: true }), 50);
       return;
     }
 

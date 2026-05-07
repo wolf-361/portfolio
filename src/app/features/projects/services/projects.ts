@@ -9,7 +9,7 @@ export class ProjectsService {
       slug: 'planific',
       title: 'Planific',
       subtitle: 'Studio Drave · Android & iOS',
-      status: 'In Development',
+      status: { en: 'In Development', fr: 'En développement' },
       description: {
         en: 'Cross-platform student planner for Android and iOS. The shared KMP module owns 100% of domain logic, state, and data — only the UI is platform-specific.',
         fr: "Agenda étudiant multiplateforme pour Android et iOS. Le module KMP partagé détient 100 % de la logique métier, l'état et les données — seule l'interface est spécifique à chaque plateforme.",
@@ -28,7 +28,7 @@ export class ProjectsService {
       meta: {
         role: { en: 'Lead Mobile', fr: 'Lead Mobile' },
         roleDetail: { en: 'Architecture, UI, KMP', fr: 'Architecture, UI, KMP' },
-        duration: { en: '8 months · 2025', fr: '8 mois · 2025' },
+        duration: { en: 'Ongoing · 2026', fr: 'En cours · 2026' },
         team: { en: '2 devs · solo design', fr: '2 devs · design solo' },
       },
       sections: [
@@ -164,7 +164,7 @@ export class ProjectsService {
       slug: 'waystone',
       title: 'Waystone',
       subtitle: 'Studio Drave · Android & iOS',
-      status: 'Architecting',
+      status: { en: 'Architecting', fr: 'En conception' },
       description: {
         en: 'Spoiler-safe companion app for non-linear open-world games. Photograph any map, pin locations, track progress — free and fully local. Curated maps with fog-of-war reveal mechanics and community sync are the paid tier.',
         fr: "Application compagnon sans spoilers pour les jeux non-linéaires. Photographiez n'importe quelle carte, épinglez des emplacements, suivez votre progression — gratuit et 100% local. Les cartes curées avec brouillard de guerre et synchronisation communautaire forment le palier payant.",
@@ -174,7 +174,7 @@ export class ProjectsService {
       meta: {
         role: { en: 'Founder · Sole Engineer', fr: 'Fondateur · Ingénieur solo' },
         roleDetail: { en: 'Architecture, Product, Design', fr: 'Architecture, Produit, Design' },
-        duration: { en: 'Ongoing · 2025', fr: 'En cours · 2025' },
+        duration: { en: 'Not started · 2026', fr: 'Pas encore commencé · 2026' },
         team: { en: 'Solo', fr: 'Solo' },
       },
       sections: [
@@ -263,7 +263,7 @@ export class ProjectsService {
       slug: 'templates',
       title: 'Starter Templates',
       subtitle: 'Open Source · KMP · Angular · Spring',
-      status: 'Maintained',
+      status: { en: 'Maintained', fr: 'Maintenu' },
       description: {
         en: 'Four production-ready starters — KMP (Android + iOS + Fastlane CI), Angular 21 (Material M3, signals, ESLint boundaries), Spring identity service (JWT + OAuth PKCE), and Spring core service (JWT consumer, vertical slices). Each stands alone. All four compose over a shared Bearer JWT contract.',
         fr: 'Quatre starters prêts pour la production — KMP (Android + iOS + Fastlane CI), Angular 21 (Material M3, signals, ESLint boundaries), service identité Spring (JWT + OAuth PKCE) et service core Spring (consommateur JWT, slices verticales). Chacun fonctionne seul. Les quatre se composent via un contrat Bearer JWT partagé.',
@@ -277,13 +277,17 @@ export class ProjectsService {
         'Playwright',
       ],
       featured: false,
+      links: [
+        { label: 'KMP', url: 'https://github.com/wolf-361/kmp-template' },
+        { label: 'Angular', url: 'https://github.com/wolf-361/angular-21-standalone-template' },
+        { label: 'Spring Identity', url: 'https://github.com/wolf-361/spring-identity-template' },
+        { label: 'Spring Core', url: 'https://github.com/wolf-361/spring-core-template' },
+      ],
       meta: {
         role: { en: 'Author', fr: 'Auteur' },
         roleDetail: { en: 'Architecture, DX, CI/CD', fr: 'Architecture, DX, CI/CD' },
-        duration: { en: 'Ongoing · 2024–2025', fr: 'En cours · 2024–2025' },
+        duration: { en: 'Ongoing · 2026', fr: 'En cours · 2026' },
         team: { en: 'Solo · Open Source', fr: 'Solo · Open Source' },
-        url: 'https://github.com/wolf-361',
-        urlLabel: { en: 'GitHub →', fr: 'GitHub →' },
       },
       sections: [
         {
@@ -356,7 +360,7 @@ export class ProjectsService {
       slug: 'home-ops',
       title: 'Home Ops',
       subtitle: 'Self-Hosted · Bare Metal · Zero-Trust',
-      status: 'Production',
+      status: { en: 'Production', fr: 'Production' },
       description: {
         en: '3-node bare-metal Debian cluster provisioned end-to-end with Ansible. 12 roles, 9 production stacks, dual-path network (NetBird VPN for internal traffic, Cloudflare tunnels for public), mTLS + Authelia SSO, full Prometheus/Grafana/Loki observability stack. One command from fresh Debian to fully connected node.',
         fr: "Cluster bare-metal 3 nœuds Debian provisionné intégralement avec Ansible. 12 rôles, 9 stacks en production, réseau dual-path (VPN NetBird pour le trafic interne, tunnels Cloudflare pour le public), mTLS + Authelia SSO, stack d'observabilité Prometheus/Grafana/Loki complète. Une commande depuis un Debian vierge jusqu'à un nœud pleinement connecté.",
@@ -369,7 +373,7 @@ export class ProjectsService {
           en: 'Provisioning, Networking, Security, Ops',
           fr: 'Provisioning, Réseau, Sécurité, Ops',
         },
-        duration: { en: 'Ongoing · 2023–2025', fr: 'En cours · 2023–2025' },
+        duration: { en: 'Ongoing · 2026', fr: 'En cours · 2026' },
         team: { en: 'Solo · 2 months build', fr: 'Solo · 2 mois de build' },
         url: 'https://github.com/wolf-361/home-ops',
         urlLabel: { en: 'GitHub →', fr: 'GitHub →' },
@@ -423,7 +427,7 @@ export class ProjectsService {
             fr: "Chaque service vit sous <code>*.wolf-361.ca</code> — mais que vous y accédiez via le VPN ou l'internet public, Traefik vous route différemment selon l'entrypoint qui a reçu la connexion.\n\n<strong>Traefik a deux entrypoints TLS :</strong>\n<ul><li><code>:443</code> (<code>internal</code>) — lié à l'IP NetBird du nœud (<code>wt0</code>). Accessible uniquement si vous êtes sur le VPN. Les tableaux de bord admin, Grafana, Prometheus, Cockpit et toutes les UIs de gestion vivent ici exclusivement.</li><li><code>:8443</code> (<code>https</code>) — atteint via le tunnel Cloudflare. Le daemon tunnel maintient une connexion sortante persistante vers Cloudflare — aucun port entrant n'est jamais ouvert. Les services publics (status page, portfolio) passent par ici.</li></ul>\n\nLe résolveur DNS de Traefik pointe d'abord sur l'IP NetBird propre du nœud, puis sur <code>1.1.1.1</code>. Sur le VPN, <code>*.wolf-361.ca</code> résout vers une adresse <code>wt0</code> — le trafic reste entièrement interne. Hors VPN, le même hostname résout via le DNS Cloudflare vers le tunnel. <strong>Même nom de domaine, deux chemins de trafic complètement différents, zéro exposition de port.</strong>\n\n<strong>Trafic inter-services :</strong> Quand un service sur le même nœud appelle un autre (ex: Promtail → Loki), le trafic passe directement par le réseau Docker <code>coolify</code> — aucun saut VPN, aucun aller-retour par Traefik. Le trafic cross-nœud (ex: agent → monitoring hub) transite par le tunnel WireGuard NetBird entre les adresses <code>wt0</code>. Le VPN est le fabric inter-nœuds ; les réseaux Docker sont le fabric intra-nœud.\n\nAjouter un nœud : <code>make worker</code> — Ansible provisionne, NetBird assigne le <code>wt0</code>, l'IP remonte comme fact Ansible, Coolify enregistre le nœud via cette adresse interne.",
           },
           diagramLabel: 'home-ops-network.svg',
-          svgDiagram: `<svg viewBox="0 0 820 310" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
+          svgDiagram: `<svg viewBox="0 0 820 330" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
   <defs>
     <marker id="arr-pub" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
       <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-primary)"/>
@@ -585,18 +589,18 @@ export class ProjectsService {
       slug: 'mesh-companion',
       title: 'Traefik Mesh Companion',
       subtitle: 'wolf-infra · Open Source · Go',
-      status: 'Production',
+      status: { en: 'Production', fr: 'Production' },
       description: {
         en: 'Lightweight Go sidecar for Traefik. Watches Docker events and automatically synchronizes Traefik routing labels to Cloudflare DNS (external), NetBird DNS (internal), and Uptime Kuma monitors — enabling split-horizon DNS and zero-config observability across a multi-node cluster.',
         fr: 'Sidecar Go léger pour Traefik. Surveille les événements Docker et synchronise automatiquement les labels de routage Traefik vers DNS Cloudflare (externe), DNS NetBird (interne) et monitors Uptime Kuma — DNS split-horizon et observabilité zéro-config sur un cluster multi-nœuds.',
       },
       tags: ['Go', 'Docker', 'Traefik', 'Uptime Kuma', 'Cloudflare', 'NetBird', 'Open Source'],
       featured: false,
-      links: [{ label: 'GitHub ↗', url: 'https://github.com/wolf-infra/traefik-mesh-companion' }],
+      links: [{ label: 'GitHub', url: 'https://github.com/wolf-infra/traefik-mesh-companion' }],
       meta: {
         role: { en: 'Author · Sole Engineer', fr: 'Auteur · Ingénieur solo' },
         roleDetail: { en: 'Architecture, Go, CI/CD', fr: 'Architecture, Go, CI/CD' },
-        duration: { en: '2025', fr: '2025' },
+        duration: { en: '2026', fr: '2026' },
         team: { en: 'Solo · Open Source', fr: 'Solo · Open Source' },
         url: 'https://github.com/wolf-infra/traefik-mesh-companion',
         urlLabel: { en: 'GitHub →', fr: 'GitHub →' },
@@ -730,7 +734,7 @@ export class ProjectsService {
       title: 'Planific',
       slug: 'planific',
       subtitle: 'Studio Drave · Android & iOS',
-      status: 'In Development',
+      status: { en: 'In Development', fr: 'En développement' },
       description: this._details['planific'].description,
       tags: [
         'Kotlin Multiplatform',
@@ -748,7 +752,7 @@ export class ProjectsService {
       title: 'Waystone',
       slug: 'waystone',
       subtitle: 'Studio Drave · Android & iOS',
-      status: 'Architecting',
+      status: { en: 'Architecting', fr: 'En conception' },
       description: this._details['waystone'].description,
       tags: ['Kotlin Multiplatform', 'Compose Canvas', 'SQLDelight', 'Supabase', 'Offline-First'],
       featured: true,
@@ -757,7 +761,7 @@ export class ProjectsService {
       title: 'Starter Templates',
       slug: 'templates',
       subtitle: 'Open Source · KMP · Angular · Spring',
-      status: 'Maintained',
+      status: { en: 'Maintained', fr: 'Maintenu' },
       description: this._details['templates'].description,
       tags: ['Kotlin Multiplatform', 'Angular 21', 'Spring Boot', 'Fastlane', 'Vitest'],
       featured: false,
@@ -766,7 +770,7 @@ export class ProjectsService {
       title: 'Home Ops',
       slug: 'home-ops',
       subtitle: 'Self-Hosted · Bare Metal · Zero-Trust',
-      status: 'Production',
+      status: { en: 'Production', fr: 'Production' },
       description: this._details['home-ops'].description,
       tags: ['Ansible', 'Docker', 'Traefik', 'NetBird', 'Cloudflare', 'Authelia'],
       featured: false,
@@ -775,7 +779,7 @@ export class ProjectsService {
       title: 'Traefik Mesh Companion',
       slug: 'mesh-companion',
       subtitle: 'wolf-infra · Open Source · Go',
-      status: 'Production',
+      status: { en: 'Production', fr: 'Production' },
       description: this._details['mesh-companion'].description,
       tags: ['Go', 'Docker', 'Traefik', 'Uptime Kuma', 'Cloudflare', 'NetBird'],
       featured: false,

@@ -23,7 +23,7 @@ export interface Education {
   institutionFull?: I18n;
   period: string;
   location: string;
-  credits?: string;
+  credits?: I18n;
   badge?: I18n;
   active?: boolean;
   /** Years on Dean's List, shown as individual year chips */

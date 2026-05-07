@@ -8,10 +8,10 @@
   <div class="section-inner">
     <ui-section-header
       index="01"
-      [label]="lang.t('PARCOURS & FORMATION', 'PARCOURS & FORMATION')"
+      [label]="lang.t('BACKGROUND & EDUCATION', 'PARCOURS & FORMATION')"
       [title]="
         lang.t(
-          'Profil dual — pro & académique en parallèle',
+          'Dual profile — professional & academic in parallel',
           'Profil dual — pro & académique en parallèle'
         )
       "
@@ -27,7 +27,7 @@
     <div class="path-pill mono">
       <span class="path-dot" aria-hidden="true"></span>
       <span class="path-text">{{
-        lang.t('PROFIL DUAL · UQTR → ENTREPRISE', 'PROFIL DUAL · UQTR → ENTREPRISE')
+        lang.t('DUAL PROFILE · UQTR → INDUSTRY', 'PROFIL DUAL · UQTR → ENTREPRISE')
       }}</span>
     </div>
 
@@ -37,9 +37,9 @@
         <p class="col-label mono">
           <span class="col-label-comment">// </span>
           <span class="col-label-tag">pro</span>
-          {{ lang.t('Volet professionnel', 'Volet professionnel') }}
+          {{ lang.t('Professional track', 'Volet professionnel') }}
           <span class="col-label-count"
-            >{{ workExperiences.length }} {{ lang.t('postes', 'postes') }}</span
+            >{{ workExperiences.length }} {{ lang.t('positions', 'postes') }}</span
           >
         </p>
         <div class="cards">
@@ -54,7 +54,7 @@
         <p class="col-label mono">
           <span class="col-label-comment">// </span>
           <span class="col-label-tag">edu</span>
-          {{ lang.t('Socle académique', 'Socle académique') }}
+          {{ lang.t('Academic foundation', 'Socle académique') }}
         </p>
 
         <!-- Edu cards -->
@@ -65,7 +65,7 @@
               <div class="edu-card-top mono">
                 <span class="edu-eyebrow-meta">{{ edu.institution }} · {{ edu.period }}</span>
                 @if (edu.credits) {
-                  <span class="edu-credits mono">{{ edu.credits }}</span>
+                  <span class="edu-credits mono">{{ lang.t(edu.credits.en, edu.credits.fr) }}</span>
                 }
               </div>
 
@@ -80,7 +80,7 @@
               <p class="edu-period-status mono">
                 {{ edu.period }}
                 @if (edu.active) {
-                  <span class="edu-active-label">· {{ lang.t('en cours', 'en cours') }}</span>
+                  <span class="edu-active-label">· {{ lang.t('ongoing', 'en cours') }}</span>
                 }
               </p>
 
@@ -88,7 +88,7 @@
                 <div class="edu-dean-row">
                   <span class="edu-dean-star" aria-hidden="true">★</span>
                   <span class="edu-dean-label mono">{{
-                    lang.t("LISTE D'EXCELLENCE DU DOYEN", "LISTE D'EXCELLENCE DU DOYEN")
+                    lang.t("DEAN'S LIST OF EXCELLENCE", "LISTE D'EXCELLENCE DU DOYEN")
                   }}</span>
                   @for (year of edu.deanYears!; track year) {
                     <span class="edu-dean-year mono">· {{ year }}</span>
@@ -106,7 +106,9 @@
               <div class="edu-compact-right mono">
                 <span class="edu-compact-period">{{ edu.period }}</span>
                 @if (edu.credits) {
-                  <span class="edu-compact-credits">{{ edu.credits }}</span>
+                  <span class="edu-compact-credits">{{
+                    lang.t(edu.credits.en, edu.credits.fr)
+                  }}</span>
                 }
               </div>
             </div>
@@ -118,7 +120,7 @@
           <p class="col-label mono">
             <span class="col-label-comment">// </span>
             <span class="col-label-tag">branche</span>
-            {{ lang.t('Associatif', 'Associatif') }}
+            {{ lang.t('Associations', 'Associatif') }}
             <span class="assoc-period-label mono">{{ lang.t('2022 — 2023', '2022 — 2023') }}</span>
           </p>
           <div class="assoc-grid">
@@ -148,7 +150,7 @@
         <span class="col-label-tag">vue d'ensemble</span>
         <span class="timeline-desc">{{
           lang.t(
-            "le Bac couvre toute la période — l'asso a passé le relais au pro en 2023.",
+            'the degree spans the entire period — associations handed off to industry in 2023.',
             "le Bac couvre toute la période — l'asso a passé le relais au pro en 2023."
           )
         }}</span>
@@ -163,11 +165,11 @@
   <div class="section-inner">
     <ui-section-header
       index="02"
-      [label]="lang.t('PROJETS', 'PROJETS')"
-      [title]="lang.t('Réalisations & Architecture', 'Réalisations & Architecture')"
+      [label]="lang.t('PROJECTS', 'PROJETS')"
+      [title]="lang.t('Work & Architecture', 'Réalisations & Architecture')"
       [subtitle]="
         lang.t(
-          'Quelques projets récents — du mobile multiplateforme à l\'infrastructure auto-hébergée.',
+          'A selection of recent projects — from cross-platform mobile to self-hosted infrastructure.',
           'Quelques projets récents — du mobile multiplateforme à l\'infrastructure auto-hébergée.'
         )
       "
@@ -198,12 +200,12 @@
     <div class="contact-status mono" role="status">
       <span class="status-led" aria-hidden="true"></span>
       <span class="status-text">
-        <strong>{{ lang.t('Disponible', 'Disponible') }}</strong>
-        {{ lang.t('pour de nouveaux défis', 'pour de nouveaux défis') }}
+        <strong>{{ lang.t('Available', 'Disponible') }}</strong>
+        {{ lang.t('for new challenges', 'pour de nouveaux défis') }}
       </span>
       <span class="status-sep">·</span>
       <span class="status-modes">{{
-        lang.t('temps plein · contrats', 'temps plein · contrats')
+        lang.t('full-time · contracts', 'temps plein · contrats')
       }}</span>
     </div>
 
@@ -227,24 +229,24 @@
               type="button"
               (click)="copyEmail()"
               [attr.data-copied]="emailCopied"
-              [attr.aria-label]="lang.t('Copier l\'adresse', 'Copier l\'adresse')"
+              [attr.aria-label]="lang.t('Copy address', 'Copier l\'adresse')"
             >
               <span class="copy-ico" aria-hidden="true">⧉</span>
               <span>{{
                 emailCopied
-                  ? lang.t('Copié !', 'Copié !')
-                  : lang.t("Copier l'adresse", "Copier l'adresse")
+                  ? lang.t('Copied!', 'Copié !')
+                  : lang.t('Copy address', "Copier l'adresse")
               }}</span>
             </button>
             <span #copyToast class="copy-toast" role="status" aria-live="polite"
-              >✓ {{ lang.t('Adresse copiée !', 'Address copied!') }}</span
+              >✓ {{ lang.t('Address copied!', 'Adresse copiée !') }}</span
             >
           </span>
         </div>
         <p class="contact-hint mono">
-          {{ lang.t('// réponse sous', '// réponse sous') }}
+          {{ lang.t('// reply within', '// réponse sous') }}
           <span class="hint-accent">~24h</span>
-          {{ lang.t('· fuseau ET (UTC−5)', '· fuseau ET (UTC−5)') }}
+          {{ lang.t('· ET timezone (UTC−5)', '· fuseau ET (UTC−5)') }}
         </p>
       </div>
     </div>
@@ -258,14 +260,14 @@
       <a href="https://github.com/wolf-361" target="_blank" rel="noopener noreferrer">
         GitHub <span class="footer-arr">↗</span>
       </a>
-      <a href="https://linkedin.com/in/luc-allaire" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.linkedin.com/in/wolf361/" target="_blank" rel="noopener noreferrer">
         LinkedIn <span class="footer-arr">↗</span>
       </a>
     </div>
     <p class="footer-meta mono">
-      {{ lang.t('Conçu avec', 'Conçu avec') }}
+      {{ lang.t('Built with', 'Conçu avec') }}
       <strong>Angular</strong> &amp; <strong>Figma</strong>
-      {{ lang.t('· déployé sur', '· déployé sur') }}
+      {{ lang.t('· deployed on', '· déployé sur') }}
       <span class="footer-accent">GitHub Pages</span>.
     </p>
     <p class="footer-meta mono">© 2026 — Luc Allaire</p>

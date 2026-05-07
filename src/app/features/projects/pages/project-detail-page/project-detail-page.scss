@@ -58,6 +58,12 @@
 
 .crumb {
   opacity: 0.55;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    opacity: 0.85;
+  }
 }
 
 .crumb-active {
@@ -258,6 +264,15 @@
     color 150ms ease,
     opacity 150ms ease,
     border-color 150ms ease;
+  // Button reset
+  background: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-family: inherit;
 
   &:hover {
     opacity: 0.85;
@@ -289,6 +304,8 @@
   display: flex;
   flex-direction: column;
   gap: sp.$xl-2;
+  min-width: 0; // prevent grid blowout
+  overflow: hidden;
 }
 
 .cs-section {
@@ -325,6 +342,8 @@
   line-height: 1.75;
   color: color-mix(in srgb, sys.$on-surface-variant 85%, transparent);
   max-width: 64ch;
+  overflow-wrap: break-word;
+  word-break: break-word;
 
   // Inline emphasis handled in global styles.scss (bypasses ViewEncapsulation)
 }
@@ -378,8 +397,11 @@
 
 .arch-frame {
   border-radius: sys.$corner-medium;
-  overflow: hidden;
+  overflow: hidden; // clips rounded corners
   border: 1px solid sys.$outline-variant;
+  // Allow children to scroll horizontally on mobile
+  display: flex;
+  flex-direction: column;
 }
 
 .arch-bar {
@@ -389,6 +411,8 @@
   align-items: center;
   gap: 6px;
   border-bottom: 1px solid sys.$outline-variant;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .arch-bar-label {
@@ -396,6 +420,10 @@
   color: sys.$on-surface-variant;
   opacity: 0.5;
   margin-left: sp.$xs;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .arch-dot {
@@ -431,11 +459,104 @@
   background: sys.$surface-container;
   padding: sp.$xl;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  cursor: zoom-in;
+  position: relative;
 
   svg {
     display: block;
     width: 100%;
     height: auto;
+    min-width: 480px; // prevent diagrams from becoming unreadably small
+  }
+
+  // Tap hint on mobile only
+  @media (max-width: 900px) {
+    &::after {
+      content: '⊕ tap to expand';
+      position: absolute;
+      bottom: sp.$sm;
+      right: sp.$sm;
+      font-family: var(--mat-sys-body-small-font, monospace);
+      font-size: 0.625rem;
+      color: sys.$on-surface-variant;
+      opacity: 0.4;
+      pointer-events: none;
+      letter-spacing: 0.05em;
+    }
+  }
+}
+
+// ── SVG zoom modal ────────────────────────────────────────────────────────────
+
+.diagram-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0 0 0 / 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: sp.$lg;
+  cursor: zoom-out;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: modal-in 150ms ease;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.diagram-modal-inner {
+  background: sys.$surface-container;
+  border-radius: sys.$corner-medium;
+  border: 1px solid sys.$outline-variant;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 95vw;
+  max-height: 90vh;
+  width: min(900px, 95vw);
+  padding: sp.$xl;
+  cursor: default;
+  // Native pinch-to-zoom on touch devices
+  touch-action: pan-x pan-y pinch-zoom;
+
+  svg {
+    display: block;
+    // Render at natural authored size — user can scroll + pinch-zoom
+    width: auto;
+    height: auto;
+    min-width: min(700px, 80vw);
+    max-width: none;
+  }
+}
+
+.diagram-modal-close {
+  position: fixed;
+  top: sp.$lg;
+  right: sp.$lg;
+  background: sys.$surface-container-high;
+  border: 1px solid sys.$outline-variant;
+  color: sys.$on-surface-variant;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 150ms ease;
+
+  &:hover {
+    color: sys.$on-surface;
+    border-color: sys.$outline;
   }
 }
 

@@ -35,8 +35,8 @@ interface NavItem {
   ],
 })
 export class MobileNavComponent {
-  readonly lang = inject(LangService);
   private readonly router = inject(Router);
+  readonly lang = inject(LangService);
 
   /** Emitted when the user navigates or closes the overlay */
   readonly closed = output<void>();

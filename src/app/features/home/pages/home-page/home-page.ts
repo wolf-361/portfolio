@@ -25,6 +25,13 @@ import { Project } from '../../models/project';
   styleUrl: './home-page.scss',
 })
 export class HomePageComponent {
+  // ── Private fields ────────────────────────────────────────────────────────
+
+  private readonly copyToastEl = viewChild<ElementRef<HTMLSpanElement>>('copyToast');
+  private copyTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  // ── Public fields ─────────────────────────────────────────────────────────
+
   readonly lang = inject(LangService);
 
   // ── Contact ───────────────────────────────────────────────────────────────
@@ -76,7 +83,7 @@ export class HomePageComponent {
       title: { en: 'Developer Intern', fr: 'Stagiaire développeur' },
       company: 'UQTR · STI / IDEV',
       period: { en: 'May – Aug 2024', fr: 'Mai – Août 2024' },
-      periodShort: { en: 'été 2024', fr: 'été 2024' },
+      periodShort: { en: 'summer 2024', fr: 'été 2024' },
       location: 'Trois-Rivières, QC',
       kind: 'internship',
       summary: {
@@ -132,7 +139,7 @@ export class HomePageComponent {
           fr: "Déploiement et gestion des serveurs de l'association + livraison de deux apps web de production pour des événements étudiants.",
         },
       ],
-      stack: ['Leadership', 'Événements'],
+      stack: ['Leadership', 'Events'],
     },
   ];
 
@@ -148,7 +155,7 @@ export class HomePageComponent {
       },
       period: '2022 – 2026',
       location: 'Trois-Rivières, QC',
-      credits: 'B.Sc. · 90 crédits',
+      credits: { en: 'B.Sc. · 90 credits', fr: 'B.Sc. · 90 crédits' },
       active: true,
       deanYears: [2023, 2024, 2025],
     },
@@ -157,7 +164,7 @@ export class HomePageComponent {
       institution: 'UQTR',
       period: '2020 – 2022',
       location: 'Trois-Rivières, QC',
-      credits: 'B.Sc. · partiel',
+      credits: { en: 'B.Sc. · partial', fr: 'B.Sc. · partiel' },
       featured: false,
     },
   ];
@@ -267,12 +274,12 @@ export class HomePageComponent {
       urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
     },
     {
-      size: 'small',
+      size: 'featured',
       tag: { en: 'infra · self-hosted', fr: 'infra · self-hosted' },
       title: { en: 'Home Ops', fr: 'Home Ops' },
       description: {
-        en: '3-node bare-metal Debian cluster. 12 Ansible roles, dual-path network (NetBird VPN + Cloudflare tunnels), mTLS + Authelia SSO, full Prometheus/Grafana/Loki observability.',
-        fr: 'Cluster bare-metal 3 nœuds. 12 rôles Ansible, réseau dual-path (VPN NetBird + tunnels Cloudflare), mTLS + Authelia SSO, observabilité Prometheus/Grafana/Loki complète.',
+        en: '3-node bare-metal Debian cluster. 12 Ansible roles, dual-path network (NetBird VPN + Cloudflare tunnels), Authelia SSO, full Prometheus/Grafana/Loki observability.',
+        fr: 'Cluster bare-metal 3 nœuds. 12 rôles Ansible, réseau dual-path (VPN NetBird + tunnels Cloudflare), Authelia SSO, observabilité Prometheus/Grafana/Loki complète.',
       },
       stack: ['Ansible', 'Docker', 'Traefik', 'NetBird', 'Cloudflare', 'Authelia', 'Debian'],
       slug: 'home-ops',
@@ -303,9 +310,6 @@ export class HomePageComponent {
   ];
 
   // ── Methods ────────────────────────────────────────────────────────────────
-
-  private readonly copyToastEl = viewChild<ElementRef<HTMLSpanElement>>('copyToast');
-  private copyTimeout: ReturnType<typeof setTimeout> | null = null;
 
   copyEmail(): void {
     // Copy to clipboard — fire and forget, don't gate the UI on the promise

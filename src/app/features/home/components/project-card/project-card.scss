@@ -32,6 +32,11 @@
     flex-direction: row;
     min-height: 340px;
   }
+
+  &.card--featured-terminal {
+    flex-direction: column;
+    min-height: 340px;
+  }
 }
 
 // ── Content pane ──────────────────────────────────────────────────────────────
@@ -46,6 +51,12 @@
 
   .card--featured & {
     max-width: 52%;
+    padding: sp.$xl;
+    gap: sp.$lg;
+  }
+
+  .card--featured-terminal & {
+    max-width: 100%;
     padding: sp.$xl;
     gap: sp.$lg;
   }

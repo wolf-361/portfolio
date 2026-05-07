@@ -16,7 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withComponentInputBinding(),
-      withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'top' }),
+      withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'disabled' }),
     ),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor, errorInterceptor])),
     { provide: APP_CONFIG, useValue: { apiBaseUrl: environment.apiBaseUrl } },

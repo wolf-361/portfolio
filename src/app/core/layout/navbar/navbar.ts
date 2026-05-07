@@ -27,11 +27,15 @@ interface NavItem {
   styleUrl: './navbar.scss',
 })
 export class NavbarComponent implements OnInit {
-  readonly theme = inject(ThemeService);
-  readonly lang = inject(LangService);
+  // ── Private injectables (must precede public fields per member-ordering) ──
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
 
+  // ── Public injectables ────────────────────────────────────────────────────
+  readonly theme = inject(ThemeService);
+  readonly lang = inject(LangService);
+
+  // ── Public fields ─────────────────────────────────────────────────────────
   readonly mobileNavOpen = signal(false);
 
   /** Active section fragment, updated by scroll-spy */
@@ -44,6 +48,7 @@ export class NavbarComponent implements OnInit {
   ];
   // Note: timeline is part of experiences section — not a separate nav item
 
+  // ── Lifecycle ─────────────────────────────────────────────────────────────
   ngOnInit(): void {
     fromEvent(window, 'scroll', { passive: true })
       .pipe(throttleTime(50), takeUntilDestroyed(this.destroyRef))
@@ -52,6 +57,32 @@ export class NavbarComponent implements OnInit {
     this.updateActiveSection();
   }
 
+  // ── Public methods ────────────────────────────────────────────────────────
+  scrollTo(fragment: string): void {
+    const el = document.getElementById(fragment);
+    if (el) {
+      const offset = 96; // sticky navbar height
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    } else {
+      // Not on home page — navigate home; app.ts NavigationEnd handler will scroll
+      this.router.navigate(['/'], { fragment });
+    }
+  }
+
+  isActive(fragment: string): boolean {
+    return this.activeFragment() === fragment;
+  }
+
+  openMobileNav(): void {
+    this.mobileNavOpen.set(true);
+  }
+
+  closeMobileNav(): void {
+    this.mobileNavOpen.set(false);
+  }
+
+  // ── Private methods ───────────────────────────────────────────────────────
   private updateActiveSection(): void {
     const scrollY = window.scrollY;
     const viewportH = window.innerHeight;
@@ -69,27 +100,5 @@ export class NavbarComponent implements OnInit {
       }
     });
     this.activeFragment.set(active);
-  }
-
-  scrollTo(fragment: string): void {
-    const el = document.getElementById(fragment);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-      // Not on home page — navigate home then scroll to fragment
-      this.router.navigate(['/'], { fragment });
-    }
-  }
-
-  isActive(fragment: string): boolean {
-    return this.activeFragment() === fragment;
-  }
-
-  openMobileNav(): void {
-    this.mobileNavOpen.set(true);
-  }
-
-  closeMobileNav(): void {
-    this.mobileNavOpen.set(false);
   }
 }
