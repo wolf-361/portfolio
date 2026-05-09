@@ -1,0 +1,235 @@
+@use 'styles/sys' as sys;
+@use 'styles/tokens' as t;
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+// ── Terminal window ────────────────────────────────────────────────────────────
+
+.terminal {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: text;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 20px 40px -4px rgba(0, 0, 0, 0.3);
+}
+
+.terminal-titlebar {
+  background: t.$macos-titlebar;
+  padding: 0.625rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &.dot-red {
+    background: t.$macos-dot-red;
+  }
+  &.dot-yellow {
+    background: t.$macos-dot-yellow;
+  }
+  &.dot-green {
+    background: t.$macos-dot-green;
+  }
+}
+
+.terminal-title {
+  flex: 1;
+  text-align: center;
+  font-size: 0.6875rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: t.$macos-titlebar-text;
+  user-select: none;
+  margin-left: -44px;
+}
+
+.terminal-body {
+  background: #0d1117;
+  padding: 1rem 1.5rem 1.25rem;
+  min-height: 200px;
+  max-height: 500px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  scrollbar-width: thin;
+  scrollbar-color: t.$macos-titlebar #0d1117;
+}
+
+// ── Terminal lines ─────────────────────────────────────────────────────────────
+
+.t-line {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  min-height: 1.6em;
+  flex-shrink: 0;
+  isolation: isolate;
+}
+
+.t-p10k-top {
+  gap: 0.3rem;
+  padding-top: 0.5rem;
+}
+
+.t-p10k-bot {
+  gap: 0;
+  margin-top: -0.1em;
+}
+
+.t-pfx {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  flex-shrink: 0;
+  user-select: none;
+  color: #4b5563;
+}
+
+.t-chevron {
+  color: #a78bfa;
+  font-weight: 700;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.t-output {
+  padding-left: 0.25rem;
+}
+
+// ── Text ──────────────────────────────────────────────────────────────────────
+
+.t-text {
+  color: #cdd6f4;
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-width: 0;
+
+  &.t-cmd {
+    color: #7dd3fc;
+  }
+  &.t-err {
+    color: #f87171;
+  }
+  &.t-dim {
+    color: #4b5563;
+  }
+}
+
+.t-cursor {
+  color: #cdd6f4;
+  flex-shrink: 0;
+
+  &.t-cursor--blink {
+    animation: cursor-blink 1.1s step-end infinite;
+  }
+}
+
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+// ── Neofetch ──────────────────────────────────────────────────────────────────
+
+.t-neofetch {
+  align-items: baseline;
+  line-height: 1.5;
+}
+
+.t-logo {
+  color: #06b6d4;
+  white-space: pre;
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+}
+
+.t-info {
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.t-info-link {
+  color: #86efac;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+
+  &:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+  }
+}
+
+// ── Interactive input ──────────────────────────────────────────────────────────
+
+.t-input-line {
+  position: relative;
+}
+
+.t-display-input {
+  min-width: 1px;
+}
+
+.t-ghost {
+  color: #3d4452;
+  pointer-events: none;
+  user-select: none;
+}
+
+.t-hidden-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+// ── Mobile ─────────────────────────────────────────────────────────────────────
+
+@media (max-width: 599px) {
+  .terminal-body {
+    padding: 0.75rem 0.875rem 1rem;
+    max-height: 380px;
+  }
+
+  .t-line {
+    font-size: 0.8125rem;
+  }
+
+  .t-p10k-top {
+    padding-top: 0.35rem;
+  }
+
+  .t-logo {
+    display: none;
+  }
+
+  .t-neofetch {
+    padding-left: 0.125rem;
+  }
+
+  .t-info {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 0.8125rem;
+  }
+}
