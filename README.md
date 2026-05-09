@@ -1,6 +1,6 @@
 # Luc Allaire — Portfolio
 
-My personal portfolio showcasing my work as a KMP developer specializing in shared-first mobile systems for Android and iOS.
+Mobile-first, but fluent across the stack — from Kotlin to Go to bare metal. Production-grade work across KMP mobile, Angular web, and self-hosted infrastructure.
 
 **Live:** [me.wolf-361.ca](https://me.wolf-361.ca)
 
