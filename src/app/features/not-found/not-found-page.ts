@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { LangService } from '../../core/lang/lang';
 
-/**
- * 404 — terminal crash aesthetic.
- * Full design implemented in a later step; this stub satisfies the route.
- */
+/** 404 — terminal crash aesthetic. */
 @Component({
   selector: 'app-not-found-page',
   imports: [RouterLink, MatButtonModule],
@@ -13,8 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
     <div class="page">
       <p class="eyebrow mono">// 404 · RouteNotMatchedError</p>
       <h1 class="title mono">404</h1>
-      <p class="message">Cette route n'existe pas.</p>
-      <a mat-flat-button routerLink="/">← Retour</a>
+      <p class="message">{{ lang.t('This route does not exist.', "Cette route n'existe pas.") }}</p>
+      <a mat-flat-button routerLink="/">{{ lang.t('← Back', '← Retour') }}</a>
     </div>
   `,
   styles: [
@@ -61,4 +59,6 @@ import { MatButtonModule } from '@angular/material/button';
     `,
   ],
 })
-export class NotFoundPageComponent {}
+export class NotFoundPageComponent {
+  readonly lang = inject(LangService);
+}
