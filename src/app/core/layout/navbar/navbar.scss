@@ -144,23 +144,34 @@
 // ── Right-side controls ───────────────────────────────────────────────────────
 
 .lang-btn {
-  font-family: var(--font-mono) !important;
-  font-size: 0.6875rem !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase !important;
-  color: sys.$on-surface-variant !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  padding: 0 sp.$xs;
+  border: none;
+  border-radius: sys.$corner-small;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: sys.$on-surface-variant;
   opacity: 0.65;
-  padding: 0 sp.$xs !important;
-  min-width: unset !important;
-  width: 36px !important;
   transition:
     color 120ms ease,
-    opacity 120ms ease !important;
+    opacity 120ms ease;
 
   &:hover {
-    color: sys.$primary !important;
+    color: sys.$primary;
     opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: 2px solid sys.$primary;
+    outline-offset: 2px;
   }
 }
 

@@ -8,10 +8,19 @@ export class LangService {
 
   readonly lang = this._lang.asReadonly();
 
+  constructor() {
+    this.applyLang(this._lang());
+  }
+
   toggle(): void {
     const next: Lang = this._lang() === 'en' ? 'fr' : 'en';
     this._lang.set(next);
     localStorage.setItem('lang', next);
+    this.applyLang(next);
+  }
+
+  private applyLang(lang: Lang): void {
+    document.documentElement.lang = lang;
   }
 
   t<T>(en: T, fr: T): T {

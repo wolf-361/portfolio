@@ -66,7 +66,7 @@ function buildNeofetchLines(lang: Lang): TermLine[] {
     { text: en ? '        built to scale.' : '        conçu pour durer.', style: S_DIM },
     { text: '', style: '' },
     { text: en ? 'OS:     Arch Linux x86_64' : 'OS :    Arch Linux x86_64', style: S_VALUE },
-    { text: en ? 'Host:   wolf-361.github.io' : 'Hôte:   wolf-361.github.io', style: S_VALUE },
+    { text: en ? 'Host:   me.wolf-361.ca' : 'Hôte:   me.wolf-361.ca', style: S_VALUE },
     { text: 'Shell:  zsh + powerlevel10k', style: S_VALUE },
     { text: '', style: '' },
     { text: 'Mobile: KMP · Compose', style: S_VALUE },

@@ -1,4 +1,4 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, effect } from '@angular/core';
 
 export type Theme = 'light' | 'dark' | 'system';
 export type PaletteName =
@@ -37,16 +37,27 @@ export class ThemeService {
     (this.readStored('palette') as PaletteName) ?? 'cyan',
   );
 
+  /** Tracks the OS preference — updated via MediaQueryList change event */
+  private readonly _systemDark = signal<boolean>(
+    window.matchMedia('(prefers-color-scheme: dark)').matches,
+  );
+
   readonly isDark = computed(() => {
     const t = this._theme();
-    if (t === 'system') return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (t === 'system') return this._systemDark();
     return t === 'dark';
   });
 
   readonly palette = this._palette.asReadonly();
 
   constructor() {
-    this.applyTheme(this.isDark());
+    // Keep _systemDark in sync with OS preference changes
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const handler = (e: MediaQueryListEvent) => this._systemDark.set(e.matches);
+    mq.addEventListener('change', handler);
+
+    // Apply theme/palette reactively
+    effect(() => this.applyTheme(this.isDark()));
     this.applyPalette(this._palette());
   }
 
@@ -57,7 +68,6 @@ export class ThemeService {
   setTheme(theme: Theme): void {
     this._theme.set(theme);
     localStorage.setItem('theme', theme);
-    this.applyTheme(this.isDark());
   }
 
   setPalette(name: PaletteName): void {
