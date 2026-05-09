@@ -1,0 +1,65 @@
+name: Generate Demo GIF
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Install Playwright browsers
+        run: bunx playwright install chromium --with-deps
+
+      - name: Install ffmpeg
+        run: sudo apt-get install -y ffmpeg
+
+      - name: Build app
+        run: bun run build
+
+      - name: Serve app
+        run: bunx serve dist/portfolio/browser -l 4200 &
+        
+      - name: Wait for server
+        run: sleep 3
+
+      - name: Record demo
+        run: bunx playwright test e2e/demo.spec.ts --project=chromium
+        env:
+          PWTEST_VIDEO: 1
+
+      - name: Convert video to GIF
+        run: |
+          VIDEO=$(find test-results -name "*.webm" | head -1)
+          ffmpeg -i "$VIDEO" \
+            -vf "fps=15,scale=1200:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
+            -loop 0 \
+            public/demo.gif
+
+      - name: Update README
+        run: |
+          if grep -q "demo.gif" README.md; then
+            echo "GIF reference already in README"
+          else
+            sed -i 's|> A demo GIF will be added here once the production domain is live.*||' README.md
+            sed -i '/^## What this is/i ![Demo](public/demo.gif)\n' README.md
+          fi
+
+      - name: Commit GIF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/demo.gif README.md
+          git commit -m "chore: update demo gif [skip ci]" || echo "Nothing to commit"
+          git push
