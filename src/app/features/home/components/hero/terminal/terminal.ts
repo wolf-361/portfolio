@@ -50,7 +50,7 @@ const ARCH_LOGO_LINES = [
 const S_HEADER = 'color:#7dd3fc;font-weight:700';
 const S_SEP = 'color:#4b5563';
 const S_VALUE = 'color:#cdd6f4';
-const S_DIM = 'color:#6b7280';
+const S_DIM = 'color:#8b9db0';
 
 function buildNeofetchLines(lang: Lang): TermLine[] {
   const en = lang === 'en';

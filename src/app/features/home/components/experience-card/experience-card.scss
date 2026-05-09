@@ -124,7 +124,9 @@
 }
 
 .active-label {
-  color: sys.$primary;
+  // sys.$primary gives ~4.4:1 in dark mode — use a slightly lighter shade
+  // that still reads as the primary accent but clears 4.5:1 WCAG AA.
+  color: color-mix(in srgb, sys.$primary 85%, #fff);
   opacity: 1;
 }
 
