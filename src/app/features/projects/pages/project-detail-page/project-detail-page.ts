@@ -1,10 +1,17 @@
-import { Component, HostListener, inject, input, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  DestroyRef,
+  HostListener,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { LangService } from '../../../../core/lang/lang';
 import { ProjectsService } from '../../services/projects';
-import { ProjectDetail } from '../../models/project-detail';
 import { TagChipSetComponent } from '../../../../shared/components/tag-chip-set/tag-chip-set';
 import { StatCardComponent } from '../../../../shared/components/stat-card/stat-card';
 import { ScrollSpyDirective } from '../../../../shared/directives/scroll-spy/scroll-spy';
@@ -26,20 +33,23 @@ import { FadeInDirective } from '../../../../shared/directives/fade-in/fade-in';
 export class ProjectDetailPageComponent {
   private readonly projects = inject(ProjectsService);
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly destroyRef = inject(DestroyRef);
   readonly lang = inject(LangService);
 
   readonly slug = input.required<string>();
 
-  get project(): ProjectDetail | undefined {
-    return this.projects.getDetail(this.slug());
-  }
-
-  get sectionIds(): string[] {
-    return this.project?.sections.map((s) => s.id) ?? [];
-  }
+  readonly project = computed(() => this.projects.getDetail(this.slug()));
+  readonly sectionIds = computed(() => this.project()?.sections.map((s) => s.id) ?? []);
 
   readonly activeSection = signal<string>('');
   readonly zoomedDiagram = signal<string | null>(null);
+
+  constructor() {
+    // Clean up overflow lock if user navigates away while diagram is open
+    this.destroyRef.onDestroy(() => {
+      if (this.zoomedDiagram()) document.body.style.overflow = '';
+    });
+  }
 
   onActiveSection(id: string): void {
     this.activeSection.set(id);
@@ -60,7 +70,8 @@ export class ProjectDetailPageComponent {
     if (this.zoomedDiagram()) this.closeDiagram();
   }
 
-  /** Split body on double-newline and sanitize each paragraph (supports <strong> and <mark>) */
+  /** Body content is trusted static data from ProjectsService — never user input.
+   *  Split on double-newline and bypass sanitization to support <strong> and <mark>. */
   bodyParagraphs(text: string): SafeHtml[] {
     return text.split('\n\n').map((p) => this.sanitizer.bypassSecurityTrustHtml(p));
   }

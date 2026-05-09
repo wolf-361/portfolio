@@ -1,4 +1,4 @@
-@if (project; as p) {
+@if (project(); as p) {
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
   <div class="cs-hero">
     <div class="cs-container">
@@ -44,7 +44,7 @@
   <!-- ── Two-column layout ──────────────────────────────────────────────────── -->
   <div
     class="cs-container cs-layout"
-    [uiScrollSpy]="sectionIds"
+    [uiScrollSpy]="sectionIds()"
     (activeSection)="onActiveSection($event)"
   >
     <!-- Sidebar -->
