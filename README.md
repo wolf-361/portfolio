@@ -1,31 +1,89 @@
-# Angular 21 Standalone Template
+# Luc Allaire — Portfolio
 
-A production-ready Angular 21 starter with Material M3 theming, feature-first architecture, and a full quality gate out of the box.
+My personal portfolio showcasing my work as a KMP developer specializing in shared-first mobile systems for Android and iOS.
+
+**Live:** [me.wolf-361.ca](https://me.wolf-361.ca)
+
+> A demo GIF will be added here once the production domain is live — showing the interactive terminal, bilingual toggle, and dark/light mode in action.
+
+---
+
+## What this is
+
+A bilingual (FR/EN) single-page portfolio built from scratch with Angular 21 and Angular Material M3. It features an interactive terminal that doubles as a navigable resume, project case studies with architecture diagrams, and a live dark/light theme with no flash on load.
 
 ---
 
 ## Stack
 
-| Layer           | Choice                               |
-| :-------------- | :----------------------------------- |
-| Framework       | Angular 21 (standalone, no NgModule) |
-| UI              | Angular Material M3                  |
-| State           | Signals + `httpResource()`           |
-| Styling         | SCSS with M3 design tokens           |
-| Tests           | Vitest (unit) · Playwright (e2e)     |
-| Linting         | ESLint + `eslint-plugin-boundaries`  |
-| Formatting      | Prettier                             |
-| Git hooks       | Husky + lint-staged + commitlint     |
-| Package manager | Bun                                  |
+| Layer           | Choice                               | Why                                                                                                                                                                                           |
+| :-------------- | :----------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework       | Angular 21 (standalone, no NgModule) | Stable, opinionated, excellent Material integration — [ADR-0002](./docs/adr/0002-standalone-components-only.md)                                                                               |
+| UI              | Angular Material M3                  | Accessible components out of the box, single token file to rebrand — [ADR-0006](./docs/adr/0006-angular-material-design-tokens.md)                                                            |
+| State           | Signals + `httpResource()`           | No subscription management, fine-grained reactivity, aligned with Angular's direction — [ADR-0003](./docs/adr/0003-signals-as-state-primitive.md)                                             |
+| Styling         | SCSS with M3 design tokens           | One `_tokens.scss` to change the entire palette, font, and radius                                                                                                                             |
+| Tests           | Vitest (unit) · Playwright (e2e)     | Vitest: no browser launch, Jest-compatible API — [ADR-0007](./docs/adr/0007-vitest-over-karma.md). Playwright: real browser, trace viewer — [ADR-0008](./docs/adr/0008-playwright-for-e2e.md) |
+| Linting         | ESLint + `eslint-plugin-boundaries`  | Import rules between `core / shared / features` are enforced mechanically, not by convention                                                                                                  |
+| Formatting      | Prettier                             |                                                                                                                                                                                               |
+| Git hooks       | Husky + lint-staged + commitlint     | Pre-commit: format + lint staged files only. Commit-msg: Conventional Commits — [ADR-0009](./docs/adr/0009-husky-lint-staged.md)                                                              |
+| Package manager | Bun                                  |                                                                                                                                                                                               |
 
 ---
 
-## Getting started
+## Architecture
+
+Feature-First layout — code is grouped by business domain, not by technical type. ([ADR-0001](./docs/adr/0001-feature-first-architecture.md))
+
+```
+src/app/
+├── core/       # Singletons loaded once: interceptors, layout, theme, lang
+├── shared/     # Reusable building blocks with no feature affinity
+└── features/   # One folder per domain (home, projects, not-found)
+```
+
+Import rules enforced by `eslint-plugin-boundaries`:
+
+- `features` → may import `core` and `shared`
+- `shared` → may **not** import `core` or `features`
+- `core` → may **not** import `features`
+- Features may **not** cross-import each other
+
+Within each feature:
+
+```
+features/{name}/
+├── models/      # TypeScript interfaces scoped to this feature
+├── services/    # Signal-based state, httpResource() reads, mutation methods
+├── guards/      # Route guards (optional)
+├── components/  # Dumb components — @Input/@Output only, no service injection
+└── pages/       # Smart components — inject services, connected to routes
+```
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for the full guide and [docs/adr/](./docs/adr/) for the reasoning behind each decision.
+
+---
+
+## Key patterns
+
+**Reads** uses `httpResource()` from `@angular/common/http`. The URL factory reads signals, so re-fetching on param changes is automatic. No manual subscriptions.
+
+```typescript
+readonly projects = httpResource<Project[]>(() => this.api.url('/projects'));
+```
+
+**State** is signals throughout. `computed()` for all derived state. No RxJS in components.
+
+**Theming** — `src/styles/_tokens.scss` is the single source of truth for palette, font, and radius. The `dark` class on `<html>` drives light/dark switching. An inline script in `index.html` sets the class synchronously before first paint — no flash of wrong theme. ([ADR-0005](./docs/adr/0005-dark-light-theme-strategy.md))
+
+**File naming** — Angular 21 style: no type suffixes in filenames (`auth.ts`, not `auth.service.ts`). Class names retain their suffix. ([ADR-0010](./docs/adr/0010-file-naming-conventions.md))
+
+---
+
+## Running locally
 
 ```bash
 bun install
-bun run init        # interactive theme initializer (palette, font, radius)
-bun start           # dev server at http://localhost:4200
+bun start           # dev server → http://localhost:4200
 ```
 
 The dev server proxies `/api` → `http://localhost:8080`. Edit `proxy.conf.json` to change the target.
@@ -37,51 +95,10 @@ The dev server proxies `/api` → `http://localhost:8080`. Edit `proxy.conf.json
 ```bash
 bun start           # dev server
 bun run build       # production build
-bun test            # unit tests (vitest)
+bun test            # unit tests (Vitest)
 bun run test:watch  # unit tests in watch mode
 bun run test:e2e    # Playwright e2e tests
 bun run lint        # ESLint
 bun run format      # Prettier
-bun run init        # re-run theme initializer
+bun run init        # interactive theme initializer (palette, font, radius)
 ```
-
----
-
-## Architecture
-
-```
-src/app/
-├── core/       # Singletons: auth, guards, interceptors, layout, theme
-├── shared/     # Reusable UI: components (ui-*), directives, models, pipes
-└── features/   # One folder per domain
-```
-
-Import boundaries are enforced by ESLint:
-
-- `features` → can import `core` and `shared`
-- `shared` → cannot import `core` or `features`
-- `core` → cannot import `features`
-- Features cannot cross-import each other
-
-See [ARCHITECTURE.md](./ARCHITECTURE.md) for the full guide and [docs/adr/](./docs/adr/) for the reasoning behind each decision.
-
----
-
-## Theming
-
-- 12 built-in Material palettes, switchable at runtime
-- Light / dark mode driven by a `dark` class on `<html>`
-- All tokens live in `src/styles/_tokens.scss` — edit palette, font, and radius there
-- Run `bun run init` for an interactive prompt
-
----
-
-## Adding a feature
-
-```bash
-mkdir -p src/app/features/{name}/{models,services,guards,components,pages}
-```
-
-1. Add a `loadComponent` route in `app.routes.ts`
-2. Create a service using `httpResource()` for reads, `ApiService` methods for mutations
-3. Pages are smart (inject services), components are dumb (`@Input` / `@Output` only)
