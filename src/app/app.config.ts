@@ -5,7 +5,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { routes } from './app.routes';
 import { APP_CONFIG } from './core/http/app-config';
-import { authInterceptor } from './core/interceptors/auth';
 import { errorInterceptor } from './core/interceptors/error';
 import { environment } from '../environments/environment';
 
@@ -18,7 +17,7 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding(),
       withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'disabled' }),
     ),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor, errorInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([errorInterceptor])),
     { provide: APP_CONFIG, useValue: { apiBaseUrl: environment.apiBaseUrl } },
   ],
 };
