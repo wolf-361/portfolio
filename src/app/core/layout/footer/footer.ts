@@ -114,7 +114,7 @@ import { LangService } from '../../lang/lang';
 
       .footer-meta {
         margin: 0;
-        opacity: 0.45;
+        opacity: 0.65;
         letter-spacing: 0.02em;
         font-family: sys.$font-mono;
 

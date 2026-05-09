@@ -12,13 +12,15 @@
                 [class]="seg.isGap ? 'bar-gap' : 'bar-' + row.variant"
                 [style.left]="segLeft(seg)"
                 [style.width]="segWidth(seg)"
-                [attr.aria-label]="seg.barLabel"
+                [attr.role]="seg.isGap ? null : 'img'"
+                [attr.aria-label]="seg.isGap ? null : seg.barLabel"
+                [attr.aria-hidden]="seg.isGap ? 'true' : null"
               >
                 @if (!seg.isGap && showSegLabel(seg)) {
                   @if (seg.starred) {
-                    <span class="bar-star" aria-label="Dean's List">★</span>
+                    <span class="bar-star" role="img" aria-label="Dean's List">★</span>
                   }
-                  <span class="bar-label">{{ seg.barLabel }}</span>
+                  <span class="bar-label" aria-hidden="true">{{ seg.barLabel }}</span>
                 }
               </div>
             }
@@ -28,13 +30,14 @@
               [class]="'bar-' + row.variant"
               [style.left]="barLeft(row)"
               [style.width]="barWidth(row)"
+              role="img"
               [attr.aria-label]="row.barLabel"
             >
               @if (showLabel(row)) {
                 @if (row.starred) {
-                  <span class="bar-star" aria-label="Dean's List">★</span>
+                  <span class="bar-star" role="img" aria-label="Dean's List">★</span>
                 }
-                <span class="bar-label">{{ row.barLabel }}</span>
+                <span class="bar-label" aria-hidden="true">{{ row.barLabel }}</span>
               }
             </div>
           }
@@ -84,6 +87,7 @@
           [style.height]="toPercent(rowEnd(vr.row)) - toPercent(rowStart(vr.row)) + '%'"
           [style.left.px]="vr.inset"
           [style.right.px]="vr.inset"
+          role="img"
           [attr.aria-label]="vr.row.label"
         >
           <span

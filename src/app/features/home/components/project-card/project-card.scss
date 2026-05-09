@@ -98,7 +98,7 @@
   border-radius: sys.$corner-extra-small;
   border: 1px solid sys.$outline-variant;
   color: sys.$on-surface-variant;
-  opacity: 0.5;
+  opacity: 0.65;
 }
 
 // ── Body ─────────────────────────────────────────────────────────────────────
@@ -176,14 +176,18 @@
   font-weight: 600;
   letter-spacing: 0.05em;
   color: sys.$on-surface-variant;
-  opacity: 0.5;
+  opacity: 0.65;
   white-space: nowrap;
   flex-shrink: 0;
   text-decoration: none;
   transition: opacity 150ms ease;
+  // Minimum 44px touch target
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 
   .card:hover & {
-    opacity: 0.8;
+    opacity: 0.9;
   }
 }
 
