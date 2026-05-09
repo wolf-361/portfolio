@@ -30,9 +30,11 @@ export interface Project {
   stack: string[];
   /** Route slug for internal detail page — takes priority over url */
   slug?: string;
-  /** Optional GitHub or live URL */
+  /** Optional GitHub or live URL — used as primary CTA when no slug */
   url?: string;
   urlLabel?: I18n;
+  /** Secondary GitHub repo link — shown alongside the case study CTA */
+  repoUrl?: string;
   /** Visual size in the bento grid */
   size: ProjectSize;
   /** Optional tag line rendered above the title in mono, e.g. "// mobile" */

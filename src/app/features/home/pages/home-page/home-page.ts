@@ -305,6 +305,7 @@ export class HomePageComponent {
       },
       stack: ['Go', 'Docker', 'Traefik', 'Uptime Kuma', 'Cloudflare', 'NetBird'],
       slug: 'mesh-companion',
+      repoUrl: 'https://github.com/wolf-infra/traefik-mesh-companion',
       urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
     },
   ];

@@ -1,5 +1,10 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import {
+  provideRouter,
+  TitleStrategy,
+  withComponentInputBinding,
+  withInMemoryScrolling,
+} from '@angular/router';
 import { provideHttpClient, withInterceptors, withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -7,6 +12,7 @@ import { routes } from './app.routes';
 import { APP_CONFIG } from './core/http/app-config';
 import { errorInterceptor } from './core/interceptors/error';
 import { environment } from '../environments/environment';
+import { PortfolioTitleStrategy } from './core/title-strategy';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,5 +25,6 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withFetch(), withInterceptors([errorInterceptor])),
     { provide: APP_CONFIG, useValue: { apiBaseUrl: environment.apiBaseUrl } },
+    { provide: TitleStrategy, useClass: PortfolioTitleStrategy },
   ],
 };

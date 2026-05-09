@@ -148,6 +148,14 @@
   padding-top: sp.$sm;
 }
 
+.card-links {
+  display: flex;
+  align-items: center;
+  gap: sp.$md;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
 .card-link {
   font-size: 0.6875rem;
   font-weight: 600;
@@ -156,11 +164,26 @@
   opacity: 0.8;
   white-space: nowrap;
   flex-shrink: 0;
-  margin-left: auto;
   transition: opacity 150ms ease;
 
   .card:hover & {
     opacity: 1;
+  }
+}
+
+.card-repo {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: sys.$on-surface-variant;
+  opacity: 0.5;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: opacity 150ms ease;
+
+  .card:hover & {
+    opacity: 0.8;
   }
 }
 

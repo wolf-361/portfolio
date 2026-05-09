@@ -31,11 +31,24 @@
 
     <div class="card-footer">
       <ui-tag-chip-set [tags]="project().stack" [accentFirst]="project().accentFirst !== false" />
-      @if (project().slug || project().url) {
-        <span class="card-link mono" aria-hidden="true">
-          {{ lang.t(project().urlLabel?.en ?? 'View →', project().urlLabel?.fr ?? 'Voir →') }}
-        </span>
-      }
+      <div class="card-links">
+        @if (project().slug || project().url) {
+          <span class="card-link mono" aria-hidden="true">
+            {{ lang.t(project().urlLabel?.en ?? 'View →', project().urlLabel?.fr ?? 'Voir →') }}
+          </span>
+        }
+        @if (project().repoUrl) {
+          <a
+            class="card-repo mono"
+            [href]="project().repoUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            (click)="$event.stopPropagation()"
+            aria-label="View source on GitHub"
+            >GitHub ↗</a
+          >
+        }
+      </div>
     </div>
   </div>
 

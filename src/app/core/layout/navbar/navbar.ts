@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -29,6 +30,7 @@ interface NavItem {
 export class NavbarComponent implements OnInit {
   // ── Private injectables (must precede public fields per member-ordering) ──
   private readonly router = inject(Router);
+  private readonly location = inject(Location);
   private readonly destroyRef = inject(DestroyRef);
 
   // ── Public injectables ────────────────────────────────────────────────────
@@ -95,6 +97,7 @@ export class NavbarComponent implements OnInit {
     const lastEl = lastItem ? document.getElementById(lastItem.fragment) : null;
     if (lastEl && scrollY + viewportH >= docH - lastEl.offsetHeight / 2) {
       this.activeFragment.set(lastItem!.fragment);
+      this.syncUrlFragment(lastItem!.fragment);
       return;
     }
 
@@ -107,5 +110,15 @@ export class NavbarComponent implements OnInit {
       }
     });
     this.activeFragment.set(active);
+    this.syncUrlFragment(active);
+  }
+
+  private syncUrlFragment(fragment: string): void {
+    const current = this.location.path(true); // includes fragment
+    const base = this.location.path(false); // path only, no fragment
+    const currentFragment = current.includes('#') ? current.split('#')[1] : '';
+    if (fragment === currentFragment) return;
+    const newUrl = fragment ? `${base}#${fragment}` : base;
+    this.location.replaceState(newUrl);
   }
 }
