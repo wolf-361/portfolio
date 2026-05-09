@@ -4,15 +4,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
 
 import { NavbarComponent } from './core/layout/navbar/navbar';
+import { FooterComponent } from './core/layout/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent],
   template: `
     <app-navbar />
     <main>
       <router-outlet />
     </main>
+    <app-footer />
   `,
   styles: [
     `

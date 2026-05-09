@@ -86,16 +86,23 @@ export class NavbarComponent implements OnInit {
   private updateActiveSection(): void {
     const scrollY = window.scrollY;
     const viewportH = window.innerHeight;
+    const docH = document.documentElement.scrollHeight;
     const triggerY = scrollY + 120;
 
+    // At the very bottom of the page — activate the last nav item
+    // Only snap if the last section is actually in the DOM and visible
+    const lastItem = this.navItems[this.navItems.length - 1];
+    const lastEl = lastItem ? document.getElementById(lastItem.fragment) : null;
+    if (lastEl && scrollY + viewportH >= docH - lastEl.offsetHeight / 2) {
+      this.activeFragment.set(lastItem!.fragment);
+      return;
+    }
+
     let active = '';
-    this.navItems.forEach((item, i) => {
+    this.navItems.forEach((item) => {
       const el = document.getElementById(item.fragment);
       if (!el) return;
-      const isLast = i === this.navItems.length - 1;
-      // For the last section activate as soon as its top is within the viewport
-      const threshold = isLast ? scrollY + viewportH : triggerY;
-      if (el.offsetTop <= threshold) {
+      if (el.offsetTop <= triggerY) {
         active = item.fragment;
       }
     });
