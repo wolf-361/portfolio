@@ -72,6 +72,9 @@
           [src]="'/assets/projects/' + project().visual!.src"
           [alt]="lang.t(project().visual!.alt.en, project().visual!.alt.fr)"
           class="phone-img"
+          loading="lazy"
+          width="220"
+          height="440"
         />
       } @else {
         <!-- CSS iOS-style app mockup -->
