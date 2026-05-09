@@ -1,4 +1,5 @@
 @use 'styles/sys' as sys;
+@use 'styles/tokens' as t;
 
 .hero {
   display: flex;
@@ -87,7 +88,7 @@
 }
 
 .terminal-titlebar {
-  background: #3a3a3c;
+  background: t.$macos-titlebar;
   padding: 0.625rem 1rem;
   display: flex;
   align-items: center;
@@ -101,13 +102,13 @@
   flex-shrink: 0;
 
   &.dot-red {
-    background: #ff5f57;
+    background: t.$macos-dot-red;
   }
   &.dot-yellow {
-    background: #febc2e;
+    background: t.$macos-dot-yellow;
   }
   &.dot-green {
-    background: #28c840;
+    background: t.$macos-dot-green;
   }
 }
 
@@ -116,7 +117,7 @@
   text-align: center;
   font-size: 0.6875rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  color: #888;
+  color: t.$macos-titlebar-text;
   user-select: none;
   margin-left: -44px;
 }
@@ -132,7 +133,7 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   scrollbar-width: thin;
-  scrollbar-color: #3a3a3c #0d1117;
+  scrollbar-color: t.$macos-titlebar #0d1117;
 }
 
 // ── Terminal lines ─────────────────────────────────────────────────────────────

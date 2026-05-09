@@ -24,6 +24,14 @@ $border-radius-md: 12px;
 $border-radius-lg: 16px;
 $border-radius-xl: 28px;
 
+// macOS window chrome — fixed OS colors, theme-independent.
+// Used in terminal titlebar dots and browser-frame mockups.
+$macos-dot-red: #ff5f57;
+$macos-dot-yellow: #febc2e;
+$macos-dot-green: #28c840;
+$macos-titlebar: #3a3a3c;
+$macos-titlebar-text: #888;
+
 // Spacing scale — SCSS-only, not emitted as CSS vars.
 // Use these in component styles: spacing.$md, spacing.$lg, etc.
 // Defined here as a reference; import via _spacing.scss.

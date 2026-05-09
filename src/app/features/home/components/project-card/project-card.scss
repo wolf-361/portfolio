@@ -314,7 +314,7 @@
 
 // Semester pill card
 .app-semester-card {
-  background: #2d5a27;
+  background: color-mix(in srgb, sys.$primary 25%, #000);
   border-radius: 12px;
   padding: 8px 10px;
   display: flex;
@@ -326,12 +326,12 @@
 .app-semester-name {
   font-size: 0.55rem;
   font-weight: 600;
-  color: #b8f0b0;
+  color: color-mix(in srgb, sys.$primary 70%, #fff);
 }
 
 .app-semester-days {
   font-size: 0.45rem;
-  color: rgba(184 240 176 / 0.7);
+  color: color-mix(in srgb, sys.$primary 50%, transparent);
   font-family: sys.$font-mono;
 }
 
@@ -351,7 +351,7 @@
 
 .app-section-action {
   font-size: 0.42rem;
-  color: #30d158;
+  color: sys.$primary;
 }
 
 .app-empty-state {
@@ -387,7 +387,7 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #7dba78;
+  color: color-mix(in srgb, sys.$primary 70%, #fff);
   margin-bottom: 1px;
 }
 

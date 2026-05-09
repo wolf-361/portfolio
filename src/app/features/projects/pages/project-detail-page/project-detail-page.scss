@@ -1,5 +1,6 @@
 @use 'styles/sys' as sys;
 @use 'styles/spacing' as sp;
+@use 'styles/tokens' as t;
 
 // ── Container ──────────────────────────────────────────────────────────────────
 
@@ -433,13 +434,13 @@
   flex-shrink: 0;
 
   &--r {
-    background: #e26565;
+    background: t.$macos-dot-red;
   }
   &--y {
-    background: #d6b54a;
+    background: t.$macos-dot-yellow;
   }
   &--g {
-    background: #5fc88f;
+    background: t.$macos-dot-green;
   }
 }
 
