@@ -9,6 +9,7 @@ export type ScrollRevealType = 'from-left' | 'from-right' | 'perspective-tilt' |
 export class ScrollRevealDirective implements OnInit, OnDestroy {
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
   private observer!: IntersectionObserver;
+  private revealTimeout: ReturnType<typeof setTimeout> | null = null;
 
   readonly scrollReveal = input.required<ScrollRevealType>();
   readonly scrollRevealDelay = input<number>(0);
@@ -32,7 +33,7 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
         if (entry.isIntersecting) {
           const delay = this.scrollRevealDelay();
           if (delay > 0) {
-            setTimeout(() => this.reveal(el), delay);
+            this.revealTimeout = setTimeout(() => this.reveal(el), delay);
           } else {
             this.reveal(el);
           }
@@ -47,6 +48,7 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.observer?.disconnect();
+    if (this.revealTimeout !== null) clearTimeout(this.revealTimeout);
   }
 
   forceReveal(): void {
