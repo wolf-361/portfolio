@@ -3,7 +3,6 @@
     <ui-floating-text-canvas [opacity]="0.18" />
 
     <div class="hero-stage">
-      <!-- Headline -->
       <div class="hero-copy" scrollReveal="fade-up">
         <p class="hero-eyebrow mono">
           {{
@@ -11,9 +10,8 @@
           }}
         </p>
         <h1 class="hero-headline">
-          <em>{{ lang.t('I build things', 'Je construis des choses') }}</em
-          ><br />
-          <em>{{ lang.t('to understand them.', 'pour les comprendre.') }}</em>
+          {{ lang.t('I build things', 'Je construis des choses') }}<br />
+          {{ lang.t('to understand them.', 'pour les comprendre.') }}
         </h1>
         <p class="hero-sub">
           {{
@@ -29,13 +27,11 @@
         </a>
       </div>
 
-      <!-- Terminal -->
       <div class="hero-terminal-wrap" scrollReveal="fade-up" [scrollRevealDelay]="150">
         <app-hero-terminal />
       </div>
     </div>
 
-    <!-- Scroll hint -->
     <div class="hero-scroll-hint" aria-hidden="true">
       <span class="hero-scroll-line"></span>
       <span class="hero-scroll-label mono">scroll</span>
