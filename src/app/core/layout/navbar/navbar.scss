@@ -5,11 +5,19 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: sys.$surface-container;
+  background: transparent;
   color: sys.$on-surface;
-  border-bottom: 1px solid sys.$outline-variant;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition:
+    background 200ms ease,
+    border-color 200ms ease;
+
+  &.scrolled {
+    background: color-mix(in srgb, sys.$surface-container 80%, transparent);
+    border-bottom-color: sys.$outline-variant;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
 }
 
 // ── Brand ─────────────────────────────────────────────────────────────────────

@@ -39,6 +39,7 @@ export class NavbarComponent implements OnInit {
 
   // ── Public fields ─────────────────────────────────────────────────────────
   readonly mobileNavOpen = signal(false);
+  readonly scrolled = signal(false);
 
   /** Active section fragment, updated by scroll-spy */
   readonly activeFragment = signal<string>('');
@@ -54,8 +55,12 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     fromEvent(window, 'scroll', { passive: true })
       .pipe(throttleTime(50), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.updateActiveSection());
+      .subscribe(() => {
+        this.scrolled.set(window.scrollY > 4);
+        this.updateActiveSection();
+      });
 
+    this.scrolled.set(window.scrollY > 4);
     this.updateActiveSection();
   }
 
