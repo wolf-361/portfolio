@@ -10,6 +10,8 @@ import { TimelineRow } from '../../../../shared/components/timeline-bar/timeline
 import { LangService } from '../../../../core/lang/lang';
 import { Experience, Education } from '../../models/experience';
 import { Project } from '../../models/project';
+import { GradientAtmosphereComponent } from '../../../../shared/components/gradient-atmosphere/gradient-atmosphere';
+import { ScrollRevealDirective } from '../../../../shared/directives/scroll-reveal/scroll-reveal';
 
 @Component({
   selector: 'app-home-page',
@@ -20,6 +22,8 @@ import { Project } from '../../models/project';
     SectionHeaderComponent,
     TimelineBarComponent,
     TagChipSetComponent,
+    GradientAtmosphereComponent,
+    ScrollRevealDirective,
   ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
