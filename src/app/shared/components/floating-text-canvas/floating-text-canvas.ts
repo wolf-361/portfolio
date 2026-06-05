@@ -72,8 +72,9 @@ function isMobile(): boolean {
 export class FloatingTextCanvasComponent implements AfterViewInit, OnDestroy {
   private readonly zone = inject(NgZone);
 
-  // Canvas fillStyle cannot use CSS variables — resolve once at init time.
+  // Canvas fillStyle and font cannot use CSS variables — resolve once at init time.
   private primaryColor = '#22d3ee';
+  private monoFont = 'monospace';
   private particles: CanvasParticle[] = [];
   private rafId = 0;
   private mouseX = 0;
@@ -103,9 +104,9 @@ export class FloatingTextCanvasComponent implements AfterViewInit, OnDestroy {
     const canvas = this.canvasRef().nativeElement;
     this.resize(canvas);
 
-    this.primaryColor =
-      getComputedStyle(document.documentElement).getPropertyValue('--mat-sys-primary').trim() ||
-      '#22d3ee';
+    const styles = getComputedStyle(document.documentElement);
+    this.primaryColor = styles.getPropertyValue('--mat-sys-primary').trim() || '#22d3ee';
+    this.monoFont = styles.getPropertyValue('--font-mono').trim() || 'monospace';
 
     const count = isMobile() ? PARTICLE_COUNT_MOBILE : PARTICLE_COUNT_DESKTOP;
     this.particles = Array.from({ length: count }, () =>
@@ -203,7 +204,7 @@ export class FloatingTextCanvasComponent implements AfterViewInit, OnDestroy {
       if (py < -40) p.y = canvas.height + 20;
       else if (py > canvas.height + 40) p.y = -20;
 
-      ctx.font = `400 ${p.size}px 'JetBrains Mono', monospace`;
+      ctx.font = `400 ${p.size}px ${this.monoFont}`;
       ctx.globalAlpha = p.opacity * this.opacity();
       ctx.fillStyle = this.primaryColor;
       ctx.fillText(p.text, px, py);

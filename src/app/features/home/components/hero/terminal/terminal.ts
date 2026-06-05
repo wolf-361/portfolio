@@ -286,12 +286,14 @@ export class HeroTerminalComponent implements OnDestroy {
     });
     effect(() => {
       if (this.isDone()) {
+        if (this.hintTimeout) clearTimeout(this.hintTimeout);
         this.hintVisible.set(true);
         this.hintTimeout = setTimeout(() => this.hintVisible.set(false), 5000);
       }
     });
     effect(() => {
-      if (this.isDone() && this.isMobile) {
+      if (this.isDone() && this.isMobile && !this.isAutoDemo()) {
+        if (this.demoTimeout) clearTimeout(this.demoTimeout);
         this.isAutoDemo.set(true);
         this.demoTimeout = setTimeout(() => this.startDemo(), 2000);
       }
