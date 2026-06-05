@@ -1,28 +1,8 @@
 @use 'styles/sys' as sys;
 @use 'styles/spacing' as sp;
 
-// ── Base — subtle surface, no border at rest, accent border on hover ──────────
-
-.card {
-  border-radius: sys.$corner-medium;
-  background: sys.$surface-container-low;
-  border: 1px solid transparent;
-  border-left: 3px solid transparent;
-  padding: sp.$md sp.$lg;
-  display: flex;
-  flex-direction: column;
-  gap: sp.$sm;
-  transition:
-    border-color 200ms ease,
-    box-shadow 200ms ease,
-    transform 200ms ease;
-
-  &:hover {
-    border-color: color-mix(in srgb, sys.$outline-variant 60%, transparent);
-    border-left-color: sys.$primary;
-    box-shadow: 0 4px 24px color-mix(in srgb, sys.$primary 10%, transparent);
-    transform: translateY(-1px);
-  }
+:host {
+  display: block;
 }
 
 // ── Header ────────────────────────────────────────────────────────────────────

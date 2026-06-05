@@ -1,4 +1,4 @@
-<article class="card" [class]="'kind-' + experience().kind">
+<ui-cinematic-card [featured]="experience().active ?? false">
   <header class="card-header">
     <!-- Title row -->
     <div class="card-title-row">
@@ -47,4 +47,4 @@
   @if (experience().stack?.length) {
     <ui-tag-chip-set [tags]="experience().stack!" [accentFirst]="true" />
   }
-</article>
+</ui-cinematic-card>
