@@ -1,11 +1,9 @@
 @use './styles/tokens' as t;
 @use './styles/material-theme';
 
-// --font-mono is the only non-M3 CSS custom property in this app.
-// All colors, shape, and typography use --mat-sys-* tokens directly.
-// Spacing uses the SCSS-only _spacing.scss module (no runtime vars).
 :root {
   --font-mono: #{t.$font-family-mono};
+  --font-display: #{t.$font-family-display};
 }
 
 *,
