@@ -156,4 +156,18 @@
   .hero-headline {
     font-size: clamp(2rem, 11vw, 3rem);
   }
+
+  .hero-stage {
+    gap: sp.$xl;
+  }
+
+  .hero-terminal-wrap {
+    position: static;
+  }
+}
+
+@media (max-height: 600px) {
+  .hero-scroll-hint {
+    display: none;
+  }
 }

@@ -27,6 +27,12 @@
   width: 100%;
 }
 
+@media (max-width: 599px) {
+  .page-section {
+    padding: sp.$xl sp.$md;
+  }
+}
+
 // ── Path pill ─────────────────────────────────────────────────────────────────
 
 .path-pill {
@@ -437,6 +443,12 @@
   flex-direction: column;
   gap: sp.$xl;
   margin-bottom: sp.$xl;
+
+  @media (min-width: 720px) {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: sp.$xl-2;
+  }
 }
 
 .contact-cta {
