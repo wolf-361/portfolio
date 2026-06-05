@@ -1,53 +1,78 @@
 @use 'styles/sys' as sys;
+@use 'styles/spacing' as sp;
+
+:host {
+  display: block;
+}
 
 .hero {
+  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100dvh - 64px);
-  padding: 4rem 2rem;
+  min-height: 100dvh;
+  padding: 6rem 2rem 4rem;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.hero-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  align-items: start;
+.hero-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 3rem;
-  max-width: 1100px;
+  max-width: 900px;
   width: 100%;
+  z-index: 1;
 }
 
-// ── Left copy ──────────────────────────────────────────────────────────────────
+// ── Copy ──────────────────────────────────────────────────────────────────────
 
 .hero-copy {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  text-align: center;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: sys.$primary;
+  opacity: 0.75;
 }
 
 .hero-headline {
   margin: 0;
-  font-size: clamp(1.75rem, 4vw, 3rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
   line-height: 1.1;
   color: sys.$on-surface;
+
+  em {
+    font-style: italic;
+  }
 }
 
 .hero-sub {
   margin: 0;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   line-height: 1.7;
   color: sys.$on-surface-variant;
-  max-width: 38ch;
+  max-width: 52ch;
 }
 
 .hero-cta {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  align-self: flex-start;
-  padding: 0.625rem 1.25rem;
+  padding: 0.625rem 1.5rem;
   border-radius: 999px;
   background: sys.$primary;
   color: sys.$on-primary;
@@ -74,27 +99,51 @@
   }
 }
 
-// ── Tablet: stack terminal below copy ─────────────────────────────────────────
+// ── Terminal wrap ─────────────────────────────────────────────────────────────
 
-@media (max-width: 860px) {
-  .hero-layout {
-    grid-template-columns: 1fr;
+.hero-terminal-wrap {
+  width: 100%;
+  max-width: 720px;
+}
+
+// ── Scroll hint ───────────────────────────────────────────────────────────────
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: scroll-hint-pulse 2.5s ease-in-out infinite;
+}
+
+.hero-scroll-line {
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, sys.$primary, transparent);
+}
+
+.hero-scroll-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: sys.$on-surface-variant;
+  opacity: 0.5;
+}
+
+@keyframes scroll-hint-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: translateX(-50%) translateY(0);
   }
-
-  .hero-copy {
-    order: 2;
-  }
-
-  app-hero-terminal {
-    order: 1;
-  }
-
-  .hero-sub {
-    max-width: unset;
-  }
-
-  .hero-cta {
-    align-self: flex-start;
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(4px);
   }
 }
 
@@ -102,7 +151,11 @@
 
 @media (max-width: 599px) {
   .hero {
-    padding: 2rem 0.75rem 3rem;
-    min-height: unset;
+    padding: 5rem 1rem 3rem;
+    min-height: 100dvh;
+  }
+
+  .hero-headline {
+    font-size: clamp(2rem, 11vw, 3rem);
   }
 }

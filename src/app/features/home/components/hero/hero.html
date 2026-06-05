@@ -1,26 +1,44 @@
-<section class="hero">
-  <div class="hero-layout">
-    <!-- Left: headline + CTA -->
-    <div class="hero-copy">
-      <h1 class="hero-headline">
-        {{ lang.t('Mobile Developer.', 'Développeur Mobile.') }}<br />
-        {{ lang.t('Shared by design.', 'Conçu pour être partagé.') }}
-      </h1>
-      <p class="hero-sub">
-        {{
-          lang.t(
-            'Mobile-first, but fluent across the stack — from Kotlin to Go to bare metal.',
-            "Mobile d'abord, mais à l'aise sur toute la pile — de Kotlin à Go au bare metal."
-          )
-        }}
-      </p>
-      <a class="hero-cta" href="#projects">
-        {{ lang.t('View projects', 'Voir les projets') }}
-        <span class="hero-cta-arr" aria-hidden="true">↓</span>
-      </a>
+<ui-gradient-atmosphere variant="hero">
+  <section class="hero" id="hero-section">
+    <ui-floating-text-canvas [opacity]="0.18" />
+
+    <div class="hero-stage">
+      <!-- Headline -->
+      <div class="hero-copy" scrollReveal="fade-up">
+        <p class="hero-eyebrow mono">
+          {{
+            lang.t('// luc allaire · software developer', '// luc allaire · développeur logiciel')
+          }}
+        </p>
+        <h1 class="hero-headline">
+          <em>{{ lang.t('I build things', 'Je construis des choses') }}</em
+          ><br />
+          <em>{{ lang.t('to understand them.', 'pour les comprendre.') }}</em>
+        </h1>
+        <p class="hero-sub">
+          {{
+            lang.t(
+              'Mobile-first, but fluent across the stack — from Kotlin to Go to bare metal.',
+              "Mobile d'abord, mais à l'aise sur toute la pile — de Kotlin à Go au bare metal."
+            )
+          }}
+        </p>
+        <a class="hero-cta" href="#projects">
+          {{ lang.t('View projects', 'Voir les projets') }}
+          <span class="hero-cta-arr" aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <!-- Terminal -->
+      <div class="hero-terminal-wrap" scrollReveal="fade-up" [scrollRevealDelay]="150">
+        <app-hero-terminal />
+      </div>
     </div>
 
-    <!-- Right: terminal -->
-    <app-hero-terminal />
-  </div>
-</section>
+    <!-- Scroll hint -->
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <span class="hero-scroll-line"></span>
+      <span class="hero-scroll-label mono">scroll</span>
+    </div>
+  </section>
+</ui-gradient-atmosphere>
