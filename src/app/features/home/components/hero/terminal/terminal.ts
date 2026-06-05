@@ -245,8 +245,13 @@ export class HeroTerminalComponent implements OnDestroy {
   private tabCycling = false;
   private tabMatches: string[] = [];
   private tabIndex = -1;
-
+  private hintTimeout: ReturnType<typeof setTimeout> | null = null;
+  private demoTimeout: ReturnType<typeof setTimeout> | null = null;
+  private readonly isMobile = typeof window !== 'undefined' && window.innerWidth <= 599;
+  private readonly DEMO_COMMANDS = ['help', 'whoami', 'cat bio.txt', 'ls', 'neofetch'];
+  private readonly hintVisible = signal(false);
   private readonly router = inject(Router);
+
   readonly lang = inject(LangService);
   readonly lines = signal<TermLine[]>([]);
   readonly partialText = signal('');
@@ -254,16 +259,8 @@ export class HeroTerminalComponent implements OnDestroy {
   readonly isDone = signal(false);
   readonly inputValue = signal('');
   readonly history: string[] = [];
-
-  private readonly hintVisible = signal(false);
-  readonly showHint = computed(() => this.hintVisible());
-  private hintTimeout: ReturnType<typeof setTimeout> | null = null;
-
-  private readonly isMobile = typeof window !== 'undefined' && window.innerWidth <= 599;
   readonly isAutoDemo = signal(false);
-  private demoTimeout: ReturnType<typeof setTimeout> | null = null;
-
-  private readonly DEMO_COMMANDS = ['help', 'whoami', 'cat bio.txt', 'ls', 'neofetch'];
+  readonly showHint = computed(() => this.hintVisible());
 
   readonly suggestion = computed(() => {
     const input = this.inputValue();
