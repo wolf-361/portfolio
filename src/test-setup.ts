@@ -16,6 +16,21 @@ expect.extend({
   },
 });
 
+// Stub ResizeObserver for jsdom environment
+if (typeof window !== 'undefined' && !('ResizeObserver' in window)) {
+  class ResizeObserverStub {
+    observe(): void {}
+    unobserve(): void {}
+    disconnect(): void {}
+  }
+
+  Object.defineProperty(window, 'ResizeObserver', {
+    writable: true,
+    configurable: true,
+    value: ResizeObserverStub,
+  });
+}
+
 // Stub IntersectionObserver for jsdom environment
 if (typeof window !== 'undefined' && !('IntersectionObserver' in window)) {
   class IntersectionObserverStub {
