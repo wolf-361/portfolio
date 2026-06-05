@@ -168,32 +168,35 @@
 </ui-gradient-atmosphere>
 
 <!-- ── Projects ──────────────────────────────────────────────────────────── -->
-<section id="projects" class="page-section page-section--alt">
-  <div class="section-inner">
-    <ui-section-header
-      index="02"
-      [label]="lang.t('PROJECTS', 'PROJETS')"
-      [title]="lang.t('Work & Architecture', 'Réalisations & Architecture')"
-      [subtitle]="
-        lang.t(
-          'From shared-first mobile systems to self-hosted infrastructure — built to last.',
-          'Des systèmes mobiles partagés à l\'infrastructure auto-hébergée — conçus pour durer.'
-        )
-      "
-    />
-    <div class="bento-grid">
-      @for (project of projects; track project.title.en) {
-        <app-project-card
-          [project]="project"
-          [class.bento-featured]="project.size === 'featured'"
-          [class.bento-small]="project.size === 'small'"
-          scrollReveal="perspective-tilt"
-          [scrollRevealDelay]="$index * 80"
-        />
-      }
+<ui-gradient-atmosphere variant="projects">
+  <section id="projects" class="page-section page-section--alt">
+    <div class="section-inner">
+      <ui-section-header
+        scrollReveal="fade-up"
+        index="02"
+        [label]="lang.t('PROJECTS', 'PROJETS')"
+        [title]="lang.t('Work & Architecture', 'Réalisations & Architecture')"
+        [subtitle]="
+          lang.t(
+            'From shared-first mobile systems to self-hosted infrastructure — built to last.',
+            'Des systèmes mobiles partagés à l\'infrastructure auto-hébergée — conçus pour durer.'
+          )
+        "
+      />
+      <div class="bento-grid">
+        @for (project of projects; track project.title.en) {
+          <app-project-card
+            [project]="project"
+            [class.bento-featured]="project.size === 'featured'"
+            [class.bento-small]="project.size === 'small'"
+            scrollReveal="perspective-tilt"
+            [scrollRevealDelay]="$index * 80"
+          />
+        }
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</ui-gradient-atmosphere>
 
 <!-- ── Contact ───────────────────────────────────────────────────────────── -->
 <section id="contact" class="page-section contact-section">

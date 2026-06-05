@@ -8,7 +8,16 @@
   scroll-margin-top: 72px; // sticky navbar height + breathing room
 
   &--alt {
-    background: sys.$surface-container-low;
+    background:
+      radial-gradient(
+        circle,
+        color-mix(in srgb, sys.$outline-variant 40%, transparent) 1px,
+        transparent 1px
+      ),
+      sys.$surface-container-low;
+    background-size:
+      24px 24px,
+      100%;
   }
 }
 
