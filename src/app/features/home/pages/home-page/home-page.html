@@ -199,68 +199,70 @@
 </ui-gradient-atmosphere>
 
 <!-- ── Contact ───────────────────────────────────────────────────────────── -->
-<section id="contact" class="page-section contact-section">
-  <div class="section-inner">
-    <!-- Eyebrow -->
-    <p class="contact-eyebrow mono">
-      <span class="col-label-comment">// </span>
-      <span class="contact-eyebrow-num">03.</span>
-      <span class="col-label-tag">CONTACT</span>
-    </p>
+<ui-gradient-atmosphere variant="contact">
+  <section id="contact" class="page-section contact-section">
+    <div class="section-inner">
+      <p class="contact-eyebrow mono" scrollReveal="fade-up">
+        <span class="col-label-comment">// </span>
+        <span class="contact-eyebrow-num">03.</span>
+        <span class="col-label-tag">CONTACT</span>
+      </p>
 
-    <!-- Availability status -->
-    <div class="contact-status mono" role="status">
-      <span class="status-led" aria-hidden="true"></span>
-      <span class="status-text">
-        <strong>{{ lang.t('Open to', 'Ouvert aux') }}</strong>
-        {{ lang.t('mobile roles', 'rôles mobiles') }}
-      </span>
-      <span class="status-sep">·</span>
-      <span class="status-modes">{{
-        lang.t('full-time · contract · remote-friendly', 'temps plein · contrat · télétravail')
-      }}</span>
-    </div>
+      <div
+        class="contact-status mono"
+        scrollReveal="fade-up"
+        [scrollRevealDelay]="80"
+        role="status"
+      >
+        <span class="status-led" aria-hidden="true"></span>
+        <span class="status-text">
+          <strong>{{ lang.t('Open to', 'Ouvert aux') }}</strong>
+          {{ lang.t('mobile roles', 'rôles mobiles') }}
+        </span>
+        <span class="status-sep">·</span>
+        <span class="status-modes">{{
+          lang.t('full-time · contract · remote-friendly', 'temps plein · contrat · télétravail')
+        }}</span>
+      </div>
 
-    <!-- CTA + email split row -->
-    <div class="contact-split">
-      <!-- Left: CTA heading -->
-      <h2 class="contact-cta">
-        {{ lang.t("Let's build", 'Construisons') }}<br />
-        {{ lang.t('something ', 'quelque chose ')
-        }}<em class="contact-accent">{{ lang.t('solid', 'solide') }}</em
-        ><span class="contact-dot">.</span>
-      </h2>
+      <div class="contact-split" scrollReveal="fade-up" [scrollRevealDelay]="160">
+        <h2 class="contact-cta">
+          {{ lang.t("Let's build", 'Construisons') }}<br />
+          {{ lang.t('something ', 'quelque chose ')
+          }}<em class="contact-accent">{{ lang.t('solid', 'solide') }}</em
+          ><span class="contact-dot">.</span>
+        </h2>
 
-      <!-- Right: email + copy + hint -->
-      <div class="contact-email-block">
-        <div class="contact-row">
-          <a class="contact-email" href="mailto:wolf-361@hotmail.com">wolf-361&#64;hotmail.com</a>
-          <span class="copy-wrap">
-            <button
-              class="contact-copy mono"
-              type="button"
-              (click)="copyEmail()"
-              [attr.data-copied]="emailCopied"
-              [attr.aria-label]="lang.t('Copy address', 'Copier l\'adresse')"
-            >
-              <span class="copy-ico" aria-hidden="true">⧉</span>
-              <span>{{
-                emailCopied
-                  ? lang.t('Copied!', 'Copié !')
-                  : lang.t('Copy address', "Copier l'adresse")
-              }}</span>
-            </button>
-            <span #copyToast class="copy-toast" role="status" aria-live="polite"
-              >✓ {{ lang.t('Address copied!', 'Adresse copiée !') }}</span
-            >
-          </span>
+        <div class="contact-email-block">
+          <div class="contact-row">
+            <a class="contact-email" href="mailto:wolf-361@hotmail.com">wolf-361&#64;hotmail.com</a>
+            <span class="copy-wrap">
+              <button
+                class="contact-copy mono"
+                type="button"
+                (click)="copyEmail()"
+                [attr.data-copied]="emailCopied"
+                [attr.aria-label]="lang.t('Copy address', 'Copier l\'adresse')"
+              >
+                <span class="copy-ico" aria-hidden="true">⧉</span>
+                <span>{{
+                  emailCopied
+                    ? lang.t('Copied!', 'Copié !')
+                    : lang.t('Copy address', "Copier l'adresse")
+                }}</span>
+              </button>
+              <span #copyToast class="copy-toast" role="status" aria-live="polite"
+                >✓ {{ lang.t('Address copied!', 'Adresse copiée !') }}</span
+              >
+            </span>
+          </div>
+          <p class="contact-hint mono">
+            {{ lang.t('// reply within', '// réponse sous') }}
+            <span class="hint-accent">~24h</span>
+            {{ lang.t('· ET timezone (UTC−5)', '· fuseau ET (UTC−5)') }}
+          </p>
         </div>
-        <p class="contact-hint mono">
-          {{ lang.t('// reply within', '// réponse sous') }}
-          <span class="hint-accent">~24h</span>
-          {{ lang.t('· ET timezone (UTC−5)', '· fuseau ET (UTC−5)') }}
-        </p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</ui-gradient-atmosphere>

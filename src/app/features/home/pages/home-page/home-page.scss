@@ -441,9 +441,11 @@
 
 .contact-cta {
   margin: 0;
+  font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
   line-height: 1.05;
   color: sys.$on-surface;
 }
