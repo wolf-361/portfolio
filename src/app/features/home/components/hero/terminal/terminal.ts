@@ -259,6 +259,12 @@ export class HeroTerminalComponent implements OnDestroy {
   readonly showHint = computed(() => this.hintVisible());
   private hintTimeout: ReturnType<typeof setTimeout> | null = null;
 
+  private readonly isMobile = typeof window !== 'undefined' && window.innerWidth <= 599;
+  readonly isAutoDemo = signal(false);
+  private demoTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  private readonly DEMO_COMMANDS = ['help', 'whoami', 'cat bio.txt', 'ls', 'neofetch'];
+
   readonly suggestion = computed(() => {
     const input = this.inputValue();
     if (!input) return '';
@@ -287,6 +293,12 @@ export class HeroTerminalComponent implements OnDestroy {
         this.hintTimeout = setTimeout(() => this.hintVisible.set(false), 5000);
       }
     });
+    effect(() => {
+      if (this.isDone() && this.isMobile) {
+        this.isAutoDemo.set(true);
+        this.demoTimeout = setTimeout(() => this.startDemo(), 2000);
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -295,6 +307,7 @@ export class HeroTerminalComponent implements OnDestroy {
       clearTimeout(this.hintTimeout);
       this.hintTimeout = null;
     }
+    if (this.demoTimeout) clearTimeout(this.demoTimeout);
   }
 
   focusInput(): void {
@@ -496,6 +509,49 @@ export class HeroTerminalComponent implements OnDestroy {
     }
 
     this.scrollBottom();
+  }
+
+  private startDemo(): void {
+    this.runDemoStep(0);
+  }
+
+  private runDemoStep(cmdIdx: number): void {
+    const cmd = this.DEMO_COMMANDS[cmdIdx % this.DEMO_COMMANDS.length];
+    this.typeDemo(cmd, 0, () => {
+      // cmd typed — pause, then execute
+      this.demoTimeout = setTimeout(() => {
+        this.lines.update((l) => [...l, { kind: 'cmd', text: cmd }]);
+        const result = runCommand(cmd, this.lang.lang());
+        if (result === 'clear') {
+          this.lines.set([]);
+        } else if (Array.isArray(result)) {
+          this.lines.update((l) => [...l, ...result]);
+        }
+        this.partialText.set('');
+        this.scrollBottom();
+        // pause after output, then next command or restart
+        const isLast = cmdIdx === this.DEMO_COMMANDS.length - 1;
+        const delay = isLast ? 4000 : 1500;
+        this.demoTimeout = setTimeout(() => {
+          if (isLast) {
+            this.lines.set([]);
+            this.runDemoStep(0);
+          } else {
+            this.runDemoStep(cmdIdx + 1);
+          }
+        }, delay);
+      }, 800);
+    });
+  }
+
+  private typeDemo(text: string, charIdx: number, onDone: () => void): void {
+    this.partialText.set(text.slice(0, charIdx));
+    this.partialIsCmd.set(true);
+    if (charIdx >= text.length) {
+      onDone();
+      return;
+    }
+    this.demoTimeout = setTimeout(() => this.typeDemo(text, charIdx + 1, onDone), 60);
   }
 
   private scrollBottom(): void {
