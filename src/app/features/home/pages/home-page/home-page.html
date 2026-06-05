@@ -187,6 +187,8 @@
           [project]="project"
           [class.bento-featured]="project.size === 'featured'"
           [class.bento-small]="project.size === 'small'"
+          scrollReveal="perspective-tilt"
+          [scrollRevealDelay]="$index * 80"
         />
       }
     </div>
