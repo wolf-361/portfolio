@@ -100,6 +100,8 @@
 .hero-terminal-wrap {
   width: 100%;
   max-width: 720px;
+  position: sticky;
+  top: 5rem; // below the navbar (64px) + gap
 }
 
 // ── Scroll hint ───────────────────────────────────────────────────────────────

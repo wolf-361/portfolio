@@ -255,6 +255,10 @@ export class HeroTerminalComponent implements OnDestroy {
   readonly inputValue = signal('');
   readonly history: string[] = [];
 
+  private readonly hintVisible = signal(false);
+  readonly showHint = computed(() => this.hintVisible());
+  private hintTimeout: ReturnType<typeof setTimeout> | null = null;
+
   readonly suggestion = computed(() => {
     const input = this.inputValue();
     if (!input) return '';
@@ -277,10 +281,20 @@ export class HeroTerminalComponent implements OnDestroy {
       this.lang.lang();
       this.reset();
     });
+    effect(() => {
+      if (this.isDone()) {
+        this.hintVisible.set(true);
+        this.hintTimeout = setTimeout(() => this.hintVisible.set(false), 5000);
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.clearInterval();
+    if (this.hintTimeout) {
+      clearTimeout(this.hintTimeout);
+      this.hintTimeout = null;
+    }
   }
 
   focusInput(): void {
@@ -288,6 +302,7 @@ export class HeroTerminalComponent implements OnDestroy {
   }
 
   onKeydown(e: KeyboardEvent): void {
+    this.hintVisible.set(false);
     switch (e.key) {
       case 'Tab':
         e.preventDefault();
@@ -336,6 +351,7 @@ export class HeroTerminalComponent implements OnDestroy {
   }
 
   onInput(e: Event): void {
+    this.hintVisible.set(false);
     this.inputValue.set((e.target as HTMLInputElement).value);
   }
 
