@@ -1,0 +1,6 @@
+<article class="cinematic-card" [class.cinematic-card--featured]="featured()">
+  <ng-content select="[slot-header]" />
+  <ng-content select="[slot-body]" />
+  <ng-content select="[slot-footer]" />
+  <ng-content />
+</article>
