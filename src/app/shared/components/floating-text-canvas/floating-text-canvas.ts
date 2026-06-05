@@ -176,10 +176,12 @@ export class FloatingTextCanvasComponent implements AfterViewInit, OnDestroy {
 
   private scheduleFrame(): void {
     if (this.paused) return;
+    if (this.rafId !== 0) return;
     this.rafId = requestAnimationFrame(() => this.draw());
   }
 
   private draw(): void {
+    this.rafId = 0;
     const canvas = this.canvasRef().nativeElement;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
