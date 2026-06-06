@@ -11,6 +11,8 @@ const LINES = ['initializing luc.allaire...', 'loading portfolio.ts', 'ready.'];
 export class BootOverlayComponent implements OnInit, OnDestroy {
   private readonly bootService = inject(BootService);
   private interval: ReturnType<typeof setInterval> | null = null;
+  private fadeTimeout: ReturnType<typeof setTimeout> | null = null;
+  private markTimeout: ReturnType<typeof setTimeout> | null = null;
   private lineIdx = 0;
   private charIdx = 0;
 
@@ -25,6 +27,8 @@ export class BootOverlayComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.interval) clearInterval(this.interval);
+    if (this.fadeTimeout) clearTimeout(this.fadeTimeout);
+    if (this.markTimeout) clearTimeout(this.markTimeout);
   }
 
   private tick(): void {
@@ -45,9 +49,9 @@ export class BootOverlayComponent implements OnInit, OnDestroy {
         clearInterval(this.interval!);
         this.interval = null;
         this.isDone.set(true);
-        setTimeout(() => {
+        this.fadeTimeout = setTimeout(() => {
           this.fading.set(true);
-          setTimeout(() => this.bootService.markSeen(), 400);
+          this.markTimeout = setTimeout(() => this.bootService.markSeen(), 400);
         }, 300);
       }
     }
