@@ -1,0 +1,60 @@
+@use 'styles/sys' as sys;
+@use 'styles/spacing' as sp;
+
+.boot-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--mat-sys-background);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: sp.$xl-2;
+  opacity: 1;
+  transition: opacity 400ms ease;
+
+  &.boot-overlay--fading {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.boot-line {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  line-height: 2.2;
+  color: color-mix(in srgb, sys.$on-surface 85%, transparent);
+}
+
+.boot-prefix {
+  color: sys.$primary;
+  user-select: none;
+}
+
+.boot-check {
+  color: sys.$primary;
+}
+
+.boot-cursor {
+  color: sys.$on-surface;
+  opacity: 0.8;
+
+  &.boot-cursor--blink {
+    animation: boot-cursor-blink 1.1s step-end infinite;
+  }
+}
+
+@keyframes boot-cursor-blink {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0;
+  }
+}

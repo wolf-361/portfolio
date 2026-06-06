@@ -1,0 +1,21 @@
+<div class="boot-overlay" [class.boot-overlay--fading]="fading()" aria-hidden="true">
+  @for (line of completedLines(); track $index) {
+    <p class="boot-line">
+      <span class="boot-prefix">~</span>
+      <span class="boot-text">{{ line }}</span>
+      @if ($index === 1) {
+        <span class="boot-check"> ✓</span>
+      }
+      @if ($last && isDone()) {
+        <span class="boot-cursor boot-cursor--blink">▌</span>
+      }
+    </p>
+  }
+  @if (!isDone()) {
+    <p class="boot-line">
+      <span class="boot-prefix">~</span>
+      <span class="boot-text">{{ currentText() }}</span>
+      <span class="boot-cursor">▌</span>
+    </p>
+  }
+</div>
