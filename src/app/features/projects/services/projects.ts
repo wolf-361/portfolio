@@ -31,6 +31,7 @@ export class ProjectsService {
         duration: { en: 'Ongoing · 2026', fr: 'En cours · 2026' },
         team: { en: '2 devs · solo design', fr: '2 devs · design solo' },
       },
+      heroVisual: { type: 'phone' },
       sections: [
         {
           id: 'problem',
@@ -177,6 +178,7 @@ export class ProjectsService {
         duration: { en: 'Not started · 2026', fr: 'Pas encore commencé · 2026' },
         team: { en: 'Solo', fr: 'Solo' },
       },
+      heroVisual: { type: 'phone' },
       sections: [
         {
           id: 'problem',
@@ -289,6 +291,7 @@ export class ProjectsService {
         duration: { en: 'Ongoing · 2026', fr: 'En cours · 2026' },
         team: { en: 'Solo · Open Source', fr: 'Solo · Open Source' },
       },
+      heroVisual: { type: 'none' },
       sections: [
         {
           id: 'problem',
@@ -377,6 +380,24 @@ export class ProjectsService {
         team: { en: 'Solo · 2 months build', fr: 'Solo · 2 mois de build' },
         url: 'https://github.com/wolf-361/home-ops',
         urlLabel: { en: 'GitHub →', fr: 'GitHub →' },
+      },
+      heroVisual: {
+        type: 'terminal',
+        terminalCommand: 'ansible-playbook site.yml',
+        terminalLines: [
+          'PLAY [all] *****************************',
+          '',
+          'TASK [common : apply hardening] ********',
+          'ok: [firenze]  ok: [siena]  ok: [roma]',
+          '',
+          'TASK [netbird : configure mesh VPN] ****',
+          'ok: [firenze]  ok: [siena]  ok: [roma]',
+          '',
+          'PLAY RECAP *****************************',
+          'firenze  : ok=18  changed=0  failed=0',
+          'siena    : ok=16  changed=0  failed=0',
+          'roma     : ok=16  changed=0  failed=0',
+        ],
       },
       sections: [
         {
@@ -604,6 +625,18 @@ export class ProjectsService {
         team: { en: 'Solo · Open Source', fr: 'Solo · Open Source' },
         url: 'https://github.com/wolf-infra/traefik-mesh-companion',
         urlLabel: { en: 'GitHub →', fr: 'GitHub →' },
+      },
+      heroVisual: {
+        type: 'terminal',
+        terminalCommand: './mesh-companion --watch',
+        terminalLines: [
+          'INFO  watching Traefik API for route changes',
+          'INFO  new route detected: portfolio.wolf-361.ca',
+          'INFO  registered DNS record  → 100.64.0.1',
+          'INFO  registered monitor    → uptime-kuma',
+          'INFO  route removed: old-service.wolf-361.ca',
+          'INFO  cleaned up DNS + monitor entries',
+        ],
       },
       sections: [
         {

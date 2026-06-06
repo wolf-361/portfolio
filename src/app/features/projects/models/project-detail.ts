@@ -1,6 +1,14 @@
 import { I18n } from '../../../shared/models/i18n';
 import { Project } from './project';
 
+export type HeroVisualType = 'phone' | 'terminal' | 'none';
+
+export interface HeroVisual {
+  type: HeroVisualType;
+  terminalCommand?: string;
+  terminalLines?: string[];
+}
+
 export interface StatCard {
   value: string;
   label: I18n;
@@ -44,4 +52,5 @@ export interface ProjectDetail extends Omit<Project, 'slug'> {
   meta?: ProjectMeta;
   sections: ProjectSection[];
   pager?: ProjectPager;
+  heroVisual?: HeroVisual;
 }
