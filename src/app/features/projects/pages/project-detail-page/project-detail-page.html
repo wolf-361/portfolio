@@ -82,7 +82,7 @@
     (activeSection)="onActiveSection($event)"
   >
     <!-- Sidebar -->
-    <aside class="cs-sidebar">
+    <aside class="cs-sidebar" scrollReveal="from-left">
       <div class="cs-sidebar-inner">
         <!-- Meta grid -->
         @if (p.meta) {
@@ -123,7 +123,12 @@
         }
 
         <!-- TOC -->
-        <nav class="toc" aria-label="Table of contents">
+        <nav
+          class="toc"
+          scrollReveal="from-left"
+          [scrollRevealDelay]="120"
+          aria-label="Table of contents"
+        >
           <span class="toc-header mono">{{ lang.t('Summary', 'Sommaire') }}</span>
           @for (section of p.sections; track section.id) {
             <button
@@ -143,7 +148,15 @@
     <!-- Content -->
     <main class="cs-content">
       @for (section of p.sections; track section.id) {
-        <article class="cs-section" [id]="section.id" uiFadeIn>
+        @if (!$first) {
+          <div class="cs-divider" aria-hidden="true"></div>
+        }
+        <article
+          class="cs-section"
+          [id]="section.id"
+          scrollReveal="fade-up"
+          [scrollRevealDelay]="$index * 120"
+        >
           <p class="sec-eyebrow mono">
             <span class="sec-eyebrow-num">0{{ $index + 1 }}.</span>
             {{ lang.t(section.tocLabel.en, section.tocLabel.fr) | uppercase }}
@@ -196,7 +209,11 @@
           @if (section.stats?.length) {
             <div class="stats-grid">
               @for (stat of section.stats!; track stat.value) {
-                <ui-stat-card [stat]="stat" />
+                <ui-stat-card
+                  [stat]="stat"
+                  scrollReveal="fade-up"
+                  [scrollRevealDelay]="$index * 80"
+                />
               }
             </div>
           }

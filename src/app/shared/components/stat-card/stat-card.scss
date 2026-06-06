@@ -35,3 +35,19 @@
   opacity: 0.7;
   letter-spacing: 0.02em;
 }
+
+// Triggered by ScrollRevealDirective adding .is-revealed to host
+:host.is-revealed .stat-value {
+  animation: stat-entrance 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes stat-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

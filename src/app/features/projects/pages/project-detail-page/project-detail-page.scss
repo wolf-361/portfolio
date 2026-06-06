@@ -411,6 +411,23 @@
   gap: sp.$md;
 }
 
+.cs-divider {
+  height: 1px;
+  background: sys.$outline-variant;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -2px;
+    width: 4px;
+    height: 4px;
+    background: sys.$primary;
+    border-radius: 1px;
+  }
+}
+
 .sec-eyebrow {
   margin: 0;
   font-size: 0.625rem;
@@ -425,8 +442,10 @@
 
 .sec-title {
   margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 300;
   letter-spacing: -0.025em;
   color: sys.$on-background;
   max-width: 22ch;
@@ -449,18 +468,13 @@
   margin: 0;
   padding: sp.$lg sp.$xl;
   border-left: 2px solid sys.$primary;
-  background: linear-gradient(
-    to right,
-    color-mix(in srgb, sys.$primary 15%, sys.$surface-container-low),
-    color-mix(in srgb, sys.$surface-container-low 60%, transparent) 70%
-  );
+  background: color-mix(in srgb, sys.$primary 8%, sys.$surface-container-low);
+  box-shadow: inset 4px 0 24px -8px color-mix(in srgb, sys.$primary 20%, transparent);
   border-radius: 0 sys.$corner-small sys.$corner-small 0;
   display: flex;
   flex-direction: column;
   gap: sp.$xs;
   max-width: 58ch;
-  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 }
 
 .sec-highlight-quote {
