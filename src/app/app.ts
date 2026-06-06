@@ -5,11 +5,16 @@ import { filter } from 'rxjs/operators';
 
 import { NavbarComponent } from './core/layout/navbar/navbar';
 import { FooterComponent } from './core/layout/footer/footer';
+import { BootOverlayComponent } from './core/boot-overlay/boot-overlay';
+import { BootService } from './core/boot-overlay/boot.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, FooterComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, BootOverlayComponent],
   template: `
+    @if (bootService.showOverlay()) {
+      <app-boot-overlay />
+    }
     <app-navbar />
     <main>
       <router-outlet />
@@ -31,6 +36,7 @@ import { FooterComponent } from './core/layout/footer/footer';
 export class App implements OnInit {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  readonly bootService = inject(BootService);
 
   // Map of url → scrollY, kept in memory for the session
   private readonly scrollMap = new Map<string, number>();

@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { LangService, Lang } from '../../../../../core/lang/lang';
+import { BootService } from '../../../../../core/boot-overlay/boot.service';
 import { P10kPromptComponent } from '../p10k-prompt';
 
 export type LineKind = 'cmd' | 'output' | 'neofetch' | 'error' | 'blank';
@@ -241,6 +242,7 @@ export class HeroTerminalComponent implements OnDestroy {
   private charIdx = 0;
   private pauseFrames = 0;
   private animInterval: ReturnType<typeof setInterval> | null = null;
+  private isFirstLoad = inject(BootService).isFirstLoad();
   private historyIdx = -1;
   private tabCycling = false;
   private tabMatches: string[] = [];
@@ -461,7 +463,14 @@ export class HeroTerminalComponent implements OnDestroy {
     this.partialIsCmd.set(true);
     this.isDone.set(false);
     this.inputValue.set('');
-    this.animInterval = setInterval(() => this.tick(), 35);
+
+    // On first load, wait for the scroll-reveal fade-in to complete before
+    // starting the animation (scroll-reveal delay 150ms + transition 600ms).
+    const startDelay = this.isFirstLoad ? 800 : 0;
+    this.isFirstLoad = false;
+    setTimeout(() => {
+      this.animInterval = setInterval(() => this.tick(), 35);
+    }, startDelay);
   }
 
   private tick(): void {
