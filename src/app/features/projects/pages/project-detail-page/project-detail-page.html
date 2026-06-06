@@ -1,8 +1,8 @@
 @if (project(); as p) {
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
-  <div class="cs-hero">
+  <div class="cs-hero" #heroRef>
     <div class="cs-container">
-      <!-- Back + breadcrumb -->
+      <!-- Breadcrumb -->
       <div class="cs-nav mono">
         <a class="back-link" routerLink="/" fragment="projects">
           <span class="back-arr">←</span>
@@ -13,29 +13,63 @@
         <span class="crumb crumb-active">{{ p.title }}</span>
       </div>
 
-      <!-- Headline -->
-      <h1 class="cs-title">{{ p.title }}</h1>
-      @if (p.description) {
-        <p class="cs-subtitle">{{ lang.t(p.description.en, p.description.fr) }}</p>
-      }
-
-      <!-- CTA row -->
-      <div class="cs-cta-row">
-        @if (p.links?.length) {
-          @for (link of p.links!; track link.label) {
-            <a
-              class="cs-btn"
-              [class.cs-btn--primary]="$first"
-              [href]="link.url"
-              target="_blank"
-              rel="noopener"
-            >
-              {{ link.label }} <span class="btn-arr">↗</span>
-            </a>
+      <!-- Split layout -->
+      <div
+        class="cs-hero-split"
+        [class.cs-hero-split--full]="!p.heroVisual || p.heroVisual.type === 'none'"
+      >
+        <!-- Left: title + meta -->
+        <div class="cs-hero-left">
+          <h1 class="cs-title" scrollReveal="fade-up">{{ p.title }}</h1>
+          @if (p.description) {
+            <p class="cs-subtitle" scrollReveal="fade-up" [scrollRevealDelay]="80">
+              {{ lang.t(p.description.en, p.description.fr) }}
+            </p>
           }
-        }
-        @if (p.status) {
-          <span class="cs-status-badge mono">{{ lang.t(p.status!.en, p.status!.fr) }}</span>
+          <div class="cs-cta-row" scrollReveal="fade-up" [scrollRevealDelay]="160">
+            @if (p.links?.length) {
+              @for (link of p.links!; track link.label) {
+                <a
+                  class="cs-btn"
+                  [class.cs-btn--primary]="$first"
+                  [href]="link.url"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {{ link.label }} <span class="btn-arr">↗</span>
+                </a>
+              }
+            }
+            @if (p.status) {
+              <span class="cs-status-badge mono">{{ lang.t(p.status!.en, p.status!.fr) }}</span>
+            }
+          </div>
+        </div>
+
+        <!-- Right: visual panel -->
+        @if (p.heroVisual && p.heroVisual.type !== 'none') {
+          <div class="cs-hero-visual" #visualRef scrollReveal="fade-up" [scrollRevealDelay]="240">
+            @if (p.heroVisual.type === 'phone') {
+              <ui-phone-mockup />
+            } @else if (p.heroVisual.type === 'terminal') {
+              <div class="cs-hero-terminal">
+                <div class="cs-hero-terminal-bar">
+                  <span class="cs-ht-dot cs-ht-dot--r"></span>
+                  <span class="cs-ht-dot cs-ht-dot--y"></span>
+                  <span class="cs-ht-dot cs-ht-dot--g"></span>
+                </div>
+                <div class="cs-hero-terminal-body">
+                  <p class="cs-ht-prompt">
+                    <span class="cs-ht-dollar mono">$</span>
+                    <span class="mono"> {{ p.heroVisual.terminalCommand }}</span>
+                  </p>
+                  @for (line of p.heroVisual.terminalLines ?? []; track $index) {
+                    <p class="cs-ht-line mono">{{ line }}</p>
+                  }
+                </div>
+              </div>
+            }
+          </div>
         }
       </div>
     </div>

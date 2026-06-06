@@ -21,6 +21,36 @@
   border-bottom: 1px solid sys.$outline-variant;
 }
 
+.cs-hero-split {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: sp.$xl-2;
+  align-items: center;
+  padding-top: sp.$lg;
+
+  &.cs-hero-split--full {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    gap: sp.$xl;
+  }
+}
+
+.cs-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: sp.$md;
+}
+
+.cs-hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  will-change: transform;
+}
+
 .cs-nav {
   display: flex;
   align-items: center;
@@ -73,9 +103,11 @@
 }
 
 .cs-title {
-  margin: 0 0 sp.$md;
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
   font-weight: 400;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   letter-spacing: -0.025em;
   line-height: 1.05;
   color: sys.$on-surface;
@@ -83,11 +115,75 @@
 }
 
 .cs-subtitle {
-  margin: 0 0 sp.$xl;
+  margin: 0;
   font-size: 1.0625rem;
   line-height: 1.75;
   color: sys.$on-surface-variant;
   max-width: 60ch;
+}
+
+// ── Static hero terminal ───────────────────────────────────────────────────────
+
+.cs-hero-terminal {
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 380px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 20px 40px -4px rgba(0, 0, 0, 0.3);
+}
+
+.cs-hero-terminal-bar {
+  background: t.$macos-titlebar;
+  padding: 0.625rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cs-ht-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &--r {
+    background: t.$macos-dot-red;
+  }
+  &--y {
+    background: t.$macos-dot-yellow;
+  }
+  &--g {
+    background: t.$macos-dot-green;
+  }
+}
+
+.cs-hero-terminal-body {
+  background: #0d1117;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cs-ht-prompt {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  color: #7dd3fc;
+}
+
+.cs-ht-dollar {
+  color: #a78bfa;
+}
+
+.cs-ht-line {
+  margin: 0;
+  font-size: 0.6875rem;
+  color: #cdd6f4;
+  opacity: 0.65;
+  line-height: 1.6;
+  white-space: pre;
 }
 
 .cs-cta-row {
