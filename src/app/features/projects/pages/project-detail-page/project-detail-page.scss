@@ -442,10 +442,8 @@
 
 .sec-title {
   margin: 0;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 400;
   font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
   letter-spacing: -0.025em;
   color: sys.$on-background;
   max-width: 22ch;
