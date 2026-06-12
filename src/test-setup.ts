@@ -31,6 +31,22 @@ if (typeof window !== 'undefined' && !('ResizeObserver' in window)) {
   });
 }
 
+// Stub matchMedia for jsdom environment
+if (typeof window !== 'undefined' && !('matchMedia' in window)) {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    configurable: true,
+    value: (query: string) => ({
+      matches: false,
+      media: query,
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    }),
+  });
+}
+
 // Stub IntersectionObserver for jsdom environment
 if (typeof window !== 'undefined' && !('IntersectionObserver' in window)) {
   class IntersectionObserverStub {
