@@ -1,6 +1,6 @@
 @if (project(); as p) {
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
-  <div class="cs-hero" #heroRef>
+  <div class="cs-hero" #heroRef [class.cs-entering]="entering()">
     <div class="cs-container">
       <!-- Breadcrumb -->
       <div class="cs-nav mono">
@@ -20,13 +20,13 @@
       >
         <!-- Left: title + meta -->
         <div class="cs-hero-left">
-          <h1 class="cs-title" scrollReveal="fade-up">{{ p.title }}</h1>
+          <h1 class="cs-title">{{ p.title }}</h1>
           @if (p.description) {
-            <p class="cs-subtitle" scrollReveal="fade-up" [scrollRevealDelay]="80">
+            <p class="cs-subtitle">
               {{ lang.t(p.description.en, p.description.fr) }}
             </p>
           }
-          <div class="cs-cta-row" scrollReveal="fade-up" [scrollRevealDelay]="160">
+          <div class="cs-cta-row">
             @if (p.links?.length) {
               @for (link of p.links!; track link.label) {
                 <a
@@ -48,7 +48,7 @@
 
         <!-- Right: visual panel -->
         @if (p.heroVisual && p.heroVisual.type !== 'none') {
-          <div class="cs-hero-visual" #visualRef scrollReveal="fade-up" [scrollRevealDelay]="240">
+          <div class="cs-hero-visual" #visualRef>
             @if (p.heroVisual.type === 'phone') {
               <ui-phone-mockup />
             } @else if (p.heroVisual.type === 'terminal') {

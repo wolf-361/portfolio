@@ -758,3 +758,44 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+// ── Hero entrance animation ───────────────────────────────────────────────────────
+
+@keyframes cs-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+// Hide hero elements before entrance class is applied — prevents 1-frame flash
+.cs-hero:not(.cs-entering) {
+  .cs-title,
+  .cs-subtitle,
+  .cs-cta-row,
+  .cs-hero-visual {
+    opacity: 0;
+  }
+}
+
+.cs-entering {
+  .cs-title {
+    animation: cs-fade-up 500ms ease-out both;
+  }
+
+  .cs-subtitle {
+    animation: cs-fade-up 500ms ease-out 80ms both;
+  }
+
+  .cs-cta-row {
+    animation: cs-fade-up 500ms ease-out 160ms both;
+  }
+
+  .cs-hero-visual {
+    animation: cs-fade-up 500ms ease-out 240ms both;
+  }
+}
