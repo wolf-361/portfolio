@@ -4,19 +4,17 @@
   [attr.aria-label]="lang.t('Interactive terminal', 'Terminal interactif')"
   (click)="focusInput()"
 >
-  @if (showHint()) {
-    <div class="t-hint" aria-hidden="true">
-      <span class="t-hint-dot"></span>
-      <span class="t-hint-text mono">try typing a command</span>
-    </div>
-  }
-
   <!-- Title bar -->
   <div class="terminal-titlebar">
     <span class="dot dot-red"></span>
     <span class="dot dot-yellow"></span>
     <span class="dot dot-green"></span>
     <span class="terminal-title">luc&#64;arch — ~/portfolio — zsh</span>
+  </div>
+
+  <div class="t-hint" [class.t-hint--visible]="showHint()" aria-hidden="true">
+    <span class="t-hint-dot"></span>
+    <span class="t-hint-text mono">try typing a command</span>
   </div>
 
   <!-- Body -->
