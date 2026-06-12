@@ -1,9 +1,9 @@
 <ui-gradient-atmosphere variant="hero">
-  <section class="hero" id="hero-section">
+  <section class="hero" id="hero-section" [class.hero-entering]="entering()">
     <ui-floating-text-canvas [opacity]="0.18" />
 
     <div class="hero-stage">
-      <div class="hero-copy" scrollReveal="fade-up">
+      <div class="hero-copy">
         <p class="hero-eyebrow mono">
           {{
             lang.t('// luc allaire · software developer', '// luc allaire · développeur logiciel')
@@ -27,7 +27,7 @@
         </a>
       </div>
 
-      <div class="hero-terminal-wrap" scrollReveal="fade-up" [scrollRevealDelay]="150">
+      <div class="hero-terminal-wrap">
         <app-hero-terminal />
       </div>
     </div>

@@ -51,6 +51,8 @@
           <div class="cs-hero-visual" #visualRef>
             @if (p.heroVisual.type === 'phone') {
               <ui-phone-mockup />
+            } @else if (p.heroVisual.type === 'waystone') {
+              <ui-waystone-mockup />
             } @else if (p.heroVisual.type === 'terminal') {
               <div class="cs-hero-terminal">
                 <div class="cs-hero-terminal-bar">

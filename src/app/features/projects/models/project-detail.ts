@@ -1,7 +1,7 @@
 import { I18n } from '../../../shared/models/i18n';
 import { Project } from './project';
 
-export type HeroVisualType = 'phone' | 'terminal' | 'none';
+export type HeroVisualType = 'phone' | 'waystone' | 'terminal' | 'none';
 
 export interface HeroVisual {
   type: HeroVisualType;

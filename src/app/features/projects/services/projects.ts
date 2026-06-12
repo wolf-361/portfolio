@@ -178,7 +178,7 @@ export class ProjectsService {
         duration: { en: 'Not started · 2026', fr: 'Pas encore commencé · 2026' },
         team: { en: 'Solo', fr: 'Solo' },
       },
-      heroVisual: { type: 'phone' },
+      heroVisual: { type: 'waystone' },
       sections: [
         {
           id: 'problem',

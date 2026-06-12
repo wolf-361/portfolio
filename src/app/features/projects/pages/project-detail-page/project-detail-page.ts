@@ -22,6 +22,7 @@ import { StatCardComponent } from '../../../../shared/components/stat-card/stat-
 import { ScrollSpyDirective } from '../../../../shared/directives/scroll-spy/scroll-spy';
 import { ScrollRevealDirective } from '../../../../shared/directives/scroll-reveal/scroll-reveal';
 import { PhoneMockupComponent } from '../../../../shared/components/phone-mockup/phone-mockup';
+import { WaystoneMockupComponent } from '../../../../shared/components/waystone-mockup/waystone-mockup';
 
 @Component({
   selector: 'app-project-detail-page',
@@ -33,6 +34,7 @@ import { PhoneMockupComponent } from '../../../../shared/components/phone-mockup
     ScrollSpyDirective,
     ScrollRevealDirective,
     PhoneMockupComponent,
+    WaystoneMockupComponent,
   ],
   templateUrl: './project-detail-page.html',
   styleUrl: './project-detail-page.scss',
