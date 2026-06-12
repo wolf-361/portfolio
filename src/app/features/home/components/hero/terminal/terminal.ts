@@ -507,6 +507,12 @@ export class HeroTerminalComponent implements OnDestroy {
         this.lineIdx++;
         this.charIdx = 0;
         this.pauseFrames = entry.isNeofetch ? 4 : 9;
+        // Neofetch dumps many lines at once — scroll to top so the logo is
+        // visible from the beginning rather than snapping to the last line.
+        if (entry.isNeofetch) {
+          this.scrollTop();
+          return;
+        }
       }
     } else {
       this.partialIsCmd.set(false);
@@ -566,6 +572,13 @@ export class HeroTerminalComponent implements OnDestroy {
     setTimeout(() => {
       const el = this.bodyEl()?.nativeElement;
       if (el) el.scrollTop = el.scrollHeight;
+    });
+  }
+
+  private scrollTop(): void {
+    setTimeout(() => {
+      const el = this.bodyEl()?.nativeElement;
+      if (el) el.scrollTop = 0;
     });
   }
 

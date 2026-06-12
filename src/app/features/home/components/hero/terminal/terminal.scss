@@ -213,10 +213,10 @@
   padding: 0.375rem 1rem;
   background: color-mix(in srgb, #7dd3fc 10%, transparent);
   border-bottom: 1px solid color-mix(in srgb, #7dd3fc 20%, transparent);
-  animation: hint-fade-in 400ms ease forwards;
 
   &--visible {
     visibility: visible;
+    animation: hint-fade-in 400ms ease forwards;
   }
 }
 
