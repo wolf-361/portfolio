@@ -40,17 +40,17 @@
   );
 }
 
-// Contact: cyan and violet converge — most saturated moment
+// Contact: subtle convergence — let the typography carry the weight
 :host([data-variant='contact'])::before {
   background:
     radial-gradient(
       ellipse 50% 60% at 25% 60%,
-      color-mix(in srgb, var(--mat-sys-primary) 16%, transparent) 0%,
+      color-mix(in srgb, var(--mat-sys-primary) 8%, transparent) 0%,
       transparent 60%
     ),
     radial-gradient(
       ellipse 45% 55% at 75% 40%,
-      color-mix(in srgb, var(--mat-sys-tertiary) 14%, transparent) 0%,
+      color-mix(in srgb, var(--mat-sys-tertiary) 7%, transparent) 0%,
       transparent 60%
     );
 }

@@ -8,7 +8,7 @@ export type ScrollRevealType = 'from-left' | 'from-right' | 'perspective-tilt' |
 })
 export class ScrollRevealDirective implements OnInit, OnDestroy {
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
-  private observer!: IntersectionObserver;
+  private observer?: IntersectionObserver;
   private revealTimeout: ReturnType<typeof setTimeout> | null = null;
 
   readonly scrollReveal = input.required<ScrollRevealType>();
@@ -37,13 +37,19 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
           } else {
             this.reveal(el);
           }
-          this.observer.disconnect();
+          this.observer?.disconnect();
         }
       },
       { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
     );
 
-    this.observer.observe(el);
+    // Double-rAF: let the browser paint sr-hidden state before observing,
+    // so in-viewport elements animate in rather than snap to final state.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.observer?.observe(el);
+      });
+    });
   }
 
   ngOnDestroy(): void {

@@ -298,17 +298,26 @@
 
 // ── Draw-in animation ─────────────────────────────────────────────────────────
 
-.bar,
-.v-bar {
+.bar {
   transform-origin: left center;
   transform: scaleX(0);
   transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+// Vertical bars (mobile) grow top-down, not left-right
+.v-bar {
+  transform-origin: top center;
+  transform: scaleY(0);
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 :host.timeline--visible {
-  .bar,
-  .v-bar {
+  .bar {
     transform: scaleX(1);
+  }
+
+  .v-bar {
+    transform: scaleY(1);
   }
 
   // Stagger each row with increasing delay (up to 5 rows)
@@ -335,9 +344,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bar,
-  .v-bar {
+  .bar {
     transform: scaleX(1);
+    transition: none;
+  }
+
+  .v-bar {
+    transform: scaleY(1);
     transition: none;
   }
 }

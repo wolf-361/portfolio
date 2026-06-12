@@ -2,8 +2,8 @@
   @for (line of completedLines(); track $index) {
     <p class="boot-line">
       <span class="boot-prefix">~</span>
-      <span class="boot-text">{{ line }}</span>
-      @if ($index === 1) {
+      <span class="boot-text">{{ line.text }}</span>
+      @if (line.check) {
         <span class="boot-check"> ✓</span>
       }
       @if ($last && isDone()) {

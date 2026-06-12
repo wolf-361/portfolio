@@ -5,7 +5,7 @@
   </button>
 
   <!-- Desktop anchor nav -->
-  <nav class="nav-links" aria-label="Navigation principale">
+  <nav class="nav-links" [attr.aria-label]="lang.t('Main navigation', 'Navigation principale')">
     @for (item of navItems; track item.fragment) {
       <button
         class="nav-link"
@@ -25,6 +25,7 @@
   <!-- Lang toggle -->
   <button
     class="lang-btn"
+    [attr.aria-label]="lang.t('Switch to French', 'Switch to English')"
     [matTooltip]="lang.t('Switch to French', 'Switch to English')"
     (click)="lang.toggle()"
   >

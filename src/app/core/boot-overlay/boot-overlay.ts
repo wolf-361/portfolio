@@ -1,7 +1,16 @@
 import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { BootService } from './boot.service';
 
-const LINES = ['initializing luc.allaire...', 'loading portfolio.ts', 'ready.'];
+interface BootLine {
+  text: string;
+  check?: true;
+}
+
+const LINES: BootLine[] = [
+  { text: 'initializing luc.allaire...' },
+  { text: 'loading portfolio.ts', check: true },
+  { text: 'ready.' },
+];
 
 @Component({
   selector: 'app-boot-overlay',
@@ -16,7 +25,7 @@ export class BootOverlayComponent implements OnInit, OnDestroy {
   private lineIdx = 0;
   private charIdx = 0;
 
-  readonly completedLines = signal<string[]>([]);
+  readonly completedLines = signal<BootLine[]>([]);
   readonly currentText = signal('');
   readonly isDone = signal(false);
   readonly fading = signal(false);
@@ -29,6 +38,8 @@ export class BootOverlayComponent implements OnInit, OnDestroy {
     if (this.interval) clearInterval(this.interval);
     if (this.fadeTimeout) clearTimeout(this.fadeTimeout);
     if (this.markTimeout) clearTimeout(this.markTimeout);
+    // Guarantee markSeen fires even when user navigates during the fade
+    if (this.isDone()) this.bootService.markSeen();
   }
 
   private tick(): void {
@@ -36,8 +47,8 @@ export class BootOverlayComponent implements OnInit, OnDestroy {
 
     const line = LINES[this.lineIdx];
 
-    if (this.charIdx <= line.length) {
-      this.currentText.set(line.slice(0, this.charIdx));
+    if (this.charIdx < line.text.length) {
+      this.currentText.set(line.text.slice(0, this.charIdx + 1));
       this.charIdx++;
     } else {
       this.completedLines.update((l) => [...l, line]);

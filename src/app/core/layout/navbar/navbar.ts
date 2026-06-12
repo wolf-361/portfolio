@@ -110,7 +110,8 @@ export class NavbarComponent implements OnInit {
     this.navItems.forEach((item) => {
       const el = document.getElementById(item.fragment);
       if (!el) return;
-      if (el.offsetTop <= triggerY) {
+      const top = el.getBoundingClientRect().top + scrollY;
+      if (top <= triggerY) {
         active = item.fragment;
       }
     });

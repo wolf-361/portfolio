@@ -1,5 +1,6 @@
 @use './styles/tokens' as t;
 @use './styles/material-theme';
+@use './app/shared/directives/scroll-reveal/scroll-reveal';
 
 :root {
   --font-mono: #{t.$font-family-mono};

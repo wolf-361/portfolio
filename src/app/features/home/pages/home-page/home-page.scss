@@ -131,6 +131,13 @@
   display: flex;
   flex-direction: column;
   gap: sp.$sm;
+
+  &.active {
+    border-color: color-mix(in srgb, sys.$primary 55%, sys.$outline-variant);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, sys.$primary 20%, transparent),
+      0 4px 24px -4px color-mix(in srgb, sys.$primary 25%, transparent);
+  }
 }
 
 .edu-card-top {
