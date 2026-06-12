@@ -29,7 +29,7 @@ describe('BootService', () => {
   beforeEach(() => {
     mockSessionStorage.clear();
     // Override global sessionStorage with our mock
-    (globalThis as Record<string, unknown>).sessionStorage = mockSessionStorage;
+    (globalThis as Record<string, unknown>)['sessionStorage'] = mockSessionStorage;
   });
 
   it('shows overlay on first load', () => {

@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   DestroyRef,
+  effect,
   ElementRef,
   HostListener,
   inject,
@@ -50,6 +51,7 @@ export class ProjectDetailPageComponent implements AfterViewInit {
 
   readonly activeSection = signal<string>('');
   readonly zoomedDiagram = signal<string | null>(null);
+  readonly entering = signal(false);
 
   readonly heroRef = viewChild<ElementRef<HTMLElement>>('heroRef');
   readonly visualRef = viewChild<ElementRef<HTMLElement>>('visualRef');
@@ -63,6 +65,12 @@ export class ProjectDetailPageComponent implements AfterViewInit {
   };
 
   constructor() {
+    effect(() => {
+      this.slug(); // re-run on every slug change
+      this.entering.set(false);
+      requestAnimationFrame(() => this.entering.set(true));
+    });
+
     this.destroyRef.onDestroy(() => {
       if (this.zoomedDiagram()) document.body.style.overflow = '';
       this.heroObserver?.disconnect();
