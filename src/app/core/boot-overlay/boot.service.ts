@@ -9,7 +9,8 @@ export class BootService {
   private readonly _seen =
     isPlatformBrowser(this.platformId) && !!sessionStorage.getItem(SESSION_KEY);
 
-  private readonly _showOverlay = signal(!this._seen);
+  // Always cover the page on load so the layout never flashes during bootstrap.
+  private readonly _showOverlay = signal(true);
   readonly showOverlay = this._showOverlay.asReadonly();
 
   private readonly _isFirstLoad = signal(!this._seen);

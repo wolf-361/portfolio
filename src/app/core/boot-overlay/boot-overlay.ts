@@ -31,6 +31,15 @@ export class BootOverlayComponent implements OnInit, OnDestroy {
   readonly fading = signal(false);
 
   ngOnInit(): void {
+    if (!this.bootService.isFirstLoad()) {
+      // Not first load — just cover the bootstrap/lazy-chunk window, then fade.
+      this.isDone.set(true);
+      this.fadeTimeout = setTimeout(() => {
+        this.fading.set(true);
+        this.markTimeout = setTimeout(() => this.bootService.markSeen(), 400);
+      }, 120);
+      return;
+    }
     this.interval = setInterval(() => this.tick(), 30);
   }
 

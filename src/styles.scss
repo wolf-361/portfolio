@@ -27,13 +27,6 @@ body {
   overflow-x: hidden;
 }
 
-// Reserve the hero's full-viewport height in the initial bundle so the lazy
-// home-page chunk loading doesn't cause a layout collapse before app-hero renders.
-app-hero {
-  display: block;
-  min-height: 100dvh;
-}
-
 // Utility class — apply JetBrains Mono anywhere without a directive.
 // Usage: <span class="mono">...</span>
 .mono {
