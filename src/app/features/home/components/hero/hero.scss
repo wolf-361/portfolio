@@ -132,6 +132,9 @@
 }
 
 // ── Entrance animation ────────────────────────────────────────────────────────
+// Pure CSS — plays immediately on stylesheet parse, no JS gate needed.
+// On first load the boot overlay covers the hero, so these run "free" behind it.
+// On refresh (no overlay) they animate in smoothly as soon as the page renders.
 
 @keyframes hero-fade-up {
   from {
@@ -144,36 +147,23 @@
   }
 }
 
-.hero:not(.hero-entering) {
-  .hero-eyebrow,
-  .hero-headline,
-  .hero-sub,
-  .hero-cta,
-  .hero-terminal-wrap,
-  .hero-scroll-hint {
-    opacity: 0;
-  }
+.hero-eyebrow {
+  animation: hero-fade-up 600ms ease-out both;
 }
-
-.hero-entering {
-  .hero-eyebrow {
-    animation: hero-fade-up 600ms ease-out both;
-  }
-  .hero-headline {
-    animation: hero-fade-up 600ms ease-out 80ms both;
-  }
-  .hero-sub {
-    animation: hero-fade-up 600ms ease-out 180ms both;
-  }
-  .hero-cta {
-    animation: hero-fade-up 600ms ease-out 280ms both;
-  }
-  .hero-terminal-wrap {
-    animation: hero-fade-up 700ms ease-out 380ms both;
-  }
-  .hero-scroll-hint {
-    animation: hero-fade-up 600ms ease-out 560ms both;
-  }
+.hero-headline {
+  animation: hero-fade-up 600ms ease-out 80ms both;
+}
+.hero-sub {
+  animation: hero-fade-up 600ms ease-out 180ms both;
+}
+.hero-cta {
+  animation: hero-fade-up 600ms ease-out 280ms both;
+}
+.hero-terminal-wrap {
+  animation: hero-fade-up 700ms ease-out 380ms both;
+}
+.hero-scroll-hint {
+  animation: hero-fade-up 600ms ease-out 560ms both;
 }
 
 @keyframes scroll-hint-pulse {
