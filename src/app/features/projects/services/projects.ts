@@ -156,8 +156,8 @@ export class ProjectsService {
         },
       ],
       pager: {
-        nextSlug: 'waystone',
-        nextTitle: 'Waystone',
+        nextSlug: 'home-ops',
+        nextTitle: 'Home Ops',
       },
     },
 
@@ -254,10 +254,8 @@ export class ProjectsService {
         },
       ],
       pager: {
-        prevSlug: 'planific',
-        prevTitle: 'Planific',
-        nextSlug: 'templates',
-        nextTitle: 'Starter Templates',
+        prevSlug: 'mesh-companion',
+        prevTitle: 'Traefik Mesh Companion',
       },
     },
 
@@ -352,10 +350,10 @@ export class ProjectsService {
         },
       ],
       pager: {
-        prevSlug: 'waystone',
-        prevTitle: 'Waystone',
-        nextSlug: 'home-ops',
-        nextTitle: 'Home Ops',
+        prevSlug: 'home-ops',
+        prevTitle: 'Home Ops',
+        nextSlug: 'mesh-companion',
+        nextTitle: 'Traefik Mesh Companion',
       },
     },
 
@@ -599,10 +597,10 @@ export class ProjectsService {
         },
       ],
       pager: {
-        prevSlug: 'templates',
-        prevTitle: 'Starter Templates',
-        nextSlug: 'mesh-companion',
-        nextTitle: 'Traefik Mesh Companion',
+        prevSlug: 'planific',
+        prevTitle: 'Planific',
+        nextSlug: 'templates',
+        nextTitle: 'Starter Templates',
       },
     },
 
@@ -756,8 +754,10 @@ export class ProjectsService {
         },
       ],
       pager: {
-        prevSlug: 'home-ops',
-        prevTitle: 'Home Ops',
+        prevSlug: 'templates',
+        prevTitle: 'Starter Templates',
+        nextSlug: 'waystone',
+        nextTitle: 'Waystone',
       },
     },
   };
