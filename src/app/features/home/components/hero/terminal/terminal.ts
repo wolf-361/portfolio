@@ -262,7 +262,7 @@ export class HeroTerminalComponent implements OnDestroy {
   readonly inputValue = signal('');
   readonly history: string[] = [];
   readonly isAutoDemo = signal(false);
-  readonly showHint = computed(() => this.hintVisible());
+  readonly showHint = this.hintVisible.asReadonly();
 
   readonly suggestion = computed(() => {
     const input = this.inputValue();
