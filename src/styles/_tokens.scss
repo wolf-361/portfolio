@@ -42,3 +42,16 @@ $spacing-md: 1rem; // 16px
 $spacing-lg: 1.5rem; // 24px
 $spacing-xl: 2rem; // 32px
 $spacing-xl-2: 3rem; // 48px
+
+// Terminal syntax highlighting — fixed palette, macOS dark theme.
+// Most values are intentionally hardcoded (Catppuccin Mocha palette).
+// Exception: $terminal-cmd uses the brand primary via sys.$primary so
+// it responds to the user's chosen palette (cyan by default).
+$terminal-bg: #0d1117;
+$terminal-text: #cdd6f4;
+$terminal-err: #f87171;
+$terminal-dim: #4b5563;
+$terminal-ghost: #3d4452;
+$terminal-logo: #06b6d4;
+$terminal-link: #86efac;
+$terminal-chevron: #a78bfa;
