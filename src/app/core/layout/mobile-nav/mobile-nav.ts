@@ -50,7 +50,7 @@ export class MobileNavComponent {
   navigate(fragment: string): void {
     const el = document.getElementById(fragment);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.scrollIntoView({ behavior: 'auto', block: 'start' });
     } else {
       this.router.navigate(['/'], { fragment });
     }

@@ -84,7 +84,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (el) {
       const offset = 96; // sticky navbar height
       const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+      window.scrollTo({ top, behavior: 'auto' });
     } else {
       // Not on home page — navigate home; app.ts NavigationEnd handler will scroll
       this.router.navigate(['/'], { fragment });
