@@ -6,11 +6,7 @@ interface BootLine {
   check?: true;
 }
 
-const LINES: BootLine[] = [
-  { text: 'initializing luc.allaire...' },
-  { text: 'loading portfolio.ts', check: true },
-  { text: 'ready.' },
-];
+const LINES: BootLine[] = [{ text: 'loading portfolio.ts', check: true }];
 
 @Component({
   selector: 'app-boot-overlay',
@@ -40,7 +36,7 @@ export class BootOverlayComponent implements OnInit, OnDestroy {
       }, 120);
       return;
     }
-    this.interval = setInterval(() => this.tick(), 30);
+    this.interval = setInterval(() => this.tick(), 15);
   }
 
   ngOnDestroy(): void {
@@ -72,7 +68,7 @@ export class BootOverlayComponent implements OnInit, OnDestroy {
         this.fadeTimeout = setTimeout(() => {
           this.fading.set(true);
           this.markTimeout = setTimeout(() => this.bootService.markSeen(), 400);
-        }, 300);
+        }, 100);
       }
     }
   }
