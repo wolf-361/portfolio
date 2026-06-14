@@ -52,7 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   readonly navItems: NavItem[] = [
     { index: '01', labelEn: 'Projects', labelFr: 'Projets', fragment: 'projects' },
-    { index: '02', labelEn: 'Background', labelFr: 'Expériences', fragment: 'experiences' },
+    { index: '02', labelEn: 'Background', labelFr: 'Parcours', fragment: 'experiences' },
     { index: '03', labelEn: 'Contact', labelFr: 'Contact', fragment: 'contact' },
   ];
   // Note: timeline is part of experiences section — not a separate nav item
