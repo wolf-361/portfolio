@@ -198,6 +198,8 @@
                   class="arch-svg-canvas"
                   [innerHTML]="sanitize(section.svgDiagram)"
                   (click)="openDiagram(section.svgDiagram)"
+                  (keydown.enter)="openDiagram(section.svgDiagram)"
+                  (keydown.space)="openDiagram(section.svgDiagram)"
                   role="button"
                   tabindex="0"
                   aria-label="Tap to expand diagram"
