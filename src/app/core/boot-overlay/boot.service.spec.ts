@@ -1,9 +1,10 @@
+import { PLATFORM_ID } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+
 import { BootService } from './boot.service';
 
-// Mock sessionStorage for testing
 const mockSessionStorage = (() => {
   let store: Record<string, string> = {};
-
   return {
     getItem: (key: string) => store[key] || null,
     setItem: (key: string, value: string) => {
@@ -25,35 +26,44 @@ const mockSessionStorage = (() => {
   };
 })();
 
+function makeService(): BootService {
+  TestBed.resetTestingModule();
+  TestBed.configureTestingModule({
+    providers: [BootService, { provide: PLATFORM_ID, useValue: 'browser' }],
+  });
+  return TestBed.inject(BootService);
+}
+
 describe('BootService', () => {
   beforeEach(() => {
     mockSessionStorage.clear();
-    // Override global sessionStorage with our mock
     (globalThis as Record<string, unknown>)['sessionStorage'] = mockSessionStorage;
   });
 
   it('shows overlay on first load', () => {
-    const svc = new BootService();
+    const svc = makeService();
     expect(svc.showOverlay()).toBe(true);
     expect(svc.isFirstLoad()).toBe(true);
   });
 
   it('markSeen sets showOverlay to false and persists to sessionStorage', () => {
-    const svc = new BootService();
+    const svc = makeService();
     svc.markSeen();
     expect(svc.showOverlay()).toBe(false);
     expect(mockSessionStorage.getItem('boot-seen')).toBe('1');
   });
 
-  it('does not show overlay if already seen this session', () => {
+  it('isFirstLoad is false when already seen this session', () => {
     mockSessionStorage.setItem('boot-seen', '1');
-    const svc = new BootService();
-    expect(svc.showOverlay()).toBe(false);
+    const svc = makeService();
+    // showOverlay is always true on construction (overlay always covers the page briefly).
+    // The component checks isFirstLoad() to decide animation timing, not whether to render.
+    expect(svc.showOverlay()).toBe(true);
     expect(svc.isFirstLoad()).toBe(false);
   });
 
   it('isFirstLoad never changes after construction', () => {
-    const svc = new BootService();
+    const svc = makeService();
     expect(svc.isFirstLoad()).toBe(true);
     svc.markSeen();
     expect(svc.isFirstLoad()).toBe(true); // snapshot — does not change
