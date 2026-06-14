@@ -60,11 +60,11 @@ function buildNeofetchLines(lang: Lang): TermLine[] {
     { text: '──────────────────────────────', style: S_SEP },
     { text: en ? 'Name:   Luc Allaire' : 'Nom:    Luc Allaire', style: S_VALUE },
     {
-      text: en ? 'Role:   Software Developer · KMP' : 'Rôle:   Développeur logiciel · KMP',
+      text: en ? 'Role:   Mobile Developer · KMP' : 'Rôle:   Développeur mobile · KMP',
       style: S_VALUE,
     },
-    { text: en ? 'Bio:    Clean code,' : 'Bio:    Code propre,', style: S_VALUE },
-    { text: en ? '        built to scale.' : '        conçu pour durer.', style: S_DIM },
+    { text: en ? 'Bio:    Shared layer,' : 'Bio:    Couche partagée,', style: S_VALUE },
+    { text: '        Android & iOS.', style: S_DIM },
     { text: '', style: '' },
     { text: en ? 'OS:     Arch Linux x86_64' : 'OS :    Arch Linux x86_64', style: S_VALUE },
     { text: en ? 'Host:   me.wolf-361.ca' : 'Hôte:   me.wolf-361.ca', style: S_VALUE },
@@ -157,8 +157,8 @@ function runCommand(raw: string, lang: Lang): CommandResult {
             kind: 'output',
             text:
               lang === 'en'
-                ? 'Software Developer · KMP Specialist · Infrastructure-Aware'
-                : 'Développeur logiciel · Spécialiste KMP · Infrastructure-First',
+                ? 'Mobile Developer · KMP Specialist · Self-Hosted Infrastructure'
+                : 'Développeur mobile · Spécialiste KMP · Infrastructure auto-hébergée',
           },
         ];
       if (file === 'bio.txt')
@@ -466,7 +466,7 @@ export class HeroTerminalComponent implements OnDestroy {
 
     // On first load, wait for the scroll-reveal fade-in to complete before
     // starting the animation (scroll-reveal delay 150ms + transition 600ms).
-    const startDelay = this.isFirstLoad ? 800 : 0;
+    const startDelay = this.isFirstLoad ? 1200 : 0;
     this.isFirstLoad = false;
     setTimeout(() => {
       this.animInterval = setInterval(() => this.tick(), 35);
