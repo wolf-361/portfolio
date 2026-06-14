@@ -481,7 +481,37 @@
   gap: sp.$xs;
 
   @media (max-width: 720px) {
-    align-items: flex-start;
+    align-items: center;
+  }
+}
+
+@media (max-width: 720px) {
+  .contact-cta {
+    text-align: center;
+  }
+
+  .contact-row {
+    justify-content: center;
+  }
+
+  .contact-hint {
+    text-align: center;
+  }
+}
+
+@media (max-width: 599px) {
+  .contact-status {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .status-sep {
+    display: none;
+  }
+
+  .status-modes {
+    flex-basis: 100%;
+    text-align: center;
   }
 }
 
@@ -560,6 +590,10 @@
     color: sys.$primary;
     border-color: color-mix(in srgb, sys.$primary 50%, transparent);
     background: color-mix(in srgb, sys.$primary 10%, transparent);
+  }
+
+  &:active {
+    transform: scale(0.96);
   }
 }
 

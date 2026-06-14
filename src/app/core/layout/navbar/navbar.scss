@@ -37,9 +37,15 @@
   color: sys.$on-surface;
   flex-shrink: 0;
 
+  transition: transform 80ms ease;
+
   &:focus-visible {
     outline: 2px solid sys.$primary;
     outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 }
 
@@ -72,7 +78,9 @@
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.01em;
-  transition: background 120ms ease;
+  transition:
+    background 120ms ease,
+    transform 80ms ease;
 
   &:focus-visible {
     outline: 2px solid sys.$primary;
@@ -128,6 +136,10 @@
       animation: cursor-blink 1s step-end infinite;
     }
   }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 @keyframes cursor-blink {
@@ -165,7 +177,8 @@
   opacity: 0.65;
   transition:
     color 120ms ease,
-    opacity 120ms ease;
+    opacity 120ms ease,
+    transform 80ms ease;
 
   &:hover {
     color: sys.$primary;
@@ -175,6 +188,10 @@
   &:focus-visible {
     outline: 2px solid sys.$primary;
     outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.92);
   }
 }
 

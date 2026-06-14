@@ -35,6 +35,13 @@
     }
   }
 
+  &:active {
+    transform: scale(0.985);
+    box-shadow:
+      2px 4px 8px -4px color-mix(in srgb, #000 20%, transparent),
+      4px 8px 16px -8px color-mix(in srgb, #000 12%, transparent);
+  }
+
   &.card--featured {
     flex-direction: row;
     min-height: 340px;

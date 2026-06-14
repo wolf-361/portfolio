@@ -92,6 +92,11 @@
     opacity: 0.88;
     transform: translateY(-1px);
   }
+
+  &:active {
+    transform: scale(0.96);
+    opacity: 0.9;
+  }
 }
 
 .hero-cta--primary {

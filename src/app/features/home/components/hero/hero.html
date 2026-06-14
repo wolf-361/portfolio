@@ -33,7 +33,7 @@
           <a
             class="hero-cta hero-cta--outline"
             [href]="lang.t('/cv-en.pdf', '/cv-fr.pdf')"
-            download
+            [attr.download]="lang.t('cv-luc-allaire-en.pdf', 'cv-luc-allaire-fr.pdf')"
             [attr.aria-label]="lang.t('Download CV (PDF)', 'Télécharger le CV (PDF)')"
           >
             {{ lang.t('Download CV', 'Télécharger le CV') }}
