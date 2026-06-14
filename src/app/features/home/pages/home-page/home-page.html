@@ -208,30 +208,10 @@
         <span class="col-label-tag">CONTACT</span>
       </p>
 
-      <div
-        class="contact-status mono"
-        scrollReveal="fade-up"
-        [scrollRevealDelay]="80"
-        role="status"
-      >
-        <span class="status-led" aria-hidden="true"></span>
-        <span class="status-text">
-          <strong>{{ lang.t('Open to', 'Ouvert aux') }}</strong>
-          {{ lang.t('mobile roles', 'rôles mobiles') }}
-        </span>
-        <span class="status-sep">·</span>
-        <span class="status-modes">{{
-          lang.t(
-            'full-time · available August 2026 · remote or Trois-Rivières',
-            'temps plein · disponible août 2026 · télétravail ou Trois-Rivières'
-          )
-        }}</span>
-      </div>
-
       <div class="contact-split" scrollReveal="fade-up" [scrollRevealDelay]="160">
         <h2 class="contact-cta">
-          {{ lang.t("Let's build", 'Construisons') }}<br />
-          {{ lang.t('something ', 'quelque chose ')
+          {{ lang.t("Let's build", 'Bâtissons quelque chose') }}
+          {{ lang.t('something ', 'de ')
           }}<em class="contact-accent">{{ lang.t('solid', 'solide') }}</em
           ><span class="contact-dot">.</span>
         </h2>
@@ -259,6 +239,14 @@
               >
             </span>
           </div>
+          <p class="contact-hint mono">
+            {{
+              lang.t(
+                '// available August 2026 · full-time · remote or Trois-Rivières',
+                '// disponible août 2026 · temps plein · télétravail ou Trois-Rivières'
+              )
+            }}
+          </p>
           <p class="contact-hint mono">
             {{ lang.t('// reply within', '// réponse sous') }}
             <span class="hint-accent">~24h</span>
