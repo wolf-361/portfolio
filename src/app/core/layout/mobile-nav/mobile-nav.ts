@@ -42,8 +42,8 @@ export class MobileNavComponent {
   readonly closed = output<void>();
 
   readonly navItems: NavItem[] = [
-    { index: '01', labelEn: 'Experiences', labelFr: 'Expériences', fragment: 'experiences' },
-    { index: '02', labelEn: 'Projects', labelFr: 'Projets', fragment: 'projects' },
+    { index: '01', labelEn: 'Projects', labelFr: 'Projets', fragment: 'projects' },
+    { index: '02', labelEn: 'Background', labelFr: 'Expériences', fragment: 'experiences' },
     { index: '03', labelEn: 'Contact', labelFr: 'Contact', fragment: 'contact' },
   ];
 

@@ -24,10 +24,22 @@
             )
           }}
         </p>
-        <a class="hero-cta" href="#projects">
-          {{ lang.t('View projects', 'Voir les projets') }}
-          <span class="hero-cta-arr" aria-hidden="true">↓</span>
-        </a>
+        <div class="hero-ctas">
+          <a class="hero-cta hero-cta--primary" href="#projects">
+            {{ lang.t('View projects', 'Voir les projets') }}
+            <span class="hero-cta-arr" aria-hidden="true">↓</span>
+          </a>
+          <!-- ⚠️ HUMAN ACTION REQUIRED: Replace public/cv-en.pdf and public/cv-fr.pdf with real CVs before deploying -->
+          <a
+            class="hero-cta hero-cta--outline"
+            [href]="lang.t('/cv-en.pdf', '/cv-fr.pdf')"
+            download
+            [attr.aria-label]="lang.t('Download CV (PDF)', 'Télécharger le CV (PDF)')"
+          >
+            {{ lang.t('Download CV', 'Télécharger le CV') }}
+            <span class="hero-cta-arr" aria-hidden="true">↓</span>
+          </a>
+        </div>
       </div>
 
       <div class="hero-terminal-wrap">

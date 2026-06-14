@@ -215,3 +215,9 @@
     display: inline-flex;
   }
 }
+
+.navbar-status {
+  @media (max-width: 599px) {
+    display: none;
+  }
+}

@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ThemeService } from '../../theme/theme';
 import { LangService } from '../../lang/lang';
 import { MobileNavComponent } from '../mobile-nav/mobile-nav';
+import { StatusPillComponent } from '../../../shared/components/status-pill/status-pill';
 
 interface NavItem {
   index: string;
@@ -20,7 +21,14 @@ interface NavItem {
 
 @Component({
   selector: 'app-navbar',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatTooltipModule, MobileNavComponent],
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MobileNavComponent,
+    StatusPillComponent,
+  ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
@@ -43,8 +51,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly activeFragment = signal<string>('');
 
   readonly navItems: NavItem[] = [
-    { index: '01', labelEn: 'Background', labelFr: 'Expériences', fragment: 'experiences' },
-    { index: '02', labelEn: 'Projects', labelFr: 'Projets', fragment: 'projects' },
+    { index: '01', labelEn: 'Projects', labelFr: 'Projets', fragment: 'projects' },
+    { index: '02', labelEn: 'Background', labelFr: 'Expériences', fragment: 'experiences' },
     { index: '03', labelEn: 'Contact', labelFr: 'Contact', fragment: 'contact' },
   ];
   // Note: timeline is part of experiences section — not a separate nav item

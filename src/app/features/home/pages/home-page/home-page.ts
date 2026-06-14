@@ -253,19 +253,6 @@ export class HomePageComponent {
     },
     {
       size: 'small',
-      tag: { en: 'mobile · game', fr: 'mobile · jeu' },
-      title: { en: 'Waystone', fr: 'Waystone' },
-      description: {
-        en: 'Companion app for open-world game maps — track locations, pins, and progress across sessions.',
-        fr: 'Application compagnon pour cartes de jeux open-world — suivez vos emplacements, épingles et progression.',
-      },
-      stack: ['Kotlin Multiplatform', 'Compose Multiplatform', 'SQLDelight'],
-      slug: 'waystone',
-      urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
-      wip: true,
-    },
-    {
-      size: 'small',
       tag: { en: 'open source', fr: 'open source' },
       accentFirst: false,
       title: { en: 'Starter Templates', fr: 'Templates de démarrage' },
@@ -275,6 +262,20 @@ export class HomePageComponent {
       },
       stack: ['Kotlin Multiplatform', 'Angular 21', 'Spring Boot', 'Bun', 'Vitest', 'Playwright'],
       slug: 'templates',
+      urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
+    },
+    {
+      size: 'small',
+      tag: { en: 'open source · infra', fr: 'open source · infra' },
+      accentFirst: false,
+      title: { en: 'Traefik Mesh Companion', fr: 'Traefik Mesh Companion' },
+      description: {
+        en: 'Docker-label-driven sidecar that auto-manages Uptime Kuma monitors, Cloudflare DNS, and NetBird DNS on container start/stop. Built for Home Ops, published as a standalone image.',
+        fr: 'Sidecar piloté par labels Docker qui gère automatiquement les monitors Uptime Kuma, DNS Cloudflare et DNS NetBird au démarrage/arrêt des conteneurs. Conçu pour Home Ops, publié en image autonome.',
+      },
+      stack: ['Go', 'Docker', 'Traefik', 'Uptime Kuma', 'Cloudflare', 'NetBird'],
+      slug: 'mesh-companion',
+      repoUrl: 'https://github.com/wolf-infra/traefik-mesh-companion',
       urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
     },
     {
@@ -300,17 +301,16 @@ export class HomePageComponent {
     },
     {
       size: 'small',
-      tag: { en: 'open source · infra', fr: 'open source · infra' },
-      accentFirst: false,
-      title: { en: 'Traefik Mesh Companion', fr: 'Traefik Mesh Companion' },
+      tag: { en: 'mobile · game', fr: 'mobile · jeu' },
+      title: { en: 'Waystone', fr: 'Waystone' },
       description: {
-        en: 'Docker-label-driven sidecar that auto-manages Uptime Kuma monitors, Cloudflare DNS, and NetBird DNS on container start/stop. Built for Home Ops, published as a standalone image.',
-        fr: 'Sidecar piloté par labels Docker qui gère automatiquement les monitors Uptime Kuma, DNS Cloudflare et DNS NetBird au démarrage/arrêt des conteneurs. Conçu pour Home Ops, publié en image autonome.',
+        en: 'Companion app for open-world game maps — track locations, pins, and progress across sessions.',
+        fr: 'Application compagnon pour cartes de jeux open-world — suivez vos emplacements, épingles et progression.',
       },
-      stack: ['Go', 'Docker', 'Traefik', 'Uptime Kuma', 'Cloudflare', 'NetBird'],
-      slug: 'mesh-companion',
-      repoUrl: 'https://github.com/wolf-infra/traefik-mesh-companion',
+      stack: ['Kotlin Multiplatform', 'Compose Multiplatform', 'SQLDelight'],
+      slug: 'waystone',
       urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
+      wip: true,
     },
   ];
 

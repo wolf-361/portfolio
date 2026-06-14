@@ -64,6 +64,15 @@
   max-width: 52ch;
 }
 
+.hero-ctas {
+  display: flex;
+  flex-direction: row;
+  gap: sp.$sm;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
 .hero-cta {
   display: inline-flex;
   align-items: center;
@@ -71,8 +80,6 @@
   padding: 0.625rem sp.$lg;
   min-height: 44px;
   border-radius: 999px;
-  background: sys.$primary;
-  color: sys.$on-primary;
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -85,6 +92,17 @@
     opacity: 0.88;
     transform: translateY(-1px);
   }
+}
+
+.hero-cta--primary {
+  background: sys.$primary;
+  color: sys.$on-primary;
+}
+
+.hero-cta--outline {
+  background: transparent;
+  border: 1px solid sys.$primary;
+  color: sys.$primary;
 }
 
 .hero-cta-arr {
@@ -157,7 +175,7 @@
 .hero-sub {
   animation: hero-fade-up 600ms ease-out 180ms both;
 }
-.hero-cta {
+.hero-ctas {
   animation: hero-fade-up 600ms ease-out 280ms both;
 }
 .hero-terminal-wrap {
