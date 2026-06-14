@@ -55,8 +55,8 @@ export class HomePageComponent {
       active: true,
       roleProgression: ['Entrepreneur', 'Stagiaire DUAL'],
       summary: {
-        en: 'Multiplatform mobile development for high-end audio products. Architecture, hardware integration and delivery automation.',
-        fr: 'Développement mobile multiplateforme pour produits audio haut de gamme. Architecture, intégration matérielle et automatisation des livraisons.',
+        en: 'Multiplatform mobile development for high-end audio products. TCP protocol reverse engineering, CI/CD pipeline setup, and test infrastructure.',
+        fr: 'Développement mobile multiplateforme pour produits audio haut de gamme. Rétro-ingénierie TCP, mise en place du pipeline CI/CD et infrastructure de tests.',
       },
       bullets: [
         {
@@ -119,7 +119,7 @@ export class HomePageComponent {
       title: { en: 'Infra Programmer', fr: 'Programmeur infra' },
       company: 'ASUQTR',
       period: { en: 'Sept 2023 – May 2024', fr: 'Sept 2023 – Mai 2024' },
-      periodShort: { en: '22–23', fr: '22–23' },
+      periodShort: { en: '23–24', fr: '23–24' },
       location: 'Trois-Rivières, QC',
       kind: 'association',
       bullets: [
@@ -134,7 +134,7 @@ export class HomePageComponent {
       title: { en: 'VP Academic Affairs', fr: 'VP aff. acad.' },
       company: 'AMI-UQTR',
       period: { en: 'Sept 2023 – May 2024', fr: 'Sept 2023 – Mai 2024' },
-      periodShort: { en: '22–23', fr: '22–23' },
+      periodShort: { en: '23–24', fr: '23–24' },
       location: 'Trois-Rivières, QC',
       kind: 'association',
       bullets: [
