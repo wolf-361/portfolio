@@ -1,7 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { fromEvent } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
+import { Component, inject, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -27,11 +24,12 @@ interface NavItem {
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   // ── Private injectables (must precede public fields per member-ordering) ──
   private readonly router = inject(Router);
   private readonly location = inject(Location);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly zone = inject(NgZone);
+  private scrollHandler: (() => void) | null = null;
 
   // ── Public injectables ────────────────────────────────────────────────────
   readonly theme = inject(ThemeService);
@@ -53,15 +51,23 @@ export class NavbarComponent implements OnInit {
 
   // ── Lifecycle ─────────────────────────────────────────────────────────────
   ngOnInit(): void {
-    fromEvent(window, 'scroll', { passive: true })
-      .pipe(throttleTime(50), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.scrolled.set(window.scrollY > 4);
-        this.updateActiveSection();
-      });
-
     this.scrolled.set(window.scrollY > 4);
     this.updateActiveSection();
+
+    this.scrollHandler = () => {
+      this.scrolled.set(window.scrollY > 4);
+      this.updateActiveSection();
+    };
+    this.zone.runOutsideAngular(() => {
+      window.addEventListener('scroll', this.scrollHandler!, { passive: true });
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.scrollHandler) {
+      window.removeEventListener('scroll', this.scrollHandler);
+      this.scrollHandler = null;
+    }
   }
 
   // ── Public methods ────────────────────────────────────────────────────────
