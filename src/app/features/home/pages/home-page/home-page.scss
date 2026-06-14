@@ -419,15 +419,15 @@
   flex-direction: column;
   align-items: flex-start;
   gap: sp.$sm;
-
-  @media (max-width: 720px) {
-    align-items: center;
-  }
 }
 
 @media (max-width: 720px) {
   .contact-cta {
     text-align: center;
+  }
+
+  .contact-email-block {
+    align-items: center;
   }
 
   .contact-row {
