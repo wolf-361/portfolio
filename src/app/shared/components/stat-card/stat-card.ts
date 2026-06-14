@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 import { LangService } from '../../../core/lang/lang';
-import { StatCard } from '../../../features/projects/models/project-detail';
+import { StatCard } from '../../models/stat-card';
 
 @Component({
   selector: 'ui-stat-card',

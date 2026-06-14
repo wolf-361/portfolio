@@ -24,9 +24,9 @@ export default tseslint.config(
     plugins: { boundaries },
     settings: {
       'boundaries/elements': [
-        { type: 'core',     pattern: ['src/app/core/**'] },
-        { type: 'shared',   pattern: ['src/app/shared/**'] },
-        { type: 'features', pattern: ['src/app/features/**'] },
+        { type: 'core',     pattern: 'src/app/core/**' },
+        { type: 'shared',   pattern: 'src/app/shared/**' },
+        { type: 'features', pattern: 'src/app/features/**' },
       ],
     },
     rules: {

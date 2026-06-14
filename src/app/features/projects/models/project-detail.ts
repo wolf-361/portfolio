@@ -1,5 +1,6 @@
 import { I18n } from '../../../shared/models/i18n';
 import { Project } from './project';
+import { StatCard } from '../../../shared/models/stat-card';
 
 export type HeroVisualType = 'phone' | 'waystone' | 'terminal' | 'none';
 
@@ -9,10 +10,7 @@ export interface HeroVisual {
   terminalLines?: string[];
 }
 
-export interface StatCard {
-  value: string;
-  label: I18n;
-}
+export { StatCard };
 
 export interface ProjectMeta {
   role: I18n;
