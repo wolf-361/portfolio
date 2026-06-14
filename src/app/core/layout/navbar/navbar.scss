@@ -68,14 +68,11 @@
   border-radius: sys.$corner-small;
   background: transparent;
   cursor: pointer;
-  opacity: 0.65;
   font-family: var(--font-mono);
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.01em;
-  transition:
-    opacity 120ms ease,
-    background 120ms ease;
+  transition: background 120ms ease;
 
   &:focus-visible {
     outline: 2px solid sys.$primary;
@@ -96,7 +93,7 @@
   }
 
   .nav-label {
-    color: sys.$on-surface;
+    color: sys.$on-surface-variant;
     transition: color 120ms ease;
   }
 
@@ -107,7 +104,6 @@
   }
 
   &:hover {
-    opacity: 1;
     background: color-mix(in srgb, sys.$primary 8%, transparent);
 
     .nav-label {
@@ -121,8 +117,7 @@
   }
 
   &.active {
-    opacity: 1;
-    background: color-mix(in srgb, sys.$primary 12%, transparent);
+    background: color-mix(in srgb, sys.$primary 20%, transparent);
 
     .nav-label {
       color: sys.$primary;

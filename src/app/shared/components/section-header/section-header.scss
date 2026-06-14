@@ -47,8 +47,9 @@
 // Supporting subtitle
 .subtitle {
   margin: 0;
-  font: sys.$body-large;
+  font-size: 1rem;
+  font-weight: 400;
   color: sys.$on-surface-variant;
-  line-height: 1.6;
+  line-height: 1.65;
   max-width: 60ch;
 }
