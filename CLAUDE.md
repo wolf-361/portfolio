@@ -9,7 +9,7 @@ Angular 21 standalone template. See `ARCHITECTURE.md` for the full folder guide 
 ```bash
 bun start          # dev server (proxies /api → localhost:8080)
 bun run build      # production build
-bun test           # unit tests via @angular/build:unit-test (vitest)
+bun run test       # unit tests via @angular/build:unit-test (vitest)
 bun run test:watch # watch mode
 bun run test:e2e   # Playwright e2e tests
 bun run lint       # ESLint
