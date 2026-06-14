@@ -96,7 +96,7 @@
 }
 
 .col-label-comment {
-  opacity: 0.6;
+  color: color-mix(in srgb, sys.$on-surface-variant 70%, transparent);
 }
 
 .col-label-tag {
@@ -300,6 +300,12 @@
   gap: sp.$sm;
 }
 
+@media (max-width: 500px) {
+  .assoc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .assoc-card {
   border-radius: sys.$corner-medium;
   border: 1px solid sys.$outline-variant;
@@ -362,7 +368,6 @@
 
 .timeline-desc {
   color: sys.$on-surface-variant;
-  opacity: 0.55;
   font-weight: 400;
   letter-spacing: 0;
 }
@@ -541,6 +546,7 @@
   border: 1px solid sys.$outline-variant;
   border-radius: 999px;
   padding: sp.$xs sp.$md;
+  min-height: 44px;
   cursor: pointer;
   transition: all 200ms ease;
 
