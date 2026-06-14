@@ -126,7 +126,7 @@
               <span class="col-label-tag">branche</span>
               {{ lang.t('Associations', 'Associatif') }}
               <span class="assoc-period-label mono">{{
-                lang.t('2022 — 2023', '2022 — 2023')
+                lang.t('2023 — 2024', '2023 — 2024')
               }}</span>
             </p>
             <div class="assoc-grid">
@@ -153,7 +153,7 @@
       <div class="timeline-block" scrollReveal="fade-up" [scrollRevealDelay]="100">
         <p class="timeline-label mono">
           <span class="col-label-comment">// timeline · </span>
-          <span class="col-label-tag">vue d'ensemble</span>
+          <span class="col-label-tag">{{ lang.t('overview', "vue d'ensemble") }}</span>
           <span class="timeline-desc">{{
             lang.t(
               'the degree spans the entire period — associations handed off to industry in 2023.',
@@ -221,7 +221,10 @@
         </span>
         <span class="status-sep">·</span>
         <span class="status-modes">{{
-          lang.t('full-time · contract · remote-friendly', 'temps plein · contrat · télétravail')
+          lang.t(
+            'full-time · available August 2026 · remote or Trois-Rivières',
+            'temps plein · disponible août 2026 · télétravail ou Trois-Rivières'
+          )
         }}</span>
       </div>
 
