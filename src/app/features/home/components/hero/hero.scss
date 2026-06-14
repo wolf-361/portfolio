@@ -126,35 +126,6 @@
   max-width: 720px;
 }
 
-// ── Scroll hint ───────────────────────────────────────────────────────────────
-
-.hero-scroll-hint {
-  position: absolute;
-  bottom: sp.$xl;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: sp.$sm;
-  animation: scroll-hint-pulse 2.5s ease-in-out infinite;
-}
-
-.hero-scroll-line {
-  display: block;
-  width: 1px;
-  height: 48px;
-  background: linear-gradient(to bottom, sys.$primary, transparent);
-}
-
-.hero-scroll-label {
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: sys.$on-surface-variant;
-  opacity: 0.5;
-}
-
 // ── Entrance animation ────────────────────────────────────────────────────────
 // Pure CSS — plays immediately on stylesheet parse, no JS gate needed.
 // On first load the boot overlay covers the hero, so these run "free" behind it.
@@ -186,21 +157,6 @@
 .hero-terminal-wrap {
   animation: hero-fade-up 700ms ease-out 380ms both;
 }
-.hero-scroll-hint {
-  animation: hero-fade-up 600ms ease-out 560ms both;
-}
-
-@keyframes scroll-hint-pulse {
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: translateX(-50%) translateY(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(4px);
-  }
-}
 
 // ── Mobile ─────────────────────────────────────────────────────────────────────
 
@@ -220,11 +176,5 @@
 
   .hero-terminal-wrap {
     position: static;
-  }
-}
-
-@media (max-height: 600px) {
-  .hero-scroll-hint {
-    display: none;
   }
 }
