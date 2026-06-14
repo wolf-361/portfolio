@@ -26,7 +26,7 @@ export class ProjectsService {
       ],
       featured: true,
       meta: {
-        role: { en: 'Lead Mobile', fr: 'Lead Mobile' },
+        role: { en: 'Sole Mobile Developer', fr: 'Développeur mobile solo' },
         roleDetail: { en: 'Architecture, UI, KMP', fr: 'Architecture, UI, KMP' },
         duration: { en: 'Ongoing · 2026', fr: 'En cours · 2026' },
         team: { en: '2 devs · solo design', fr: '2 devs · design solo' },
@@ -165,7 +165,7 @@ export class ProjectsService {
       slug: 'waystone',
       title: 'Waystone',
       subtitle: 'Studio Drave · Android & iOS',
-      status: { en: 'Architecting', fr: 'En conception' },
+      status: { en: 'Design phase', fr: 'Phase de conception' },
       description: {
         en: 'Spoiler-safe companion app for non-linear open-world games. Photograph any map, pin locations, track progress — free and fully local. Curated maps with fog-of-war reveal mechanics and community sync are the paid tier.',
         fr: "Application compagnon sans spoilers pour les jeux non-linéaires. Photographiez n'importe quelle carte, épinglez des emplacements, suivez votre progression — gratuit et 100% local. Les cartes curées avec brouillard de guerre et synchronisation communautaire forment le palier payant.",
@@ -175,7 +175,7 @@ export class ProjectsService {
       meta: {
         role: { en: 'Founder · Sole Engineer', fr: 'Fondateur · Ingénieur solo' },
         roleDetail: { en: 'Architecture, Product, Design', fr: 'Architecture, Produit, Design' },
-        duration: { en: 'Not started · 2026', fr: 'Pas encore commencé · 2026' },
+        duration: { en: 'In design · 2026', fr: 'En conception · 2026' },
         team: { en: 'Solo', fr: 'Solo' },
       },
       heroVisual: { type: 'waystone' },
@@ -785,7 +785,7 @@ export class ProjectsService {
       title: 'Waystone',
       slug: 'waystone',
       subtitle: 'Studio Drave · Android & iOS',
-      status: { en: 'Architecting', fr: 'En conception' },
+      status: { en: 'Design phase', fr: 'Phase de conception' },
       description: this._details['waystone'].description,
       tags: ['Kotlin Multiplatform', 'Compose Canvas', 'SQLDelight', 'Supabase', 'Offline-First'],
       featured: true,
