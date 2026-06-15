@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { LangService, Lang } from '../../../../../core/lang/lang';
+import { BootService } from '../../../../../core/boot-overlay/boot.service';
 import { P10kPromptComponent } from '../p10k-prompt';
 
 export type LineKind = 'cmd' | 'output' | 'neofetch' | 'error' | 'blank';
@@ -59,11 +60,11 @@ function buildNeofetchLines(lang: Lang): TermLine[] {
     { text: '──────────────────────────────', style: S_SEP },
     { text: en ? 'Name:   Luc Allaire' : 'Nom:    Luc Allaire', style: S_VALUE },
     {
-      text: en ? 'Role:   Software Developer · KMP' : 'Rôle:   Développeur logiciel · KMP',
+      text: en ? 'Role:   Mobile Developer · KMP' : 'Rôle:   Développeur mobile · KMP',
       style: S_VALUE,
     },
-    { text: en ? 'Bio:    Clean code,' : 'Bio:    Code propre,', style: S_VALUE },
-    { text: en ? '        built to scale.' : '        conçu pour durer.', style: S_DIM },
+    { text: en ? 'Bio:    Shared layer,' : 'Bio:    Couche partagée,', style: S_VALUE },
+    { text: '        Android & iOS.', style: S_DIM },
     { text: '', style: '' },
     { text: en ? 'OS:     Arch Linux x86_64' : 'OS :    Arch Linux x86_64', style: S_VALUE },
     { text: en ? 'Host:   me.wolf-361.ca' : 'Hôte:   me.wolf-361.ca', style: S_VALUE },
@@ -156,8 +157,8 @@ function runCommand(raw: string, lang: Lang): CommandResult {
             kind: 'output',
             text:
               lang === 'en'
-                ? 'Software Developer · KMP Specialist · Infrastructure-Aware'
-                : 'Développeur logiciel · Spécialiste KMP · Infrastructure-First',
+                ? 'Mobile Developer · KMP Specialist · Self-Hosted Infrastructure'
+                : 'Développeur mobile · Spécialiste KMP · Infrastructure auto-hébergée',
           },
         ];
       if (file === 'bio.txt')
@@ -169,7 +170,7 @@ function runCommand(raw: string, lang: Lang): CommandResult {
             ]
           : [
               { kind: 'output', text: 'Je construis des logiciels comme mon infrastructure :' },
-              { kind: 'output', text: 'contrats explicites, frontières enforced,' },
+              { kind: 'output', text: 'contrats explicites, frontières imposées,' },
               { kind: 'output', text: "zéro tolérance pour l'ambiguïté." },
             ];
       if (file === 'cv.pdf')
@@ -241,12 +242,20 @@ export class HeroTerminalComponent implements OnDestroy {
   private charIdx = 0;
   private pauseFrames = 0;
   private animInterval: ReturnType<typeof setInterval> | null = null;
+  private isFirstLoad = inject(BootService).isFirstLoad();
   private historyIdx = -1;
   private tabCycling = false;
   private tabMatches: string[] = [];
   private tabIndex = -1;
-
+  private hintFallbackTimeout: ReturnType<typeof setTimeout> | null = null;
+  private scrollListener: (() => void) | null = null;
+  private demoTimeout: ReturnType<typeof setTimeout> | null = null;
+  private readonly isMobile = typeof window !== 'undefined' && window.innerWidth <= 599;
+  private readonly DEMO_COMMANDS = ['help', 'whoami', 'cat bio.txt', 'ls', 'neofetch'];
+  private readonly hintDismissed = signal(false);
+  private readonly el = inject(ElementRef);
   private readonly router = inject(Router);
+
   readonly lang = inject(LangService);
   readonly lines = signal<TermLine[]>([]);
   readonly partialText = signal('');
@@ -254,6 +263,8 @@ export class HeroTerminalComponent implements OnDestroy {
   readonly isDone = signal(false);
   readonly inputValue = signal('');
   readonly history: string[] = [];
+  readonly isAutoDemo = signal(false);
+  readonly showHint = computed(() => this.isDone() && !this.hintDismissed());
 
   readonly suggestion = computed(() => {
     const input = this.inputValue();
@@ -277,17 +288,58 @@ export class HeroTerminalComponent implements OnDestroy {
       this.lang.lang();
       this.reset();
     });
+    effect(() => {
+      if (this.isDone()) {
+        this.hintFallbackTimeout = setTimeout(() => this.dismissHint(), 30_000);
+      }
+    });
+    if (typeof window !== 'undefined') {
+      this.scrollListener = () => {
+        if (this.el.nativeElement.getBoundingClientRect().top < 0) this.dismissHint();
+      };
+      window.addEventListener('scroll', this.scrollListener, { passive: true });
+    }
+    effect(() => {
+      if (this.isDone() && this.isMobile && !this.isAutoDemo()) {
+        if (this.demoTimeout) clearTimeout(this.demoTimeout);
+        this.isAutoDemo.set(true);
+        this.demoTimeout = setTimeout(() => this.startDemo(), 2000);
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.clearInterval();
+    if (this.scrollListener) {
+      window.removeEventListener('scroll', this.scrollListener);
+      this.scrollListener = null;
+    }
+    if (this.hintFallbackTimeout) {
+      clearTimeout(this.hintFallbackTimeout);
+      this.hintFallbackTimeout = null;
+    }
+    if (this.demoTimeout) clearTimeout(this.demoTimeout);
   }
 
   focusInput(): void {
+    this.dismissHint();
     if (this.isDone()) this.inputEl()?.nativeElement.focus({ preventScroll: true });
   }
 
+  private dismissHint(): void {
+    this.hintDismissed.set(true);
+    if (this.hintFallbackTimeout) {
+      clearTimeout(this.hintFallbackTimeout);
+      this.hintFallbackTimeout = null;
+    }
+    if (this.scrollListener) {
+      window.removeEventListener('scroll', this.scrollListener);
+      this.scrollListener = null;
+    }
+  }
+
   onKeydown(e: KeyboardEvent): void {
+    this.dismissHint();
     switch (e.key) {
       case 'Tab':
         e.preventDefault();
@@ -336,6 +388,7 @@ export class HeroTerminalComponent implements OnDestroy {
   }
 
   onInput(e: Event): void {
+    this.dismissHint();
     this.inputValue.set((e.target as HTMLInputElement).value);
   }
 
@@ -433,7 +486,14 @@ export class HeroTerminalComponent implements OnDestroy {
     this.partialIsCmd.set(true);
     this.isDone.set(false);
     this.inputValue.set('');
-    this.animInterval = setInterval(() => this.tick(), 35);
+
+    // On first load, wait for the scroll-reveal fade-in to complete before
+    // starting the animation (scroll-reveal delay 150ms + transition 600ms).
+    const startDelay = this.isFirstLoad ? 1200 : 0;
+    this.isFirstLoad = false;
+    setTimeout(() => {
+      this.animInterval = setInterval(() => this.tick(), 35);
+    }, startDelay);
   }
 
   private tick(): void {
@@ -470,6 +530,12 @@ export class HeroTerminalComponent implements OnDestroy {
         this.lineIdx++;
         this.charIdx = 0;
         this.pauseFrames = entry.isNeofetch ? 4 : 9;
+        // Neofetch dumps many lines at once — scroll to top so the logo is
+        // visible from the beginning rather than snapping to the last line.
+        if (entry.isNeofetch) {
+          this.scrollTop();
+          return;
+        }
       }
     } else {
       this.partialIsCmd.set(false);
@@ -482,10 +548,60 @@ export class HeroTerminalComponent implements OnDestroy {
     this.scrollBottom();
   }
 
+  private startDemo(): void {
+    this.runDemoStep(0);
+  }
+
+  private runDemoStep(cmdIdx: number): void {
+    const cmd = this.DEMO_COMMANDS[cmdIdx % this.DEMO_COMMANDS.length];
+    this.typeDemo(cmd, 0, () => {
+      // cmd typed — pause, then execute
+      this.demoTimeout = setTimeout(() => {
+        this.lines.update((l) => [...l, { kind: 'cmd', text: cmd }]);
+        const result = runCommand(cmd, this.lang.lang());
+        if (result === 'clear') {
+          this.lines.set([]);
+        } else if (Array.isArray(result)) {
+          this.lines.update((l) => [...l, ...result]);
+        }
+        this.partialText.set('');
+        this.scrollBottom();
+        // pause after output, then next command or restart
+        const isLast = cmdIdx === this.DEMO_COMMANDS.length - 1;
+        const delay = isLast ? 4000 : 1500;
+        this.demoTimeout = setTimeout(() => {
+          if (isLast) {
+            this.lines.set([]);
+            this.runDemoStep(0);
+          } else {
+            this.runDemoStep(cmdIdx + 1);
+          }
+        }, delay);
+      }, 800);
+    });
+  }
+
+  private typeDemo(text: string, charIdx: number, onDone: () => void): void {
+    this.partialText.set(text.slice(0, charIdx));
+    this.partialIsCmd.set(true);
+    if (charIdx >= text.length) {
+      onDone();
+      return;
+    }
+    this.demoTimeout = setTimeout(() => this.typeDemo(text, charIdx + 1, onDone), 60);
+  }
+
   private scrollBottom(): void {
     setTimeout(() => {
       const el = this.bodyEl()?.nativeElement;
       if (el) el.scrollTop = el.scrollHeight;
+    });
+  }
+
+  private scrollTop(): void {
+    setTimeout(() => {
+      const el = this.bodyEl()?.nativeElement;
+      if (el) el.scrollTop = 0;
     });
   }
 

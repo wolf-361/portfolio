@@ -1,28 +1,8 @@
 @use 'styles/sys' as sys;
 @use 'styles/spacing' as sp;
 
-// ── Base — subtle surface, no border at rest, accent border on hover ──────────
-
-.card {
-  border-radius: sys.$corner-medium;
-  background: sys.$surface-container-low;
-  border: 1px solid transparent;
-  border-left: 3px solid transparent;
-  padding: sp.$md sp.$lg;
-  display: flex;
-  flex-direction: column;
-  gap: sp.$sm;
-  transition:
-    border-color 200ms ease,
-    box-shadow 200ms ease,
-    transform 200ms ease;
-
-  &:hover {
-    border-color: color-mix(in srgb, sys.$outline-variant 60%, transparent);
-    border-left-color: sys.$primary;
-    box-shadow: 0 4px 24px color-mix(in srgb, sys.$primary 10%, transparent);
-    transform: translateY(-1px);
-  }
+:host {
+  display: block;
 }
 
 // ── Header ────────────────────────────────────────────────────────────────────
@@ -37,36 +17,6 @@
   display: flex;
   align-items: center;
   gap: sp.$xs;
-}
-
-.active-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: sys.$primary;
-  flex-shrink: 0;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: 50%;
-    background: sys.$primary;
-    animation: dot-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-}
-
-@keyframes dot-ping {
-  0% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(2.4);
-    opacity: 0;
-  }
 }
 
 .card-title {
@@ -88,7 +38,6 @@
   font-size: 0.6875rem;
   font-family: sys.$font-mono;
   color: sys.$on-surface-variant;
-  opacity: 0.6;
   white-space: nowrap;
   flex-shrink: 0;
 }

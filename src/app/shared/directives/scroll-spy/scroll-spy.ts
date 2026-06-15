@@ -1,4 +1,4 @@
-import { Directive, Input, OnDestroy, OnInit, output } from '@angular/core';
+import { Directive, OnDestroy, OnInit, input, output } from '@angular/core';
 
 /**
  * ScrollSpyDirective — attach to a container, pass a list of section IDs.
@@ -16,7 +16,7 @@ export class ScrollSpyDirective implements OnInit, OnDestroy {
   private rafId = 0;
   private lastActive = '';
 
-  @Input('uiScrollSpy') sectionIds: string[] = [];
+  readonly sectionIds = input<string[]>([], { alias: 'uiScrollSpy' });
 
   readonly activeSection = output<string>();
 
@@ -47,8 +47,8 @@ export class ScrollSpyDirective implements OnInit, OnDestroy {
     // If scrolled to the very bottom, force the last section active
     const atBottom = scrollY + viewportH >= document.documentElement.scrollHeight - 4;
 
-    if (atBottom && this.sectionIds.length > 0) {
-      const last = this.sectionIds[this.sectionIds.length - 1];
+    if (atBottom && this.sectionIds().length > 0) {
+      const last = this.sectionIds()[this.sectionIds().length - 1];
       if (last !== this.lastActive) {
         this.lastActive = last;
         this.activeSection.emit(last);
@@ -56,9 +56,9 @@ export class ScrollSpyDirective implements OnInit, OnDestroy {
       return;
     }
 
-    let active = this.sectionIds[0] ?? '';
+    let active = this.sectionIds()[0] ?? '';
 
-    for (const id of this.sectionIds) {
+    for (const id of this.sectionIds()) {
       const el = document.getElementById(id);
       if (!el) continue;
       if (el.offsetTop <= triggerY) {

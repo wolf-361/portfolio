@@ -1,26 +1,49 @@
-<section class="hero">
-  <div class="hero-layout">
-    <!-- Left: headline + CTA -->
-    <div class="hero-copy">
-      <h1 class="hero-headline">
-        {{ lang.t('Mobile Developer.', 'Développeur Mobile.') }}<br />
-        {{ lang.t('Shared by design.', 'Conçu pour être partagé.') }}
-      </h1>
-      <p class="hero-sub">
-        {{
-          lang.t(
-            'Mobile-first, but fluent across the stack — from Kotlin to Go to bare metal.',
-            "Mobile d'abord, mais à l'aise sur toute la pile — de Kotlin à Go au bare metal."
-          )
-        }}
-      </p>
-      <a class="hero-cta" href="#projects">
-        {{ lang.t('View projects', 'Voir les projets') }}
-        <span class="hero-cta-arr" aria-hidden="true">↓</span>
-      </a>
-    </div>
+<ui-gradient-atmosphere variant="hero">
+  <section class="hero" id="hero-section">
+    <ui-floating-text-canvas [opacity]="0.18" />
 
-    <!-- Right: terminal -->
-    <app-hero-terminal />
-  </div>
-</section>
+    <div class="hero-stage">
+      <div class="hero-copy">
+        <p class="hero-eyebrow mono">
+          {{
+            lang.t(
+              '// luc allaire · mobile developer · available Aug 2026',
+              '// luc allaire · développeur mobile · disponible août 2026'
+            )
+          }}
+        </p>
+        <h1 class="hero-headline">
+          {{ lang.t('I build things', 'Je construis') }}<br />
+          {{ lang.t('to understand them.', 'pour comprendre.') }}
+        </h1>
+        <p class="hero-sub">
+          {{
+            lang.t(
+              'Building the shared layer between Android and iOS.',
+              'Le pont partagé entre Android et iOS.'
+            )
+          }}
+        </p>
+        <div class="hero-ctas">
+          <a class="hero-cta hero-cta--primary" href="#projects">
+            {{ lang.t('View projects', 'Voir les projets') }}
+            <span class="hero-cta-arr" aria-hidden="true">↓</span>
+          </a>
+          <a
+            class="hero-cta hero-cta--outline"
+            [href]="lang.t('/cv-en.pdf', '/cv-fr.pdf')"
+            [attr.download]="lang.t('cv-luc-allaire-en.pdf', 'cv-luc-allaire-fr.pdf')"
+            [attr.aria-label]="lang.t('Download CV (PDF)', 'Télécharger le CV (PDF)')"
+          >
+            {{ lang.t('Download CV', 'Télécharger le CV') }}
+            <span class="hero-cta-arr" aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-terminal-wrap">
+        <app-hero-terminal />
+      </div>
+    </div>
+  </section>
+</ui-gradient-atmosphere>

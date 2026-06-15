@@ -35,7 +35,7 @@ jobs:
         run: sleep 3
 
       - name: Record demo
-        run: bunx playwright test e2e/demo.spec.ts --project=chromium
+        run: bunx playwright test e2e/dem.spec.ts --project=chromium
         env:
           PWTEST_VIDEO: 1
 

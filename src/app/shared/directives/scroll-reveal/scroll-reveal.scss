@@ -1,0 +1,45 @@
+$easing: cubic-bezier(0.16, 1, 0.3, 1);
+$duration: 600ms;
+
+[data-reveal].sr-hidden {
+  will-change: transform, opacity;
+}
+
+[data-reveal='from-left'].sr-hidden {
+  opacity: 0;
+  transform: translateX(-48px);
+}
+
+[data-reveal='from-right'].sr-hidden {
+  opacity: 0;
+  transform: translateX(48px);
+}
+
+[data-reveal='fade-up'].sr-hidden {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+[data-reveal='perspective-tilt'].sr-hidden {
+  opacity: 0;
+  transform: perspective(800px) rotateX(8deg) rotateY(-4deg) translateZ(-30px);
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity $duration $easing,
+    transform $duration $easing;
+}
+
+@media (max-width: 767px) {
+  [data-reveal='perspective-tilt'].sr-hidden {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+
+  [data-reveal='perspective-tilt']:nth-child(even).sr-hidden {
+    transform: translateX(32px);
+  }
+}

@@ -1,10 +1,16 @@
 import { I18n } from '../../../shared/models/i18n';
 import { Project } from './project';
+import { StatCard } from '../../../shared/models/stat-card';
 
-export interface StatCard {
-  value: string;
-  label: I18n;
+export type HeroVisualType = 'phone' | 'waystone' | 'terminal' | 'none';
+
+export interface HeroVisual {
+  type: HeroVisualType;
+  terminalCommand?: string;
+  terminalLines?: string[];
 }
+
+export type { StatCard };
 
 export interface ProjectMeta {
   role: I18n;
@@ -44,4 +50,5 @@ export interface ProjectDetail extends Omit<Project, 'slug'> {
   meta?: ProjectMeta;
   sections: ProjectSection[];
   pager?: ProjectPager;
+  heroVisual?: HeroVisual;
 }

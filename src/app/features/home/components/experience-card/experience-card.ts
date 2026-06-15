@@ -1,11 +1,12 @@
 import { Component, input, inject } from '@angular/core';
 import { TagChipSetComponent } from '../../../../shared/components/tag-chip-set/tag-chip-set';
+import { CinematicCardComponent } from '../../../../shared/components/cinematic-card/cinematic-card';
 import { LangService } from '../../../../core/lang/lang';
 import { Experience } from '../../models/experience';
 
 @Component({
   selector: 'app-experience-card',
-  imports: [TagChipSetComponent],
+  imports: [TagChipSetComponent, CinematicCardComponent],
   templateUrl: './experience-card.html',
   styleUrl: './experience-card.scss',
 })

@@ -1,56 +1,85 @@
 @use 'styles/sys' as sys;
+@use 'styles/spacing' as sp;
+
+:host {
+  display: block;
+}
 
 .hero {
+  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100dvh - 64px);
-  padding: 4rem 2rem;
+  min-height: 100dvh;
+  padding: 6rem sp.$xl 4rem;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.hero-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  align-items: start;
-  gap: 3rem;
-  max-width: 1100px;
+.hero-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: sp.$xl-2;
+  max-width: 900px;
   width: 100%;
+  z-index: 1;
 }
 
-// ── Left copy ──────────────────────────────────────────────────────────────────
+// ── Copy ──────────────────────────────────────────────────────────────────────
 
 .hero-copy {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  text-align: center;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: sys.$primary;
+  opacity: 0.75;
 }
 
 .hero-headline {
   margin: 0;
-  font-size: clamp(1.75rem, 4vw, 3rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
   line-height: 1.1;
   color: sys.$on-surface;
 }
 
 .hero-sub {
   margin: 0;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   line-height: 1.7;
   color: sys.$on-surface-variant;
-  max-width: 38ch;
+  max-width: 52ch;
+}
+
+.hero-ctas {
+  display: flex;
+  flex-direction: row;
+  gap: sp.$sm;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .hero-cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  align-self: flex-start;
-  padding: 0.625rem 1.25rem;
+  gap: sp.$sm;
+  padding: 0.625rem sp.$lg;
+  min-height: 44px;
   border-radius: 999px;
-  background: sys.$primary;
-  color: sys.$on-primary;
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -63,6 +92,22 @@
     opacity: 0.88;
     transform: translateY(-1px);
   }
+
+  &:active {
+    transform: scale(0.96);
+    opacity: 0.9;
+  }
+}
+
+.hero-cta--primary {
+  background: sys.$primary;
+  color: sys.$on-primary;
+}
+
+.hero-cta--outline {
+  background: transparent;
+  border: 1px solid sys.$primary;
+  color: sys.$primary;
 }
 
 .hero-cta-arr {
@@ -74,35 +119,62 @@
   }
 }
 
-// ── Tablet: stack terminal below copy ─────────────────────────────────────────
+// ── Terminal wrap ─────────────────────────────────────────────────────────────
 
-@media (max-width: 860px) {
-  .hero-layout {
-    grid-template-columns: 1fr;
-  }
+.hero-terminal-wrap {
+  width: 100%;
+  max-width: 720px;
+}
 
-  .hero-copy {
-    order: 2;
-  }
+// ── Entrance animation ────────────────────────────────────────────────────────
+// Pure CSS — plays immediately on stylesheet parse, no JS gate needed.
+// On first load the boot overlay covers the hero, so these run "free" behind it.
+// On refresh (no overlay) they animate in smoothly as soon as the page renders.
 
-  app-hero-terminal {
-    order: 1;
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
 
-  .hero-sub {
-    max-width: unset;
-  }
-
-  .hero-cta {
-    align-self: flex-start;
-  }
+.hero-eyebrow {
+  animation: hero-fade-up 600ms ease-out both;
+}
+.hero-headline {
+  animation: hero-fade-up 600ms ease-out 80ms both;
+}
+.hero-sub {
+  animation: hero-fade-up 600ms ease-out 180ms both;
+}
+.hero-ctas {
+  animation: hero-fade-up 600ms ease-out 280ms both;
+}
+.hero-terminal-wrap {
+  animation: hero-fade-up 700ms ease-out 380ms both;
 }
 
 // ── Mobile ─────────────────────────────────────────────────────────────────────
 
 @media (max-width: 599px) {
   .hero {
-    padding: 2rem 0.75rem 3rem;
-    min-height: unset;
+    padding: 5rem sp.$md sp.$xl-2;
+    min-height: 100dvh;
+  }
+
+  .hero-headline {
+    font-size: clamp(2rem, 11vw, 3rem);
+  }
+
+  .hero-stage {
+    gap: sp.$xl;
+  }
+
+  .hero-terminal-wrap {
+    position: static;
   }
 }

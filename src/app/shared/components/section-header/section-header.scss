@@ -37,8 +37,8 @@
 // Main title
 .title {
   margin: 0 0 sp.$sm;
-  font: sys.$headline-large;
-  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 600;
   color: sys.$on-surface;
   letter-spacing: -0.02em;
   line-height: 1.1;
@@ -47,8 +47,9 @@
 // Supporting subtitle
 .subtitle {
   margin: 0;
-  font: sys.$body-large;
+  font-size: 1rem;
+  font-weight: 400;
   color: sys.$on-surface-variant;
-  line-height: 1.6;
+  line-height: 1.65;
   max-width: 60ch;
 }

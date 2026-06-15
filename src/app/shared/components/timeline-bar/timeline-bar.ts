@@ -1,4 +1,14 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  computed,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { FloatAnchor, TimelineRow, TimelineSegment } from './timeline-bar.model';
 
 /** Mobile vertical layout: each row enriched with an inset level (0 = full width) */
@@ -32,10 +42,17 @@ export interface TimelineRowV {
   selector: 'ui-timeline-bar',
   templateUrl: './timeline-bar.html',
   styleUrl: './timeline-bar.scss',
+  host: { '[class.timeline--visible]': 'visible()' },
 })
-export class TimelineBarComponent {
+export class TimelineBarComponent implements AfterViewInit, OnDestroy {
   private readonly GAP_INSET = 2; // px — sp.$xxs
   private readonly V_INSET_STEP = 8; // px per containment level
+
+  private readonly zone = inject(NgZone);
+  private readonly el = inject(ElementRef<HTMLElement>);
+  private observer: IntersectionObserver | null = null;
+
+  readonly visible = signal(false);
 
   readonly rows = input.required<TimelineRow[]>();
   readonly startYear = input<number>(2022);
@@ -169,5 +186,24 @@ export class TimelineBarComponent {
     const start = this.rowStart(row);
     const end = this.rowEnd(row);
     return this.toPercent(end) - this.toPercent(start) < 20;
+  }
+
+  ngAfterViewInit(): void {
+    this.zone.runOutsideAngular(() => {
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            this.zone.run(() => this.visible.set(true));
+            this.observer?.disconnect();
+          }
+        },
+        { threshold: 0.15 },
+      );
+      this.observer.observe(this.el.nativeElement);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
   }
 }

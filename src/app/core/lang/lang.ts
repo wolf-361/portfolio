@@ -1,22 +1,30 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 export type Lang = 'en' | 'fr';
 
 @Injectable({ providedIn: 'root' })
 export class LangService {
-  private readonly _lang = signal<Lang>((localStorage.getItem('lang') as Lang) ?? 'en');
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly _lang = signal<Lang>(this.storedLang());
 
   readonly lang = this._lang.asReadonly();
 
   constructor() {
-    this.applyLang(this._lang());
+    if (isPlatformBrowser(this.platformId)) this.applyLang(this._lang());
   }
 
   toggle(): void {
     const next: Lang = this._lang() === 'en' ? 'fr' : 'en';
+    if (isPlatformBrowser(this.platformId)) localStorage.setItem('lang', next);
     this._lang.set(next);
-    localStorage.setItem('lang', next);
-    this.applyLang(next);
+    if (isPlatformBrowser(this.platformId)) this.applyLang(next);
+  }
+
+  private storedLang(): Lang {
+    if (!isPlatformBrowser(this.platformId)) return 'en';
+    const stored = localStorage.getItem('lang');
+    return stored === 'en' || stored === 'fr' ? stored : 'en';
   }
 
   private applyLang(lang: Lang): void {

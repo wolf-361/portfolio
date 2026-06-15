@@ -1,11 +1,16 @@
 import {
+  AfterViewInit,
   Component,
   computed,
   DestroyRef,
+  effect,
+  ElementRef,
   HostListener,
   inject,
   input,
+  NgZone,
   signal,
+  viewChild,
 } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -15,7 +20,9 @@ import { ProjectsService } from '../../services/projects';
 import { TagChipSetComponent } from '../../../../shared/components/tag-chip-set/tag-chip-set';
 import { StatCardComponent } from '../../../../shared/components/stat-card/stat-card';
 import { ScrollSpyDirective } from '../../../../shared/directives/scroll-spy/scroll-spy';
-import { FadeInDirective } from '../../../../shared/directives/fade-in/fade-in';
+import { ScrollRevealDirective } from '../../../../shared/directives/scroll-reveal/scroll-reveal';
+import { PhoneMockupComponent } from '../../../../shared/components/phone-mockup/phone-mockup';
+import { WaystoneMockupComponent } from '../../../../shared/components/waystone-mockup/waystone-mockup';
 
 @Component({
   selector: 'app-project-detail-page',
@@ -25,17 +32,20 @@ import { FadeInDirective } from '../../../../shared/directives/fade-in/fade-in';
     TagChipSetComponent,
     StatCardComponent,
     ScrollSpyDirective,
-    FadeInDirective,
+    ScrollRevealDirective,
+    PhoneMockupComponent,
+    WaystoneMockupComponent,
   ],
   templateUrl: './project-detail-page.html',
   styleUrl: './project-detail-page.scss',
 })
-export class ProjectDetailPageComponent {
+export class ProjectDetailPageComponent implements AfterViewInit {
   private readonly projects = inject(ProjectsService);
   private readonly sanitizer = inject(DomSanitizer);
   private readonly destroyRef = inject(DestroyRef);
-  readonly lang = inject(LangService);
+  private readonly zone = inject(NgZone);
 
+  readonly lang = inject(LangService);
   readonly slug = input.required<string>();
 
   readonly project = computed(() => this.projects.getDetail(this.slug()));
@@ -43,11 +53,48 @@ export class ProjectDetailPageComponent {
 
   readonly activeSection = signal<string>('');
   readonly zoomedDiagram = signal<string | null>(null);
+  readonly entering = signal(false);
+
+  readonly heroRef = viewChild<ElementRef<HTMLElement>>('heroRef');
+  readonly visualRef = viewChild<ElementRef<HTMLElement>>('visualRef');
+
+  private heroVisible = false;
+  private heroObserver?: IntersectionObserver;
+  private readonly onScroll = (): void => {
+    if (!this.heroVisible) return;
+    const el = this.visualRef()?.nativeElement;
+    if (el) el.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+  };
 
   constructor() {
-    // Clean up overflow lock if user navigates away while diagram is open
+    effect(() => {
+      this.slug(); // re-run on every slug change
+      this.entering.set(false);
+      requestAnimationFrame(() => this.entering.set(true));
+    });
+
     this.destroyRef.onDestroy(() => {
       if (this.zoomedDiagram()) document.body.style.overflow = '';
+      this.heroObserver?.disconnect();
+      window.removeEventListener('scroll', this.onScroll);
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.setupParallax();
+  }
+
+  private setupParallax(): void {
+    const heroEl = this.heroRef()?.nativeElement;
+    if (!heroEl || !this.visualRef()?.nativeElement) return;
+
+    this.heroObserver = new IntersectionObserver(([entry]) => {
+      this.heroVisible = entry.isIntersecting;
+    });
+    this.heroObserver.observe(heroEl);
+
+    this.zone.runOutsideAngular(() => {
+      window.addEventListener('scroll', this.onScroll, { passive: true });
     });
   }
 

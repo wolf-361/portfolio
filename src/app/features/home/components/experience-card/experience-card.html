@@ -1,4 +1,4 @@
-<article class="card" [class]="'kind-' + experience().kind">
+<ui-cinematic-card [featured]="experience().active ?? false">
   <header class="card-header">
     <!-- Title row -->
     <div class="card-title-row">
@@ -23,7 +23,7 @@
       @if (experience().roleProgression?.length) {
         <div class="role-progression">
           @for (role of experience().roleProgression!; track role; let last = $last) {
-            <span class="role-chip mono">{{ role }}</span>
+            <span class="role-chip mono">{{ lang.t(role.en, role.fr) }}</span>
             @if (!last) {
               <span class="role-arrow" aria-hidden="true">→</span>
             }
@@ -47,4 +47,4 @@
   @if (experience().stack?.length) {
     <ui-tag-chip-set [tags]="experience().stack!" [accentFirst]="true" />
   }
-</article>
+</ui-cinematic-card>

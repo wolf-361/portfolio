@@ -12,6 +12,13 @@
     <span class="terminal-title">luc&#64;arch — ~/portfolio — zsh</span>
   </div>
 
+  <div class="t-hint" [class.t-hint--visible]="showHint()" aria-hidden="true">
+    <span class="t-hint-dot"></span>
+    <span class="t-hint-text mono">{{
+      lang.t('try typing a command', 'essayez une commande')
+    }}</span>
+  </div>
+
   <!-- Body -->
   <div class="terminal-body" #bodyRef>
     <!-- Completed lines -->
@@ -68,8 +75,22 @@
       </div>
     }
 
+    <!-- Auto-demo typing display -->
+    @if (isAutoDemo()) {
+      <div class="t-line t-p10k-top">
+        <span class="t-pfx t-pfx-top" aria-hidden="true">╭─</span>
+        <app-p10k-prompt />
+      </div>
+      <div class="t-line t-p10k-bot">
+        <span class="t-pfx t-pfx-bot" aria-hidden="true">╰─</span
+        ><span class="t-chevron" aria-hidden="true">❯ </span
+        ><span class="t-text t-cmd">{{ partialText() }}</span
+        ><span class="t-cursor">▌</span>
+      </div>
+    }
+
     <!-- Interactive input -->
-    @if (isDone()) {
+    @if (isDone() && !isAutoDemo()) {
       <div class="t-line t-p10k-top">
         <span class="t-pfx t-pfx-top" aria-hidden="true">╭─</span>
         <app-p10k-prompt />

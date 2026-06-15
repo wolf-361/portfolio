@@ -12,20 +12,34 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: sys.$corner-large;
-  background: sys.$surface-container-low;
-  border: 1px solid sys.$outline-variant;
+  border-radius: 12px;
+  background: color-mix(in srgb, sys.$surface-container 80%, transparent);
+  border: 1px solid color-mix(in srgb, sys.$outline-variant 60%, transparent);
+  box-shadow:
+    4px 6px 16px -4px color-mix(in srgb, #000 30%, transparent),
+    8px 12px 32px -8px color-mix(in srgb, #000 20%, transparent);
   text-decoration: none;
   color: inherit;
   overflow: hidden;
   flex: 1;
   transition:
-    box-shadow 200ms ease,
-    transform 200ms ease;
+    transform 350ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1);
 
-  &:hover {
-    box-shadow: 0 4px 32px color-mix(in srgb, sys.$primary 12%, transparent);
-    transform: translateY(-2px);
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        6px 10px 24px -4px color-mix(in srgb, #000 40%, transparent),
+        12px 18px 40px -8px color-mix(in srgb, #000 28%, transparent);
+    }
+  }
+
+  &:active {
+    transform: scale(0.985);
+    box-shadow:
+      2px 4px 8px -4px color-mix(in srgb, #000 20%, transparent),
+      4px 8px 16px -8px color-mix(in srgb, #000 12%, transparent);
   }
 
   &.card--featured {
@@ -213,203 +227,6 @@
   filter: drop-shadow(-12px 0 48px color-mix(in srgb, sys.$primary 20%, transparent));
   border-radius: 36px;
   transform: rotate(4deg);
-}
-
-// ── CSS Phone mockup — renders when no visual asset is set ────────────────────
-
-.phone-frame {
-  width: 178px;
-  height: 356px;
-  border-radius: 38px;
-  // iOS-style near-black, independent of theme
-  background: #1c1c1e;
-  border: 1.5px solid rgba(255 255 255 / 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  overflow: hidden;
-  position: relative; // for phone-island absolute positioning
-  box-shadow:
-    -20px 8px 72px color-mix(in srgb, sys.$primary 22%, transparent),
-    0 24px 48px rgba(0 0 0 / 0.5);
-  transform: rotate(8deg) translateY(-4px);
-  flex-shrink: 0;
-}
-
-// Status bar area
-.phone-status-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 18px 0;
-  flex-shrink: 0;
-}
-
-.phone-time {
-  font-size: 0.5rem;
-  font-weight: 700;
-  color: rgba(255 255 255 / 0.85);
-  letter-spacing: 0.02em;
-}
-
-.phone-island {
-  width: 52px;
-  height: 14px;
-  border-radius: 999px;
-  background: #000;
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.phone-status-icons {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-
-.phone-status-icon {
-  width: 12px;
-  height: 6px;
-  border-radius: 1px;
-  border: 1px solid rgba(255 255 255 / 0.6);
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 1px;
-    right: 3px;
-    background: rgba(255 255 255 / 0.6);
-    border-radius: 0.5px;
-  }
-}
-
-// App scroll content
-.phone-scroll {
-  flex: 1;
-  overflow: hidden;
-  padding: 12px 12px 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-// Greeting
-.app-greeting {
-  flex-shrink: 0;
-}
-
-.app-greeting-sub {
-  font-size: 0.45rem;
-  color: rgba(255 255 255 / 0.5);
-  margin-bottom: 2px;
-  display: block;
-}
-
-.app-greeting-name {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.1;
-  display: block;
-}
-
-// Semester pill card
-.app-semester-card {
-  background: color-mix(in srgb, sys.$primary 25%, #000);
-  border-radius: 12px;
-  padding: 8px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-}
-
-.app-semester-name {
-  font-size: 0.55rem;
-  font-weight: 600;
-  color: color-mix(in srgb, sys.$primary 70%, #fff);
-}
-
-.app-semester-days {
-  font-size: 0.45rem;
-  color: color-mix(in srgb, sys.$primary 50%, transparent);
-  font-family: sys.$font-mono;
-}
-
-// Schedule section
-.app-section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-}
-
-.app-section-title {
-  font-size: 0.5rem;
-  font-weight: 600;
-  color: rgba(255 255 255 / 0.7);
-}
-
-.app-section-action {
-  font-size: 0.42rem;
-  color: sys.$primary;
-}
-
-.app-empty-state {
-  background: #2c2c2e;
-  border-radius: 10px;
-  padding: 8px 10px;
-  font-size: 0.45rem;
-  color: rgba(255 255 255 / 0.4);
-  flex-shrink: 0;
-}
-
-// Up Next list
-.app-task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-  overflow: hidden;
-}
-
-.app-task {
-  background: #2c2c2e;
-  border-radius: 10px;
-  padding: 6px 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex-shrink: 0;
-}
-
-.task-badge {
-  font-size: 0.38rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, sys.$primary 70%, #fff);
-  margin-bottom: 1px;
-}
-
-.task-name {
-  font-size: 0.52rem;
-  font-weight: 600;
-  color: rgba(255 255 255 / 0.9);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.task-course {
-  font-size: 0.42rem;
-  color: rgba(255 255 255 / 0.4);
-  font-family: sys.$font-mono;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 // ── Responsive: hide bleed on small screens ───────────────────────────────────

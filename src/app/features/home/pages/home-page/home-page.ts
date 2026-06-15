@@ -10,6 +10,8 @@ import { TimelineRow } from '../../../../shared/components/timeline-bar/timeline
 import { LangService } from '../../../../core/lang/lang';
 import { Experience, Education } from '../../models/experience';
 import { Project } from '../../models/project';
+import { GradientAtmosphereComponent } from '../../../../shared/components/gradient-atmosphere/gradient-atmosphere';
+import { ScrollRevealDirective } from '../../../../shared/directives/scroll-reveal/scroll-reveal';
 
 @Component({
   selector: 'app-home-page',
@@ -20,6 +22,8 @@ import { Project } from '../../models/project';
     SectionHeaderComponent,
     TimelineBarComponent,
     TagChipSetComponent,
+    GradientAtmosphereComponent,
+    ScrollRevealDirective,
   ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
@@ -49,10 +53,13 @@ export class HomePageComponent {
       location: 'Montréal, QC',
       kind: 'work',
       active: true,
-      roleProgression: ['Entrepreneur', 'Stagiaire DUAL'],
+      roleProgression: [
+        { en: 'Entrepreneur', fr: 'Entrepreneur' },
+        { en: 'Intern (Dual)', fr: 'Stagiaire DUAL' },
+      ],
       summary: {
-        en: 'Multiplatform mobile development for high-end audio products. Architecture, hardware integration and delivery automation.',
-        fr: 'Développement mobile multiplateforme pour produits audio haut de gamme. Architecture, intégration matérielle et automatisation des livraisons.',
+        en: 'Multiplatform mobile development for high-end audio products. TCP protocol reverse engineering, CI/CD pipeline setup, and test infrastructure.',
+        fr: 'Développement mobile multiplateforme pour produits audio haut de gamme. Rétro-ingénierie TCP, mise en place du pipeline CI/CD et infrastructure de tests.',
       },
       bullets: [
         {
@@ -92,12 +99,12 @@ export class HomePageComponent {
       },
       bullets: [
         {
-          en: 'Designed and shipped a Jira plugin on Atlassian Forge for internal project tracking — ticket creation, assignment, and reporting.',
-          fr: "Conception et livraison d'un plugin Jira sur Atlassian Forge pour le suivi de projet interne — création de tickets, attribution et reporting.",
+          en: 'Designed and shipped a Jira plugin on Atlassian Forge for internal project tracking: ticket creation, assignment, and reporting.',
+          fr: "Conception et livraison d'un plugin Jira sur Atlassian Forge pour le suivi de projet interne : création de tickets, attribution et reporting.",
         },
         {
           en: 'Migrated and improved an existing inventory management plugin, refactoring the data model and fixing regressions across the Forge suite.',
-          fr: "Migration et amélioration d'un plugin de gestion d'inventaire existant — refactorisation du modèle de données et correction de régressions sur la suite Forge.",
+          fr: "Migration et amélioration d'un plugin de gestion d'inventaire existant, en refactorisant le modèle de données et en corrigeant des régressions dans la suite Forge.",
         },
         {
           en: 'Built a local development bootstrapping tool to reduce environment setup friction for the team.',
@@ -115,13 +122,13 @@ export class HomePageComponent {
       title: { en: 'Infra Programmer', fr: 'Programmeur infra' },
       company: 'ASUQTR',
       period: { en: 'Sept 2023 – May 2024', fr: 'Sept 2023 – Mai 2024' },
-      periodShort: { en: '22–23', fr: '22–23' },
+      periodShort: { en: '23–24', fr: '23–24' },
       location: 'Trois-Rivières, QC',
       kind: 'association',
       bullets: [
         {
-          en: 'Vision system (OpenCV/Python) + full IT infrastructure migration — servers, Nginx, Docker.',
-          fr: "Système de vision (OpenCV/Python) + migration complète de l'infrastructure IT — serveurs, Nginx, Docker.",
+          en: 'Vision system (OpenCV/Python) + full IT infrastructure migration: servers, Nginx, Docker.',
+          fr: "Système de vision (OpenCV/Python) + migration complète de l'infrastructure IT : serveurs, Nginx, Docker.",
         },
       ],
       stack: ['Proxmox', 'Linux'],
@@ -130,7 +137,7 @@ export class HomePageComponent {
       title: { en: 'VP Academic Affairs', fr: 'VP aff. acad.' },
       company: 'AMI-UQTR',
       period: { en: 'Sept 2023 – May 2024', fr: 'Sept 2023 – Mai 2024' },
-      periodShort: { en: '22–23', fr: '22–23' },
+      periodShort: { en: '23–24', fr: '23–24' },
       location: 'Trois-Rivières, QC',
       kind: 'association',
       bullets: [
@@ -230,8 +237,8 @@ export class HomePageComponent {
         fr: "Agenda étudiant multiplateforme pour Android et iOS. Le module KMP partagé détient 100 % de la logique métier, l'état et les données — seule l'interface est spécifique à chaque plateforme.",
       },
       details: {
-        en: 'Strict MVI unidirectional flow — Native UI → ViewModel (shared StateFlow) → UseCase → Repository → Room KMP / Ktor. Swift interop via SKIE, exposing Kotlin Flows as native AsyncSequence.',
-        fr: 'Flux MVI unidirectionnel strict — UI native → ViewModel (StateFlow partagé) → UseCase → Repository → Room KMP / Ktor. Interop Swift via SKIE, exposant les Flows Kotlin en AsyncSequence native.',
+        en: 'Strict MVI unidirectional flow: Native UI → ViewModel (shared StateFlow) → UseCase → Repository → Room KMP / Ktor. Swift interop via SKIE, exposing Kotlin Flows as native AsyncSequence.',
+        fr: 'Flux MVI unidirectionnel strict : UI native → ViewModel (StateFlow partagé) → UseCase → Repository → Room KMP / Ktor. Interop Swift via SKIE, exposant les Flows Kotlin en AsyncSequence native.',
       },
       stack: [
         'Kotlin Multiplatform',
@@ -249,28 +256,29 @@ export class HomePageComponent {
     },
     {
       size: 'small',
-      tag: { en: 'mobile · game', fr: 'mobile · jeu' },
-      title: { en: 'Waystone', fr: 'Waystone' },
-      description: {
-        en: 'Companion app for open-world game maps — track locations, pins, and progress across sessions.',
-        fr: 'Application compagnon pour cartes de jeux open-world — suivez vos emplacements, épingles et progression.',
-      },
-      stack: ['Kotlin Multiplatform', 'Compose Multiplatform', 'SQLDelight'],
-      slug: 'waystone',
-      urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
-      wip: true,
-    },
-    {
-      size: 'small',
       tag: { en: 'open source', fr: 'open source' },
       accentFirst: false,
       title: { en: 'Starter Templates', fr: 'Templates de démarrage' },
       description: {
-        en: 'Production-ready starters for KMP, Angular 21, and Spring Boot (identity + core). Each stands alone — all compose over a shared Bearer JWT contract.',
-        fr: 'Starters prêts pour la production : KMP, Angular 21 et Spring Boot (identité + core). Chacun fonctionne seul — tous se composent via Bearer JWT.',
+        en: 'Production-ready starters for KMP, Angular 21, and Spring Boot (identity + core). Each stands alone; all compose over a shared Bearer JWT contract.',
+        fr: 'Starters prêts pour la production : KMP, Angular 21 et Spring Boot (identité + core). Chacun fonctionne seul ; tous se composent via Bearer JWT.',
       },
       stack: ['Kotlin Multiplatform', 'Angular 21', 'Spring Boot', 'Bun', 'Vitest', 'Playwright'],
       slug: 'templates',
+      urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
+    },
+    {
+      size: 'small',
+      tag: { en: 'open source · infra', fr: 'open source · infra' },
+      accentFirst: false,
+      title: { en: 'Traefik Mesh Companion', fr: 'Traefik Mesh Companion' },
+      description: {
+        en: 'Docker-label-driven sidecar that auto-manages Uptime Kuma monitors, Cloudflare DNS, and NetBird DNS on container start/stop. Built for Home Ops, published as a standalone image.',
+        fr: 'Sidecar piloté par labels Docker qui gère automatiquement les monitors Uptime Kuma, DNS Cloudflare et DNS NetBird au démarrage/arrêt des conteneurs. Conçu pour Home Ops, publié en image autonome.',
+      },
+      stack: ['Go', 'Docker', 'Traefik', 'Uptime Kuma', 'Cloudflare', 'NetBird'],
+      slug: 'mesh-companion',
+      repoUrl: 'https://github.com/wolf-infra/traefik-mesh-companion',
       urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
     },
     {
@@ -296,17 +304,16 @@ export class HomePageComponent {
     },
     {
       size: 'small',
-      tag: { en: 'open source · infra', fr: 'open source · infra' },
-      accentFirst: false,
-      title: { en: 'Traefik Mesh Companion', fr: 'Traefik Mesh Companion' },
+      tag: { en: 'mobile · game', fr: 'mobile · jeu' },
+      title: { en: 'Waystone', fr: 'Waystone' },
       description: {
-        en: 'Docker-label-driven sidecar that auto-manages Uptime Kuma monitors, Cloudflare DNS, and NetBird DNS on container start/stop. Built for Home Ops, published as a standalone image.',
-        fr: 'Sidecar piloté par labels Docker qui gère automatiquement les monitors Uptime Kuma, DNS Cloudflare et DNS NetBird au démarrage/arrêt des conteneurs. Conçu pour Home Ops, publié en image autonome.',
+        en: 'Companion app for open-world game maps: track locations, pins, and progress across sessions.',
+        fr: 'Application compagnon pour cartes de jeux open-world : suivez vos emplacements, épingles et progression.',
       },
-      stack: ['Go', 'Docker', 'Traefik', 'Uptime Kuma', 'Cloudflare', 'NetBird'],
-      slug: 'mesh-companion',
-      repoUrl: 'https://github.com/wolf-infra/traefik-mesh-companion',
+      stack: ['Kotlin Multiplatform', 'Compose Multiplatform', 'SQLDelight'],
+      slug: 'waystone',
       urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
+      wip: true,
     },
   ];
 

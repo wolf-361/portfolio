@@ -4,9 +4,9 @@ Mobile-first, but fluent across the stack — from Kotlin to Go to bare metal. P
 
 **Live:** [me.wolf-361.ca](https://me.wolf-361.ca)
 
-> A demo GIF will be added here once the production domain is live — showing the interactive terminal, bilingual toggle, and dark/light mode in action.
-
 ---
+
+![Demo](public/demo.gif)
 
 ## What this is
 

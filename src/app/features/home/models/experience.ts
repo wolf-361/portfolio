@@ -14,7 +14,7 @@ export interface Experience {
   summary?: I18n;
   stack?: string[];
   /** Role progression shown as chips, e.g. ['Entrepreneur', 'Stagiaire DUAL'] */
-  roleProgression?: string[];
+  roleProgression?: I18n[];
 }
 
 export interface Education {

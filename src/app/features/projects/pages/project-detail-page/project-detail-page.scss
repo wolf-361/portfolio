@@ -21,6 +21,36 @@
   border-bottom: 1px solid sys.$outline-variant;
 }
 
+.cs-hero-split {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: sp.$xl-2;
+  align-items: center;
+  padding-top: sp.$lg;
+
+  &.cs-hero-split--full {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    gap: sp.$xl;
+  }
+}
+
+.cs-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: sp.$md;
+}
+
+.cs-hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  will-change: transform;
+}
+
 .cs-nav {
   display: flex;
   align-items: center;
@@ -73,9 +103,11 @@
 }
 
 .cs-title {
-  margin: 0 0 sp.$md;
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
   font-weight: 400;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   letter-spacing: -0.025em;
   line-height: 1.05;
   color: sys.$on-surface;
@@ -83,11 +115,77 @@
 }
 
 .cs-subtitle {
-  margin: 0 0 sp.$xl;
+  margin: 0;
   font-size: 1.0625rem;
   line-height: 1.75;
   color: sys.$on-surface-variant;
   max-width: 60ch;
+}
+
+// ── Static hero terminal ───────────────────────────────────────────────────────
+
+.cs-hero-terminal {
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 380px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 20px 40px -4px rgba(0, 0, 0, 0.3);
+}
+
+.cs-hero-terminal-bar {
+  background: t.$macos-titlebar;
+  padding: 0.625rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cs-ht-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &--r {
+    background: t.$macos-dot-red;
+  }
+  &--y {
+    background: t.$macos-dot-yellow;
+  }
+  &--g {
+    background: t.$macos-dot-green;
+  }
+}
+
+.cs-hero-terminal-body {
+  background: #0d1117;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cs-ht-prompt {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  color: #7dd3fc;
+}
+
+.cs-ht-dollar {
+  color: #a78bfa;
+}
+
+.cs-ht-line {
+  margin: 0;
+  font-size: 0.6875rem;
+  color: #cdd6f4;
+  opacity: 0.65;
+  line-height: 1.6;
+  white-space: pre;
 }
 
 .cs-cta-row {
@@ -102,6 +200,7 @@
   align-items: center;
   gap: sp.$xs;
   padding: sp.$xs sp.$md;
+  min-height: 44px;
   border-radius: 999px;
   font-size: 0.875rem;
   font-weight: 500;
@@ -202,7 +301,6 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   color: sys.$on-surface-variant;
-  opacity: 0.5;
   text-transform: uppercase;
 }
 
@@ -213,8 +311,7 @@
 
 .meta-sub {
   font-size: 0.75rem;
-  color: sys.$on-surface-variant;
-  opacity: 0.6;
+  color: color-mix(in srgb, sys.$on-surface-variant 80%, transparent);
 }
 
 .meta-link {
@@ -306,13 +403,29 @@
   flex-direction: column;
   gap: sp.$xl-2;
   min-width: 0; // prevent grid blowout
-  overflow: hidden;
 }
 
 .cs-section {
   display: flex;
   flex-direction: column;
   gap: sp.$md;
+}
+
+.cs-divider {
+  height: 1px;
+  background: sys.$outline-variant;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -2px;
+    width: 4px;
+    height: 4px;
+    background: sys.$primary;
+    border-radius: 1px;
+  }
 }
 
 .sec-eyebrow {
@@ -330,7 +443,7 @@
 .sec-title {
   margin: 0;
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 300;
+  font-weight: 600;
   letter-spacing: -0.025em;
   color: sys.$on-background;
   max-width: 22ch;
@@ -353,18 +466,13 @@
   margin: 0;
   padding: sp.$lg sp.$xl;
   border-left: 2px solid sys.$primary;
-  background: linear-gradient(
-    to right,
-    color-mix(in srgb, sys.$primary 15%, sys.$surface-container-low),
-    color-mix(in srgb, sys.$surface-container-low 60%, transparent) 70%
-  );
+  background: color-mix(in srgb, sys.$primary 8%, sys.$surface-container-low);
+  box-shadow: inset 4px 0 24px -8px color-mix(in srgb, sys.$primary 20%, transparent);
   border-radius: 0 sys.$corner-small sys.$corner-small 0;
   display: flex;
   flex-direction: column;
   gap: sp.$xs;
   max-width: 58ch;
-  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 }
 
 .sec-highlight-quote {
@@ -546,8 +654,8 @@
   border: 1px solid sys.$outline-variant;
   color: sys.$on-surface-variant;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -612,8 +720,7 @@
 
 .pager-dir {
   font-size: 0.6875rem;
-  color: sys.$on-surface-variant;
-  opacity: 0.55;
+  color: color-mix(in srgb, sys.$on-surface-variant 80%, transparent);
 }
 
 .pager-title {
@@ -649,4 +756,45 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+// ── Hero entrance animation ───────────────────────────────────────────────────────
+
+@keyframes cs-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+// Hide hero elements before entrance class is applied — prevents 1-frame flash
+.cs-hero:not(.cs-entering) {
+  .cs-title,
+  .cs-subtitle,
+  .cs-cta-row,
+  .cs-hero-visual {
+    opacity: 0;
+  }
+}
+
+.cs-entering {
+  .cs-title {
+    animation: cs-fade-up 500ms ease-out both;
+  }
+
+  .cs-subtitle {
+    animation: cs-fade-up 500ms ease-out 80ms both;
+  }
+
+  .cs-cta-row {
+    animation: cs-fade-up 500ms ease-out 160ms both;
+  }
+
+  .cs-hero-visual {
+    animation: cs-fade-up 500ms ease-out 240ms both;
+  }
 }

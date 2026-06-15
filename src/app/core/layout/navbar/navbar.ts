@@ -1,7 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { fromEvent } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
+import { Component, inject, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -13,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ThemeService } from '../../theme/theme';
 import { LangService } from '../../lang/lang';
 import { MobileNavComponent } from '../mobile-nav/mobile-nav';
+import { StatusPillComponent } from '../../../shared/components/status-pill/status-pill';
 
 interface NavItem {
   index: string;
@@ -23,15 +21,23 @@ interface NavItem {
 
 @Component({
   selector: 'app-navbar',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatTooltipModule, MobileNavComponent],
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MobileNavComponent,
+    StatusPillComponent,
+  ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   // ── Private injectables (must precede public fields per member-ordering) ──
   private readonly router = inject(Router);
   private readonly location = inject(Location);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly zone = inject(NgZone);
+  private scrollHandler: (() => void) | null = null;
 
   // ── Public injectables ────────────────────────────────────────────────────
   readonly theme = inject(ThemeService);
@@ -39,24 +45,37 @@ export class NavbarComponent implements OnInit {
 
   // ── Public fields ─────────────────────────────────────────────────────────
   readonly mobileNavOpen = signal(false);
+  readonly scrolled = signal(false);
 
   /** Active section fragment, updated by scroll-spy */
   readonly activeFragment = signal<string>('');
 
   readonly navItems: NavItem[] = [
-    { index: '01', labelEn: 'Experiences', labelFr: 'Expériences', fragment: 'experiences' },
-    { index: '02', labelEn: 'Projects', labelFr: 'Projets', fragment: 'projects' },
+    { index: '01', labelEn: 'Projects', labelFr: 'Projets', fragment: 'projects' },
+    { index: '02', labelEn: 'Background', labelFr: 'Parcours', fragment: 'experiences' },
     { index: '03', labelEn: 'Contact', labelFr: 'Contact', fragment: 'contact' },
   ];
   // Note: timeline is part of experiences section — not a separate nav item
 
   // ── Lifecycle ─────────────────────────────────────────────────────────────
   ngOnInit(): void {
-    fromEvent(window, 'scroll', { passive: true })
-      .pipe(throttleTime(50), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.updateActiveSection());
-
+    this.scrolled.set(window.scrollY > 4);
     this.updateActiveSection();
+
+    this.scrollHandler = () => {
+      this.scrolled.set(window.scrollY > 4);
+      this.updateActiveSection();
+    };
+    this.zone.runOutsideAngular(() => {
+      window.addEventListener('scroll', this.scrollHandler!, { passive: true });
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.scrollHandler) {
+      window.removeEventListener('scroll', this.scrollHandler);
+      this.scrollHandler = null;
+    }
   }
 
   // ── Public methods ────────────────────────────────────────────────────────
@@ -65,7 +84,7 @@ export class NavbarComponent implements OnInit {
     if (el) {
       const offset = 96; // sticky navbar height
       const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+      window.scrollTo({ top, behavior: 'auto' });
     } else {
       // Not on home page — navigate home; app.ts NavigationEnd handler will scroll
       this.router.navigate(['/'], { fragment });
@@ -105,7 +124,8 @@ export class NavbarComponent implements OnInit {
     this.navItems.forEach((item) => {
       const el = document.getElementById(item.fragment);
       if (!el) return;
-      if (el.offsetTop <= triggerY) {
+      const top = el.getBoundingClientRect().top + scrollY;
+      if (top <= triggerY) {
         active = item.fragment;
       }
     });

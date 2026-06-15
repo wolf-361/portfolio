@@ -1,11 +1,10 @@
 @use './styles/tokens' as t;
 @use './styles/material-theme';
+@use './app/shared/directives/scroll-reveal/scroll-reveal';
 
-// --font-mono is the only non-M3 CSS custom property in this app.
-// All colors, shape, and typography use --mat-sys-* tokens directly.
-// Spacing uses the SCSS-only _spacing.scss module (no runtime vars).
 :root {
   --font-mono: #{t.$font-family-mono};
+  --font-display: #{t.$font-family-display};
 }
 
 *,
@@ -16,6 +15,13 @@
 
 html {
   height: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {

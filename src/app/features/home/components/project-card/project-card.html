@@ -16,7 +16,9 @@
         <span class="card-tag mono">{{ lang.t(project().tag!.en, project().tag!.fr) }}</span>
       }
       @if (project().wip) {
-        <span class="wip-badge mono">WIP</span>
+        <span class="wip-badge mono">{{
+          lang.t('In active development', 'En développement actif')
+        }}</span>
       }
     </div>
 
@@ -43,7 +45,7 @@
             target="_blank"
             rel="noopener noreferrer"
             (click)="$event.stopPropagation()"
-            aria-label="View source on GitHub"
+            [attr.aria-label]="lang.t('View source on GitHub', 'Voir le code source sur GitHub')"
             >GitHub ↗</a
           >
         }
@@ -89,63 +91,7 @@
           height="440"
         />
       } @else {
-        <!-- CSS iOS-style app mockup -->
-        <div class="phone-frame">
-          <div class="phone-island"></div>
-
-          <!-- Status bar -->
-          <div class="phone-status-bar">
-            <span class="phone-time">9:41</span>
-            <div class="phone-status-icons">
-              <div class="phone-status-icon"></div>
-            </div>
-          </div>
-
-          <!-- App content -->
-          <div class="phone-scroll">
-            <!-- Greeting -->
-            <div class="app-greeting">
-              <span class="app-greeting-sub">Mon, May 4</span>
-              <span class="app-greeting-name">Hello, Luc!</span>
-            </div>
-
-            <!-- Semester pill -->
-            <div class="app-semester-card">
-              <span class="app-semester-name">Summer 2026</span>
-              <span class="app-semester-days">119 days left</span>
-            </div>
-
-            <!-- Today's schedule -->
-            <div class="app-section-header">
-              <span class="app-section-title">Today's Schedule</span>
-              <span class="app-section-action">📅</span>
-            </div>
-            <div class="app-empty-state">No classes today! Take a break.</div>
-
-            <!-- Up Next -->
-            <div class="app-section-header">
-              <span class="app-section-title">Up Next</span>
-              <span class="app-section-action">See all</span>
-            </div>
-            <div class="app-task-list">
-              <div class="app-task">
-                <span class="task-badge">Today</span>
-                <span class="task-name">Lab Report: Gravity</span>
-                <span class="task-course">PHY101</span>
-              </div>
-              <div class="app-task">
-                <span class="task-badge">Today</span>
-                <span class="task-name">Derivatives Problem Set</span>
-                <span class="task-course">MAT+101</span>
-              </div>
-              <div class="app-task">
-                <span class="task-badge">Today</span>
-                <span class="task-name">Reading Reflection</span>
-                <span class="task-course">LIT390</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ui-phone-mockup />
       }
     </div>
   }

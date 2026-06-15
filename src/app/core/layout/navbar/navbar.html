@@ -1,11 +1,11 @@
-<mat-toolbar class="navbar">
+<mat-toolbar class="navbar" [class.scrolled]="scrolled()">
   <!-- Brand -->
   <button class="brand" (click)="scrollTo('hero')">
     <span class="brand-prefix">~/</span>luc.allaire
   </button>
 
   <!-- Desktop anchor nav -->
-  <nav class="nav-links" aria-label="Navigation principale">
+  <nav class="nav-links" [attr.aria-label]="lang.t('Main navigation', 'Navigation principale')">
     @for (item of navItems; track item.fragment) {
       <button
         class="nav-link"
@@ -22,9 +22,16 @@
 
   <span class="spacer"></span>
 
+  <ui-status-pill
+    class="navbar-status"
+    [label]="lang.t('Open to work · Aug 2026', 'Disponible · Août 2026')"
+    status="available"
+  />
+
   <!-- Lang toggle -->
   <button
     class="lang-btn"
+    [attr.aria-label]="lang.t('Switch to French', 'Switch to English')"
     [matTooltip]="lang.t('Switch to French', 'Switch to English')"
     (click)="lang.toggle()"
   >

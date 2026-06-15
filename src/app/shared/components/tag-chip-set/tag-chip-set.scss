@@ -15,24 +15,25 @@
 .chip {
   display: inline-flex;
   align-items: center;
-  height: 22px;
+  height: 24px;
   padding: 0 sp.$sm;
-  border-radius: sys.$corner-extra-small;
-  background: transparent;
+  border-radius: sys.$corner-small;
+  background: color-mix(in srgb, sys.$surface-container-high 60%, transparent);
   color: sys.$on-surface-variant;
-  border: 1px solid color-mix(in srgb, sys.$outline-variant 60%, transparent);
+  border: 1px solid color-mix(in srgb, sys.$outline-variant 50%, transparent);
   font-family: sys.$font-mono;
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   white-space: nowrap;
-  opacity: 0.65;
+  opacity: 0.75;
+  transition: opacity 150ms ease;
 
   &.accent {
-    background: transparent;
+    background: color-mix(in srgb, sys.$primary 12%, transparent);
     color: sys.$primary;
-    border-color: sys.$primary;
+    border-color: color-mix(in srgb, sys.$primary 40%, transparent);
     opacity: 1;
     font-weight: 600;
   }

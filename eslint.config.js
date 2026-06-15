@@ -24,10 +24,11 @@ export default tseslint.config(
     plugins: { boundaries },
     settings: {
       'boundaries/elements': [
-        { type: 'core',     pattern: ['src/app/core/**'] },
-        { type: 'shared',   pattern: ['src/app/shared/**'] },
-        { type: 'features', pattern: ['src/app/features/**'] },
+        { type: 'core',     pattern: 'src/app/core/**' },
+        { type: 'shared',   pattern: 'src/app/shared/**' },
+        { type: 'features', pattern: 'src/app/features/**' },
       ],
+      'import/resolver': { typescript: true },
     },
     rules: {
       // app- for feature/core components, ui- for shared components

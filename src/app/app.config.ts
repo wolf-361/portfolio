@@ -9,6 +9,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { routes } from './app.routes';
 import { PortfolioTitleStrategy } from './core/title-strategy';
+import { PROJECT_TITLE_PROVIDER } from './shared/models/project-title-provider';
+import { ProjectsService } from './features/projects/services/projects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,5 +22,10 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'disabled' }),
     ),
     { provide: TitleStrategy, useClass: PortfolioTitleStrategy },
+    {
+      provide: PROJECT_TITLE_PROVIDER,
+      useFactory: (projects: ProjectsService) => (slug: string) => projects.getDetail(slug)?.title,
+      deps: [ProjectsService],
+    },
   ],
 };

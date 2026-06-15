@@ -3,252 +3,257 @@
   <app-hero />
 </section>
 
-<!-- ── Experiences ──────────────────────────────────────────────────────── -->
-<section id="experiences" class="page-section">
-  <div class="section-inner">
-    <ui-section-header
-      index="01"
-      [label]="lang.t('BACKGROUND & EDUCATION', 'PARCOURS & FORMATION')"
-      [title]="
-        lang.t(
-          'Dual profile — professional & academic in parallel',
-          'Profil dual — pro & académique en parallèle'
-        )
-      "
-      [subtitle]="
-        lang.t(
-          'A university curriculum spanning the entire period, alongside a professional career that took over from association work in 2023.',
-          'Un cursus universitaire qui couvre toute la période, doublé d\'une carrière professionnelle qui a pris le relais des engagements associatifs en 2023.'
-        )
-      "
-    />
-
-    <!-- Path pill -->
-    <div class="path-pill mono">
-      <span class="path-dot" aria-hidden="true"></span>
-      <span class="path-text">{{
-        lang.t('DUAL PROFILE · UQTR → INDUSTRY', 'PROFIL DUAL · UQTR → ENTREPRISE')
-      }}</span>
+<!-- ── Projects ──────────────────────────────────────────────────────────── -->
+<ui-gradient-atmosphere variant="projects">
+  <section id="projects" class="page-section page-section--alt">
+    <div class="section-inner">
+      <ui-section-header
+        scrollReveal="fade-up"
+        index="01"
+        [label]="lang.t('PROJECTS', 'PROJETS')"
+        [title]="lang.t('Work & Architecture', 'Réalisations & Architecture')"
+        [subtitle]="
+          lang.t(
+            'From shared-first mobile systems to self-hosted infrastructure — built to last.',
+            'Des systèmes mobiles partagés à l\'infrastructure auto-hébergée — conçus pour durer.'
+          )
+        "
+      />
+      <div class="bento-grid">
+        @for (project of projects; track project.title.en) {
+          <app-project-card
+            [project]="project"
+            [class.bento-featured]="project.size === 'featured'"
+            [class.bento-small]="project.size === 'small'"
+            scrollReveal="perspective-tilt"
+            [scrollRevealDelay]="$index * 80"
+          />
+        }
+      </div>
     </div>
+  </section>
+</ui-gradient-atmosphere>
 
-    <div class="exp-columns">
-      <!-- Left: pro work -->
-      <div class="exp-col">
-        <p class="col-label mono">
-          <span class="col-label-comment">// </span>
-          <span class="col-label-tag">pro</span>
-          {{ lang.t('Professional track', 'Volet professionnel') }}
-          <span class="col-label-count"
-            >{{ workExperiences.length }} {{ lang.t('positions', 'postes') }}</span
-          >
-        </p>
-        <div class="cards">
-          @for (exp of workExperiences; track exp.company) {
-            <app-experience-card [experience]="exp" />
-          }
-        </div>
+<!-- ── Experiences ──────────────────────────────────────────────────────── -->
+<ui-gradient-atmosphere variant="experiences">
+  <section id="experiences" class="page-section">
+    <div class="section-inner">
+      <ui-section-header
+        scrollReveal="fade-up"
+        index="02"
+        [label]="lang.t('BACKGROUND & EDUCATION', 'PARCOURS & FORMATION')"
+        [title]="
+          lang.t(
+            'Dual profile — professional & academic in parallel',
+            'Double profil — pro & académique en parallèle'
+          )
+        "
+        [subtitle]="
+          lang.t(
+            'A university curriculum spanning the entire period, alongside a professional career that picked up where association work left off in 2023.',
+            'Un cursus universitaire qui couvre toute la période, doublé d\'une carrière professionnelle qui a pris le relais des engagements associatifs en 2023.'
+          )
+        "
+      />
+
+      <!-- Path pill -->
+      <div class="path-pill mono" scrollReveal="fade-up" [scrollRevealDelay]="100">
+        <span class="path-dot" aria-hidden="true"></span>
+        <span class="path-text">{{
+          lang.t('DUAL PROFILE · UQTR → INDUSTRY', 'DOUBLE PROFIL · UQTR → ENTREPRISE')
+        }}</span>
       </div>
 
-      <!-- Right: edu featured card + associations mini-grid -->
-      <div class="exp-col">
-        <p class="col-label mono">
-          <span class="col-label-comment">// </span>
-          <span class="col-label-tag">edu</span>
-          {{ lang.t('Academic foundation', 'Socle académique') }}
-        </p>
+      <div class="exp-columns">
+        <!-- Left: pro work -->
+        <div class="exp-col">
+          <p class="col-label mono">
+            <span class="col-label-comment">// </span>
+            <span class="col-label-tag">pro</span>
+            {{ lang.t('Professional track', 'Volet professionnel') }}
+            <span class="col-label-count"
+              >{{ workExperiences.length }} {{ lang.t('positions', 'postes') }}</span
+            >
+          </p>
+          <div class="cards" scrollReveal="from-left">
+            @for (exp of workExperiences; track exp.company) {
+              <app-experience-card [experience]="exp" />
+            }
+          </div>
+        </div>
 
-        <!-- Edu cards -->
-        @for (edu of educationEntries; track edu.institution + edu.period) {
-          @if (edu.featured !== false) {
-            <!-- Featured hero card -->
-            <div class="edu-featured" [class.active]="edu.active">
-              <div class="edu-card-top mono">
-                <span class="edu-eyebrow-meta">{{ edu.institution }} · {{ edu.period }}</span>
-                @if (edu.credits) {
-                  <span class="edu-credits mono">{{ lang.t(edu.credits.en, edu.credits.fr) }}</span>
+        <!-- Right: edu featured card + associations mini-grid -->
+        <div class="exp-col" scrollReveal="from-right" [scrollRevealDelay]="200">
+          <p class="col-label mono">
+            <span class="col-label-comment">// </span>
+            <span class="col-label-tag">edu</span>
+            {{ lang.t('Academic foundation', 'Socle académique') }}
+          </p>
+
+          <!-- Edu cards -->
+          @for (edu of educationEntries; track edu.institution + edu.period) {
+            @if (edu.featured !== false) {
+              <!-- Featured hero card -->
+              <div class="edu-featured" [class.active]="edu.active">
+                <div class="edu-card-top mono">
+                  <span class="edu-eyebrow-meta">{{ edu.institution }} · {{ edu.period }}</span>
+                  @if (edu.credits) {
+                    <span class="edu-credits mono">{{
+                      lang.t(edu.credits.en, edu.credits.fr)
+                    }}</span>
+                  }
+                </div>
+
+                <h3 class="edu-degree">{{ lang.t(edu.degree.en, edu.degree.fr) }}</h3>
+
+                @if (edu.institutionFull) {
+                  <p class="edu-institution-full">
+                    {{ lang.t(edu.institutionFull.en, edu.institutionFull.fr) }}
+                  </p>
+                }
+
+                <p class="edu-period-status mono">
+                  {{ edu.period }}
+                  @if (edu.active) {
+                    <span class="edu-active-label">· {{ lang.t('ongoing', 'en cours') }}</span>
+                  }
+                </p>
+
+                @if (edu.deanYears?.length) {
+                  <div class="edu-dean-row">
+                    <span class="edu-dean-star" aria-hidden="true">★</span>
+                    <span class="edu-dean-label mono">{{
+                      lang.t("DEAN'S LIST OF EXCELLENCE", "LISTE D'EXCELLENCE DU DOYEN")
+                    }}</span>
+                    @for (year of edu.deanYears!; track year) {
+                      <span class="edu-dean-year mono">· {{ year }}</span>
+                    }
+                  </div>
                 }
               </div>
+            } @else {
+              <!-- Compact secondary card -->
+              <div class="edu-compact">
+                <div class="edu-compact-left">
+                  <span class="edu-compact-degree">{{ lang.t(edu.degree.en, edu.degree.fr) }}</span>
+                  <span class="edu-compact-institution mono">{{ edu.institution }}</span>
+                </div>
+                <div class="edu-compact-right mono">
+                  <span class="edu-compact-period">{{ edu.period }}</span>
+                  @if (edu.credits) {
+                    <span class="edu-compact-credits">{{
+                      lang.t(edu.credits.en, edu.credits.fr)
+                    }}</span>
+                  }
+                </div>
+              </div>
+            }
+          }
 
-              <h3 class="edu-degree">{{ lang.t(edu.degree.en, edu.degree.fr) }}</h3>
-
-              @if (edu.institutionFull) {
-                <p class="edu-institution-full">
-                  {{ lang.t(edu.institutionFull.en, edu.institutionFull.fr) }}
-                </p>
-              }
-
-              <p class="edu-period-status mono">
-                {{ edu.period }}
-                @if (edu.active) {
-                  <span class="edu-active-label">· {{ lang.t('ongoing', 'en cours') }}</span>
-                }
-              </p>
-
-              @if (edu.deanYears?.length) {
-                <div class="edu-dean-row">
-                  <span class="edu-dean-star" aria-hidden="true">★</span>
-                  <span class="edu-dean-label mono">{{
-                    lang.t("DEAN'S LIST OF EXCELLENCE", "LISTE D'EXCELLENCE DU DOYEN")
-                  }}</span>
-                  @for (year of edu.deanYears!; track year) {
-                    <span class="edu-dean-year mono">· {{ year }}</span>
+          <!-- Associations mini-grid -->
+          <div class="assoc-block">
+            <p class="col-label mono">
+              <span class="col-label-comment">// </span>
+              <span class="col-label-tag">{{ lang.t('branch', 'branche') }}</span>
+              {{ lang.t('Associations', 'Associatif') }}
+              <span class="assoc-period-label mono">{{
+                lang.t('2023 — 2024', '2023 — 2024')
+              }}</span>
+            </p>
+            <div class="assoc-grid">
+              @for (exp of associationExperiences; track exp.company) {
+                <div class="assoc-card">
+                  <div class="assoc-header">
+                    <span class="assoc-title">{{ lang.t(exp.title.en, exp.title.fr) }}</span>
+                    <span class="assoc-period mono">{{
+                      lang.t(exp.periodShort?.en ?? '', exp.periodShort?.fr ?? '')
+                    }}</span>
+                  </div>
+                  <span class="assoc-company mono">{{ exp.company }}</span>
+                  @if (exp.stack?.length) {
+                    <ui-tag-chip-set [tags]="exp.stack!" [accentFirst]="true" />
                   }
                 </div>
               }
             </div>
-          } @else {
-            <!-- Compact secondary card -->
-            <div class="edu-compact">
-              <div class="edu-compact-left">
-                <span class="edu-compact-degree">{{ lang.t(edu.degree.en, edu.degree.fr) }}</span>
-                <span class="edu-compact-institution mono">{{ edu.institution }}</span>
-              </div>
-              <div class="edu-compact-right mono">
-                <span class="edu-compact-period">{{ edu.period }}</span>
-                @if (edu.credits) {
-                  <span class="edu-compact-credits">{{
-                    lang.t(edu.credits.en, edu.credits.fr)
-                  }}</span>
-                }
-              </div>
-            </div>
-          }
-        }
-
-        <!-- Associations mini-grid -->
-        <div class="assoc-block">
-          <p class="col-label mono">
-            <span class="col-label-comment">// </span>
-            <span class="col-label-tag">branche</span>
-            {{ lang.t('Associations', 'Associatif') }}
-            <span class="assoc-period-label mono">{{ lang.t('2022 — 2023', '2022 — 2023') }}</span>
-          </p>
-          <div class="assoc-grid">
-            @for (exp of associationExperiences; track exp.company) {
-              <div class="assoc-card">
-                <div class="assoc-header">
-                  <span class="assoc-title">{{ lang.t(exp.title.en, exp.title.fr) }}</span>
-                  <span class="assoc-period mono">{{
-                    lang.t(exp.periodShort?.en ?? '', exp.periodShort?.fr ?? '')
-                  }}</span>
-                </div>
-                <span class="assoc-company mono">{{ exp.company }}</span>
-                @if (exp.stack?.length) {
-                  <ui-tag-chip-set [tags]="exp.stack!" [accentFirst]="true" />
-                }
-              </div>
-            }
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Timeline -->
-    <div class="timeline-block">
-      <p class="timeline-label mono">
-        <span class="col-label-comment">// timeline · </span>
-        <span class="col-label-tag">vue d'ensemble</span>
-        <span class="timeline-desc">{{
-          lang.t(
-            'the degree spans the entire period — associations handed off to industry in 2023.',
-            "le Bac couvre toute la période — l'asso a passé le relais au pro en 2023."
-          )
-        }}</span>
-      </p>
-      <ui-timeline-bar [rows]="timelineRows" [startYear]="2022" [endYear]="2027" />
-    </div>
-  </div>
-</section>
-
-<!-- ── Projects ──────────────────────────────────────────────────────────── -->
-<section id="projects" class="page-section page-section--alt">
-  <div class="section-inner">
-    <ui-section-header
-      index="02"
-      [label]="lang.t('PROJECTS', 'PROJETS')"
-      [title]="lang.t('Work & Architecture', 'Réalisations & Architecture')"
-      [subtitle]="
-        lang.t(
-          'From shared-first mobile systems to self-hosted infrastructure — built to last.',
-          'Des systèmes mobiles partagés à l\'infrastructure auto-hébergée — conçus pour durer.'
-        )
-      "
-    />
-    <div class="bento-grid">
-      @for (project of projects; track project.title.en) {
-        <app-project-card
-          [project]="project"
-          [class.bento-featured]="project.size === 'featured'"
-          [class.bento-small]="project.size === 'small'"
-        />
-      }
-    </div>
-  </div>
-</section>
-
-<!-- ── Contact ───────────────────────────────────────────────────────────── -->
-<section id="contact" class="page-section contact-section">
-  <div class="section-inner">
-    <!-- Eyebrow -->
-    <p class="contact-eyebrow mono">
-      <span class="col-label-comment">// </span>
-      <span class="contact-eyebrow-num">03.</span>
-      <span class="col-label-tag">CONTACT</span>
-    </p>
-
-    <!-- Availability status -->
-    <div class="contact-status mono" role="status">
-      <span class="status-led" aria-hidden="true"></span>
-      <span class="status-text">
-        <strong>{{ lang.t('Open to', 'Ouvert aux') }}</strong>
-        {{ lang.t('mobile roles', 'rôles mobiles') }}
-      </span>
-      <span class="status-sep">·</span>
-      <span class="status-modes">{{
-        lang.t('full-time · contract · remote-friendly', 'temps plein · contrat · télétravail')
-      }}</span>
-    </div>
-
-    <!-- CTA + email split row -->
-    <div class="contact-split">
-      <!-- Left: CTA heading -->
-      <h2 class="contact-cta">
-        {{ lang.t("Let's build", 'Construisons') }}<br />
-        {{ lang.t('something ', 'quelque chose ')
-        }}<em class="contact-accent">{{ lang.t('solid', 'solide') }}</em
-        ><span class="contact-dot">.</span>
-      </h2>
-
-      <!-- Right: email + copy + hint -->
-      <div class="contact-email-block">
-        <div class="contact-row">
-          <a class="contact-email" href="mailto:wolf-361@hotmail.com">wolf-361&#64;hotmail.com</a>
-          <span class="copy-wrap">
-            <button
-              class="contact-copy mono"
-              type="button"
-              (click)="copyEmail()"
-              [attr.data-copied]="emailCopied"
-              [attr.aria-label]="lang.t('Copy address', 'Copier l\'adresse')"
-            >
-              <span class="copy-ico" aria-hidden="true">⧉</span>
-              <span>{{
-                emailCopied
-                  ? lang.t('Copied!', 'Copié !')
-                  : lang.t('Copy address', "Copier l'adresse")
-              }}</span>
-            </button>
-            <span #copyToast class="copy-toast" role="status" aria-live="polite"
-              >✓ {{ lang.t('Address copied!', 'Adresse copiée !') }}</span
-            >
-          </span>
-        </div>
-        <p class="contact-hint mono">
-          {{ lang.t('// reply within', '// réponse sous') }}
-          <span class="hint-accent">~24h</span>
-          {{ lang.t('· ET timezone (UTC−5)', '· fuseau ET (UTC−5)') }}
+      <!-- Timeline -->
+      <div class="timeline-block" scrollReveal="fade-up" [scrollRevealDelay]="100">
+        <p class="timeline-label mono">
+          <span class="col-label-comment">// timeline · </span>
+          <span class="col-label-tag">{{ lang.t('overview', "vue d'ensemble") }}</span>
+          <span class="timeline-desc">{{
+            lang.t(
+              'the degree spans the entire period — associations gave way to industry in 2023.',
+              "le Bac couvre toute la période — l'asso a passé le relais au pro en 2023."
+            )
+          }}</span>
         </p>
+        <ui-timeline-bar [rows]="timelineRows" [startYear]="2022" [endYear]="2027" />
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</ui-gradient-atmosphere>
+
+<!-- ── Contact ───────────────────────────────────────────────────────────── -->
+<ui-gradient-atmosphere variant="contact">
+  <section id="contact" class="page-section contact-section">
+    <div class="section-inner">
+      <p class="contact-eyebrow mono" scrollReveal="fade-up">
+        <span class="col-label-comment">// </span>
+        <span class="contact-eyebrow-num">03.</span>
+        <span class="col-label-tag">CONTACT</span>
+      </p>
+
+      <div class="contact-split" scrollReveal="fade-up" [scrollRevealDelay]="160">
+        <h2 class="contact-cta">
+          {{ lang.t("Let's build", 'Bâtissons quelque chose') }}
+          {{ lang.t('something ', 'de ')
+          }}<em class="contact-accent">{{ lang.t('solid', 'solide') }}</em
+          ><span class="contact-dot">.</span>
+        </h2>
+
+        <div class="contact-email-block">
+          <div class="contact-row">
+            <a class="contact-email" href="mailto:wolf-361@hotmail.com">wolf-361&#64;hotmail.com</a>
+            <span class="copy-wrap">
+              <button
+                class="contact-copy mono"
+                type="button"
+                (click)="copyEmail()"
+                [attr.data-copied]="emailCopied"
+                [attr.aria-label]="lang.t('Copy address', 'Copier l\'adresse')"
+              >
+                <span class="copy-ico" aria-hidden="true">⧉</span>
+                <span>{{
+                  emailCopied
+                    ? lang.t('Copied!', 'Copié !')
+                    : lang.t('Copy address', "Copier l'adresse")
+                }}</span>
+              </button>
+              <span #copyToast class="copy-toast" role="status" aria-live="polite"
+                >✓ {{ lang.t('Address copied!', 'Adresse copiée !') }}</span
+              >
+            </span>
+          </div>
+          <p class="contact-hint mono">
+            {{
+              lang.t(
+                '// available August 2026 · full-time · remote or Trois-Rivières',
+                '// disponible août 2026 · temps plein · télétravail ou Trois-Rivières'
+              )
+            }}
+          </p>
+          <p class="contact-hint mono">
+            {{ lang.t('// reply within', '// réponse sous') }}
+            <span class="hint-accent">~24h</span>
+            {{ lang.t('· ET timezone (UTC−5)', '· fuseau ET (UTC−5)') }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</ui-gradient-atmosphere>
