@@ -96,8 +96,8 @@ export class HomePageComponent {
       },
       bullets: [
         {
-          en: 'Designed and shipped a Jira plugin on Atlassian Forge for internal project tracking — ticket creation, assignment, and reporting.',
-          fr: "Conception et livraison d'un plugin Jira sur Atlassian Forge pour le suivi de projet interne — création de tickets, attribution et reporting.",
+          en: 'Designed and shipped a Jira plugin on Atlassian Forge for internal project tracking: ticket creation, assignment, and reporting.',
+          fr: "Conception et livraison d'un plugin Jira sur Atlassian Forge pour le suivi de projet interne : création de tickets, attribution et reporting.",
         },
         {
           en: 'Migrated and improved an existing inventory management plugin, refactoring the data model and fixing regressions across the Forge suite.',
@@ -257,8 +257,8 @@ export class HomePageComponent {
       accentFirst: false,
       title: { en: 'Starter Templates', fr: 'Templates de démarrage' },
       description: {
-        en: 'Production-ready starters for KMP, Angular 21, and Spring Boot (identity + core). Each stands alone — all compose over a shared Bearer JWT contract.',
-        fr: 'Starters prêts pour la production : KMP, Angular 21 et Spring Boot (identité + core). Chacun fonctionne seul — tous se composent via Bearer JWT.',
+        en: 'Production-ready starters for KMP, Angular 21, and Spring Boot (identity + core). Each stands alone; all compose over a shared Bearer JWT contract.',
+        fr: 'Starters prêts pour la production : KMP, Angular 21 et Spring Boot (identité + core). Chacun fonctionne seul ; tous se composent via Bearer JWT.',
       },
       stack: ['Kotlin Multiplatform', 'Angular 21', 'Spring Boot', 'Bun', 'Vitest', 'Playwright'],
       slug: 'templates',
@@ -304,8 +304,8 @@ export class HomePageComponent {
       tag: { en: 'mobile · game', fr: 'mobile · jeu' },
       title: { en: 'Waystone', fr: 'Waystone' },
       description: {
-        en: 'Companion app for open-world game maps — track locations, pins, and progress across sessions.',
-        fr: 'Application compagnon pour cartes de jeux open-world — suivez vos emplacements, épingles et progression.',
+        en: 'Companion app for open-world game maps: track locations, pins, and progress across sessions.',
+        fr: 'Application compagnon pour cartes de jeux open-world : suivez vos emplacements, épingles et progression.',
       },
       stack: ['Kotlin Multiplatform', 'Compose Multiplatform', 'SQLDelight'],
       slug: 'waystone',

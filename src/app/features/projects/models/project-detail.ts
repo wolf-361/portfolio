@@ -10,7 +10,7 @@ export interface HeroVisual {
   terminalLines?: string[];
 }
 
-export { StatCard };
+export type { StatCard };
 
 export interface ProjectMeta {
   role: I18n;

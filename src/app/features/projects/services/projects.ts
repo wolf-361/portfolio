@@ -43,8 +43,8 @@ export class ProjectsService {
           },
           highlight: {
             text: {
-              en: 'How do you share 80% of the code between iOS and Android without sacrificing the native feel, or offline autonomy?',
-              fr: "Comment partager 80% du code entre iOS et Android sans sacrifier le feeling natif, ni l'autonomie hors-ligne ?",
+              en: 'How do you share 80% of the code between iOS and Android without sacrificing the native feel or offline autonomy?',
+              fr: "Comment partager 80% du code entre iOS et Android sans sacrifier le rendu natif ni l'autonomie hors-ligne ?",
             },
             attribution: {
               en: 'founding question of the project',
@@ -193,8 +193,8 @@ export class ProjectsService {
           },
           highlight: {
             text: {
-              en: 'How do you give players exactly the help they asked for — and nothing more?',
-              fr: "Comment donner aux joueurs exactement l'aide demandée — et rien de plus ?",
+              en: 'How do you give players exactly the help they asked for, and nothing more?',
+              fr: "Comment donner aux joueurs exactement l'aide demandée, et rien de plus ?",
             },
             attribution: {
               en: 'founding constraint of the product',
@@ -296,13 +296,13 @@ export class ProjectsService {
           title: { en: 'Every project starts the same.', fr: 'Chaque projet commence pareil.' },
           tocLabel: { en: 'The Problem', fr: 'Le Problème' },
           body: {
-            en: "Starting a new KMP project means wiring Koin, Room, Ktor, SKIE, and Fastlane from scratch — then configuring ESLint, Husky, commitlint, and Vitest for the Angular companion — then standing up Spring Security, JWT validation, Flyway migrations, and an identity service. That's days of setup before writing a single line of business logic.\n\nThe deeper problem: without enforced structure, each project accumulates its own conventions. Cross-feature imports creep in. The test pyramid collapses. Decisions that should be architecture become accidents of the first sprint.",
+            en: "Starting a new KMP project means wiring Koin, Room, Ktor, SKIE, and Fastlane from scratch — then configuring ESLint, Husky, commitlint, and Vitest for the Angular companion — then standing up Spring Security, JWT validation, Flyway migrations, and an identity service. That's days of setup before writing a single line of business logic.\n\nThe deeper problem: without enforced structure, each project accumulates its own conventions. Cross-feature imports creep in. The test pyramid collapses. Architectural decisions become accidents of the first sprint.",
             fr: "Démarrer un projet KMP implique de brancher Koin, Room, Ktor, SKIE et Fastlane depuis zéro — puis de configurer ESLint, Husky, commitlint et Vitest pour le compagnon Angular — puis de monter Spring Security, la validation JWT, les migrations Flyway et un service d'identité. C'est des jours de configuration avant d'écrire une seule ligne de logique métier.\n\nLe problème plus profond : sans structure imposée, chaque projet accumule ses propres conventions. Les imports cross-features s'infiltrent. La pyramide de tests s'effondre. Les décisions qui devraient relever de l'architecture deviennent des accidents du premier sprint.",
           },
           highlight: {
             text: {
-              en: "A template is not a starting point — it's a contract. It should be impossible to violate the architecture accidentally.",
-              fr: "Un template n'est pas un point de départ — c'est un contrat. Il doit être impossible de violer l'architecture accidentellement.",
+              en: "A template is not a starting point. It's a contract. It should be impossible to violate the architecture accidentally.",
+              fr: "Un template n'est pas un point de départ. C'est un contrat. Il doit être impossible de violer l'architecture accidentellement.",
             },
             attribution: { en: 'design principle', fr: 'principe de conception' },
           },
@@ -403,7 +403,7 @@ export class ProjectsService {
           title: { en: 'Full control, zero vendor lock-in.', fr: 'Contrôle total, zéro lock-in.' },
           tocLabel: { en: 'The Problem', fr: 'Le Problème' },
           body: {
-            en: 'Running production workloads on cloud VMs is convenient until you see the bill. More importantly, it\'s not infrastructure engineering — it\'s infrastructure renting. The goal was to build real operational depth: provisioning, networking, observability, security hardening — and to run actual production services on owned hardware.\n\nThe non-negotiable constraint: the cluster had to be <strong>reproducible from a fresh Debian install</strong>. Not "documented enough to reconstruct" — literally one command. Any node that dies gets wiped and re-provisioned in minutes. Two months of work distilled into <code>make cluster</code>.',
+            en: 'Running production workloads on cloud VMs is convenient until you see the bill. More importantly, it\'s not infrastructure engineering — it\'s infrastructure renting. The goal was to build real operational depth: provisioning, networking, observability, security hardening — and run actual production services on owned hardware.\n\nThe non-negotiable constraint: the cluster had to be <strong>reproducible from a fresh Debian install</strong>. Not "documented enough to reconstruct" — literally one command. Any node that dies gets wiped and re-provisioned in minutes. Two months of work distilled into <code>make cluster</code>.',
             fr: "Faire tourner des workloads en production sur des VMs cloud est pratique jusqu'à ce qu'on voit la facture. Plus important : ce n'est pas de l'ingénierie infrastructure — c'est de la location. L'objectif était de développer une vraie profondeur opérationnelle : provisioning, réseau, observabilité, durcissement de sécurité — et faire tourner de vrais services en production sur du matériel possédé.\n\nLa contrainte non-négociable : le cluster devait être <strong>reproductible depuis un Debian vierge</strong>. Pas « documenté suffisamment pour reconstruire » — littéralement une commande. Tout nœud qui tombe est effacé et re-provisionné en minutes. Deux mois de travail distillés en <code>make cluster</code>.",
           },
           highlight: {

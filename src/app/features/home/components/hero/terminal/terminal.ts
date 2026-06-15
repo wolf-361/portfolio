@@ -170,7 +170,7 @@ function runCommand(raw: string, lang: Lang): CommandResult {
             ]
           : [
               { kind: 'output', text: 'Je construis des logiciels comme mon infrastructure :' },
-              { kind: 'output', text: 'contrats explicites, frontières enforced,' },
+              { kind: 'output', text: 'contrats explicites, frontières imposées,' },
               { kind: 'output', text: "zéro tolérance pour l'ambiguïté." },
             ];
       if (file === 'cv.pdf')
@@ -247,11 +247,13 @@ export class HeroTerminalComponent implements OnDestroy {
   private tabCycling = false;
   private tabMatches: string[] = [];
   private tabIndex = -1;
-  private hintTimeout: ReturnType<typeof setTimeout> | null = null;
+  private hintFallbackTimeout: ReturnType<typeof setTimeout> | null = null;
+  private scrollListener: (() => void) | null = null;
   private demoTimeout: ReturnType<typeof setTimeout> | null = null;
   private readonly isMobile = typeof window !== 'undefined' && window.innerWidth <= 599;
   private readonly DEMO_COMMANDS = ['help', 'whoami', 'cat bio.txt', 'ls', 'neofetch'];
-  private readonly hintVisible = signal(false);
+  private readonly hintDismissed = signal(false);
+  private readonly el = inject(ElementRef);
   private readonly router = inject(Router);
 
   readonly lang = inject(LangService);
@@ -262,7 +264,7 @@ export class HeroTerminalComponent implements OnDestroy {
   readonly inputValue = signal('');
   readonly history: string[] = [];
   readonly isAutoDemo = signal(false);
-  readonly showHint = this.hintVisible.asReadonly();
+  readonly showHint = computed(() => this.isDone() && !this.hintDismissed());
 
   readonly suggestion = computed(() => {
     const input = this.inputValue();
@@ -288,11 +290,15 @@ export class HeroTerminalComponent implements OnDestroy {
     });
     effect(() => {
       if (this.isDone()) {
-        if (this.hintTimeout) clearTimeout(this.hintTimeout);
-        this.hintVisible.set(true);
-        this.hintTimeout = setTimeout(() => this.hintVisible.set(false), 5000);
+        this.hintFallbackTimeout = setTimeout(() => this.dismissHint(), 30_000);
       }
     });
+    if (typeof window !== 'undefined') {
+      this.scrollListener = () => {
+        if (this.el.nativeElement.getBoundingClientRect().top < 0) this.dismissHint();
+      };
+      window.addEventListener('scroll', this.scrollListener, { passive: true });
+    }
     effect(() => {
       if (this.isDone() && this.isMobile && !this.isAutoDemo()) {
         if (this.demoTimeout) clearTimeout(this.demoTimeout);
@@ -304,19 +310,36 @@ export class HeroTerminalComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.clearInterval();
-    if (this.hintTimeout) {
-      clearTimeout(this.hintTimeout);
-      this.hintTimeout = null;
+    if (this.scrollListener) {
+      window.removeEventListener('scroll', this.scrollListener);
+      this.scrollListener = null;
+    }
+    if (this.hintFallbackTimeout) {
+      clearTimeout(this.hintFallbackTimeout);
+      this.hintFallbackTimeout = null;
     }
     if (this.demoTimeout) clearTimeout(this.demoTimeout);
   }
 
   focusInput(): void {
+    this.dismissHint();
     if (this.isDone()) this.inputEl()?.nativeElement.focus({ preventScroll: true });
   }
 
+  private dismissHint(): void {
+    this.hintDismissed.set(true);
+    if (this.hintFallbackTimeout) {
+      clearTimeout(this.hintFallbackTimeout);
+      this.hintFallbackTimeout = null;
+    }
+    if (this.scrollListener) {
+      window.removeEventListener('scroll', this.scrollListener);
+      this.scrollListener = null;
+    }
+  }
+
   onKeydown(e: KeyboardEvent): void {
-    this.hintVisible.set(false);
+    this.dismissHint();
     switch (e.key) {
       case 'Tab':
         e.preventDefault();
@@ -365,7 +388,7 @@ export class HeroTerminalComponent implements OnDestroy {
   }
 
   onInput(e: Event): void {
-    this.hintVisible.set(false);
+    this.dismissHint();
     this.inputValue.set((e.target as HTMLInputElement).value);
   }
 
