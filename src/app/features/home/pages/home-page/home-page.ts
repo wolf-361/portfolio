@@ -53,7 +53,10 @@ export class HomePageComponent {
       location: 'Montréal, QC',
       kind: 'work',
       active: true,
-      roleProgression: ['Entrepreneur', 'Stagiaire DUAL'],
+      roleProgression: [
+        { en: 'Entrepreneur', fr: 'Entrepreneur' },
+        { en: 'Intern (Dual)', fr: 'Stagiaire DUAL' },
+      ],
       summary: {
         en: 'Multiplatform mobile development for high-end audio products. TCP protocol reverse engineering, CI/CD pipeline setup, and test infrastructure.',
         fr: 'Développement mobile multiplateforme pour produits audio haut de gamme. Rétro-ingénierie TCP, mise en place du pipeline CI/CD et infrastructure de tests.',

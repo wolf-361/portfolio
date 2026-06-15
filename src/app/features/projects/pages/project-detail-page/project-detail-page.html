@@ -107,7 +107,7 @@
               <span class="meta-value">{{ lang.t(p.meta.team.en, p.meta.team.fr) }}</span>
             </div>
             <div class="meta-block">
-              <span class="meta-label mono">Stack</span>
+              <span class="meta-label mono">{{ lang.t('Stack', 'Technologies') }}</span>
               <ui-tag-chip-set [tags]="p.tags" [accentFirst]="true" />
             </div>
             @if (p.meta.url) {
@@ -129,7 +129,7 @@
           class="toc"
           scrollReveal="from-left"
           [scrollRevealDelay]="120"
-          aria-label="Table of contents"
+          [attr.aria-label]="lang.t('Table of contents', 'Table des matières')"
         >
           <span class="toc-header mono">{{ lang.t('Summary', 'Sommaire') }}</span>
           @for (section of p.sections; track section.id) {
@@ -202,7 +202,9 @@
                   (keydown.space)="openDiagram(section.svgDiagram)"
                   role="button"
                   tabindex="0"
-                  aria-label="Tap to expand diagram"
+                  [attr.aria-label]="
+                    lang.t('Tap to expand diagram', 'Appuyer pour agrandir le diagramme')
+                  "
                 ></div>
               } @else {
                 <pre class="arch-canvas">{{ section.diagram!.join('\n') }}</pre>
@@ -215,6 +217,7 @@
               @for (stat of section.stats!; track stat.value) {
                 <ui-stat-card
                   [stat]="stat"
+                  [locale]="lang.lang()"
                   scrollReveal="fade-up"
                   [scrollRevealDelay]="$index * 80"
                 />
@@ -253,7 +256,12 @@
         [innerHTML]="sanitize(zoomedDiagram()!)"
         (click)="$event.stopPropagation()"
       ></div>
-      <button class="diagram-modal-close" type="button" (click)="closeDiagram()" aria-label="Close">
+      <button
+        class="diagram-modal-close"
+        type="button"
+        (click)="closeDiagram()"
+        [attr.aria-label]="lang.t('Close', 'Fermer')"
+      >
         ✕
       </button>
     </div>

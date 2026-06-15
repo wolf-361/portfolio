@@ -23,7 +23,7 @@
       @if (experience().roleProgression?.length) {
         <div class="role-progression">
           @for (role of experience().roleProgression!; track role; let last = $last) {
-            <span class="role-chip mono">{{ role }}</span>
+            <span class="role-chip mono">{{ lang.t(role.en, role.fr) }}</span>
             @if (!last) {
               <span class="role-arrow" aria-hidden="true">→</span>
             }

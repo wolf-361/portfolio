@@ -14,7 +14,9 @@
 
   <div class="t-hint" [class.t-hint--visible]="showHint()" aria-hidden="true">
     <span class="t-hint-dot"></span>
-    <span class="t-hint-text mono">try typing a command</span>
+    <span class="t-hint-text mono">{{
+      lang.t('try typing a command', 'essayez une commande')
+    }}</span>
   </div>
 
   <!-- Body -->

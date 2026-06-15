@@ -16,7 +16,9 @@
         <span class="card-tag mono">{{ lang.t(project().tag!.en, project().tag!.fr) }}</span>
       }
       @if (project().wip) {
-        <span class="wip-badge mono">WIP</span>
+        <span class="wip-badge mono">{{
+          lang.t('In active development', 'En développement actif')
+        }}</span>
       }
     </div>
 
@@ -43,7 +45,7 @@
             target="_blank"
             rel="noopener noreferrer"
             (click)="$event.stopPropagation()"
-            aria-label="View source on GitHub"
+            [attr.aria-label]="lang.t('View source on GitHub', 'Voir le code source sur GitHub')"
             >GitHub ↗</a
           >
         }

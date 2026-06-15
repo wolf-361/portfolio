@@ -1,4 +1,5 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
@@ -36,6 +37,7 @@ import { BootService } from './core/boot-overlay/boot.service';
 export class App implements OnInit {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly platformId = inject(PLATFORM_ID);
   readonly bootService = inject(BootService);
 
   // Map of url → scrollY, kept in memory for the session
@@ -51,7 +53,7 @@ export class App implements OnInit {
       .subscribe((e) => {
         if (e instanceof NavigationStart) {
           // Save scroll position of the page we're leaving
-          if (this.currentUrl) {
+          if (this.currentUrl && isPlatformBrowser(this.platformId)) {
             this.scrollMap.set(this.currentUrl, window.scrollY);
           }
         }
@@ -63,10 +65,14 @@ export class App implements OnInit {
 
           if (saved !== undefined) {
             // Restore saved position (back/forward navigation)
-            setTimeout(() => window.scrollTo({ top: saved, behavior: 'instant' }), 0);
+            if (isPlatformBrowser(this.platformId)) {
+              setTimeout(() => window.scrollTo({ top: saved, behavior: 'instant' }), 0);
+            }
           } else if (!fragment) {
             // Fresh navigation to a non-fragment route — scroll to top
-            window.scrollTo({ top: 0, behavior: 'instant' });
+            if (isPlatformBrowser(this.platformId)) {
+              window.scrollTo({ top: 0, behavior: 'instant' });
+            }
           }
           // Fragment routes with no saved position — anchorScrolling handles it
         }

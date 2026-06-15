@@ -28,6 +28,7 @@ export default tseslint.config(
         { type: 'shared',   pattern: 'src/app/shared/**' },
         { type: 'features', pattern: 'src/app/features/**' },
       ],
+      'import/resolver': { typescript: true },
     },
     rules: {
       // app- for feature/core components, ui- for shared components

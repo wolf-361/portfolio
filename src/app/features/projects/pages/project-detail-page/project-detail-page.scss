@@ -200,6 +200,7 @@
   align-items: center;
   gap: sp.$xs;
   padding: sp.$xs sp.$md;
+  min-height: 44px;
   border-radius: 999px;
   font-size: 0.875rem;
   font-weight: 500;
@@ -310,8 +311,7 @@
 
 .meta-sub {
   font-size: 0.75rem;
-  color: sys.$on-surface-variant;
-  opacity: 0.6;
+  color: color-mix(in srgb, sys.$on-surface-variant 80%, transparent);
 }
 
 .meta-link {
@@ -720,8 +720,7 @@
 
 .pager-dir {
   font-size: 0.6875rem;
-  color: sys.$on-surface-variant;
-  opacity: 0.55;
+  color: color-mix(in srgb, sys.$on-surface-variant 80%, transparent);
 }
 
 .pager-title {
