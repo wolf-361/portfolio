@@ -101,7 +101,7 @@ export class HomePageComponent {
         },
         {
           en: 'Migrated and improved an existing inventory management plugin, refactoring the data model and fixing regressions across the Forge suite.',
-          fr: "Migration et amélioration d'un plugin de gestion d'inventaire existant — refactorisation du modèle de données et correction de régressions sur la suite Forge.",
+          fr: "Migration et amélioration d'un plugin de gestion d'inventaire existant, en refactorisant le modèle de données et en corrigeant des régressions dans la suite Forge.",
         },
         {
           en: 'Built a local development bootstrapping tool to reduce environment setup friction for the team.',
@@ -124,8 +124,8 @@ export class HomePageComponent {
       kind: 'association',
       bullets: [
         {
-          en: 'Vision system (OpenCV/Python) + full IT infrastructure migration — servers, Nginx, Docker.',
-          fr: "Système de vision (OpenCV/Python) + migration complète de l'infrastructure IT — serveurs, Nginx, Docker.",
+          en: 'Vision system (OpenCV/Python) + full IT infrastructure migration: servers, Nginx, Docker.',
+          fr: "Système de vision (OpenCV/Python) + migration complète de l'infrastructure IT : serveurs, Nginx, Docker.",
         },
       ],
       stack: ['Proxmox', 'Linux'],
@@ -234,8 +234,8 @@ export class HomePageComponent {
         fr: "Agenda étudiant multiplateforme pour Android et iOS. Le module KMP partagé détient 100 % de la logique métier, l'état et les données — seule l'interface est spécifique à chaque plateforme.",
       },
       details: {
-        en: 'Strict MVI unidirectional flow — Native UI → ViewModel (shared StateFlow) → UseCase → Repository → Room KMP / Ktor. Swift interop via SKIE, exposing Kotlin Flows as native AsyncSequence.',
-        fr: 'Flux MVI unidirectionnel strict — UI native → ViewModel (StateFlow partagé) → UseCase → Repository → Room KMP / Ktor. Interop Swift via SKIE, exposant les Flows Kotlin en AsyncSequence native.',
+        en: 'Strict MVI unidirectional flow: Native UI → ViewModel (shared StateFlow) → UseCase → Repository → Room KMP / Ktor. Swift interop via SKIE, exposing Kotlin Flows as native AsyncSequence.',
+        fr: 'Flux MVI unidirectionnel strict : UI native → ViewModel (StateFlow partagé) → UseCase → Repository → Room KMP / Ktor. Interop Swift via SKIE, exposant les Flows Kotlin en AsyncSequence native.',
       },
       stack: [
         'Kotlin Multiplatform',
