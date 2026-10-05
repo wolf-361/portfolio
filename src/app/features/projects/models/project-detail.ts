@@ -40,7 +40,7 @@ export interface ProjectSection {
   body: I18n;
   highlight?: ProjectHighlight;
   diagram?: string[]; // legacy ASCII fallback
-  svgDiagram?: string; // inline SVG markup — takes priority over diagram
+  svgDiagram?: I18n; // inline SVG markup — takes priority over diagram
   diagramLabel?: string; // filename shown in the terminal bar, e.g. 'network.svg'
   stats?: StatCard[];
 }

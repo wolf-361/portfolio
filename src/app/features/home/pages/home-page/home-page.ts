@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, viewChild } from '@angular/core';
+import { Component, ElementRef, computed, inject, viewChild } from '@angular/core';
 
 import { HeroComponent } from '../../components/hero/hero';
 import { ExperienceCardComponent } from '../../components/experience-card/experience-card';
@@ -180,23 +180,37 @@ export class HomePageComponent {
   // Decimal year formula: year + (month - 1) / 12
   // Jan = 0/12, May = 4/12, Aug = 7/12, Sept = 8/12, Apr = 3/12
 
-  readonly timelineRows: TimelineRow[] = [
+  readonly timelineRows = computed<TimelineRow[]>(() => [
     {
       label: 'UQTR · Bac',
-      barLabel: 'B.Sc. Informatique',
+      barLabel: this.lang.t('B.Sc. Computer Science', 'B.Sc. Informatique'),
       start: 2022,
       end: 2026,
       variant: 'education',
       ongoing: true,
       segments: [
-        { start: 2022, end: 2024 + 7 / 12, barLabel: 'B.Sc. Informatique', starred: true },
-        { start: 2024 + 7 / 12, end: 2025 + 3 / 12, barLabel: 'Congé', isGap: true },
-        { start: 2025 + 3 / 12, end: 2026, barLabel: 'B.Sc. Informatique' },
+        {
+          start: 2022,
+          end: 2024 + 7 / 12,
+          barLabel: this.lang.t('B.Sc. Computer Science', 'B.Sc. Informatique'),
+          starred: true,
+        },
+        {
+          start: 2024 + 7 / 12,
+          end: 2025 + 3 / 12,
+          barLabel: this.lang.t('Leave', 'Congé'),
+          isGap: true,
+        },
+        {
+          start: 2025 + 3 / 12,
+          end: 2026,
+          barLabel: this.lang.t('B.Sc. Computer Science', 'B.Sc. Informatique'),
+        },
       ],
     },
     {
       label: 'Simaudio',
-      barLabel: 'Développeur logiciel',
+      barLabel: this.lang.t('Software Developer', 'Développeur logiciel'),
       start: 2025 + 3 / 12,
       end: new Date().getFullYear() + new Date().getMonth() / 12,
       variant: 'work',
@@ -211,19 +225,19 @@ export class HomePageComponent {
     },
     {
       label: 'AMI · UQTR',
-      barLabel: 'VP Académique',
+      barLabel: this.lang.t('VP Academic Affairs', 'VP Académique'),
       start: 2023 + 8 / 12,
       end: 2024 + 4 / 12,
       variant: 'association',
     },
     {
       label: 'ASUQTR',
-      barLabel: 'Programmeur',
+      barLabel: this.lang.t('Programmer', 'Programmeur'),
       start: 2023 + 8 / 12,
       end: 2024 + 4 / 12,
       variant: 'association',
     },
-  ];
+  ]);
 
   // ── Projects ───────────────────────────────────────────────────────────────
 

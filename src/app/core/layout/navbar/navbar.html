@@ -42,8 +42,14 @@
   <button
     mat-icon-button
     class="theme-btn"
-    [attr.aria-label]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
-    [matTooltip]="theme.isDark() ? 'Light mode' : 'Dark mode'"
+    [attr.aria-label]="
+      theme.isDark()
+        ? lang.t('Switch to light mode', 'Passer en mode clair')
+        : lang.t('Switch to dark mode', 'Passer en mode sombre')
+    "
+    [matTooltip]="
+      theme.isDark() ? lang.t('Light mode', 'Mode clair') : lang.t('Dark mode', 'Mode sombre')
+    "
     (click)="theme.toggle()"
   >
     <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
