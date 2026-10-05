@@ -196,10 +196,14 @@
               @if (section.svgDiagram) {
                 <div
                   class="arch-svg-canvas"
-                  [innerHTML]="sanitize(section.svgDiagram)"
-                  (click)="openDiagram(section.svgDiagram)"
-                  (keydown.enter)="openDiagram(section.svgDiagram)"
-                  (keydown.space)="openDiagram(section.svgDiagram)"
+                  [innerHTML]="sanitize(lang.t(section.svgDiagram.en, section.svgDiagram.fr))"
+                  (click)="openDiagram(lang.t(section.svgDiagram.en, section.svgDiagram.fr))"
+                  (keydown.enter)="
+                    openDiagram(lang.t(section.svgDiagram.en, section.svgDiagram.fr))
+                  "
+                  (keydown.space)="
+                    openDiagram(lang.t(section.svgDiagram.en, section.svgDiagram.fr))
+                  "
                   role="button"
                   tabindex="0"
                   [attr.aria-label]="

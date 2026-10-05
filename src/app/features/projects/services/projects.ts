@@ -61,7 +61,8 @@ export class ProjectsService {
             fr: "Nous avons choisi <strong>Kotlin Multiplatform</strong> pour la couche métier : modèles, validation, synchronisation, cache. Chaque plateforme garde son moteur de rendu natif — <mark>Jetpack Compose</mark> sur Android, <mark>SwiftUI</mark> sur iOS — pilotés par un même ViewModel basé sur <mark>StateFlow</mark>.\n\n<strong>Module partagé (commonMain), 10 features, Feature-First :</strong>\n\n<ul><li><strong>Couche métier (~95% du code non-UI mutualisé)</strong> — modèles domaine, UseCases, interfaces Repository, moteur de sync, parseurs iCal.</li><li><strong>Persistance</strong> — <mark>Room KMP</mark> pour un schéma typé, partagé, et migrable depuis le code commun.</li><li><strong>Réseau</strong> — client <mark>Ktor</mark> avec intercepteurs, gestion d'erreurs typée via un DSL <mark>AppResult&lt;T&gt;</mark> maison.</li><li><strong>DI</strong> — modules <mark>Koin</mark> déclarés une fois dans shared, les apps plateformes appellent juste <code>startKoin{}</code>.</li><li><strong>Bridge Swift</strong> — <mark>SKIE</mark> (Touchlab) expose les Kotlin Flows comme des <code>AsyncSequence</code> Swift natifs, zéro classe wrapper côté iOS.</li></ul>",
           },
           diagramLabel: 'planific-architecture.svg',
-          svgDiagram: `<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="12">
+          svgDiagram: {
+            en: `<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="12">
   <defs>
     <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
       <path d="M0,0 L0,6 L8,3 z" fill="var(--mat-sys-outline-variant)"/>
@@ -111,6 +112,57 @@ export class ProjectsService {
   <text x="500" y="314" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Ktor</text>
   <text x="500" y="326" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="10">remote</text>
 </svg>`,
+            fr: `<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="12">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="var(--mat-sys-outline-variant)"/>
+    </marker>
+  </defs>
+
+  <!-- Native UI row -->
+  <rect x="40" y="16" width="180" height="44" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-outline-variant)" stroke-width="1"/>
+  <text x="130" y="34" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Compose Screen</text>
+  <text x="130" y="50" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="10">Android</text>
+
+  <rect x="420" y="16" width="180" height="44" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-outline-variant)" stroke-width="1"/>
+  <text x="510" y="34" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">SwiftUI View</text>
+  <text x="510" y="50" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="10">iOS</text>
+
+  <!-- Arrows from UI to ViewModel -->
+  <line x1="130" y1="60" x2="295" y2="104" stroke="var(--mat-sys-outline-variant)" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="510" y1="60" x2="348" y2="104" stroke="var(--mat-sys-outline-variant)" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Shared badge -->
+  <rect x="200" y="96" width="240" height="44" rx="6" fill="color-mix(in srgb, var(--mat-sys-primary) 12%, var(--mat-sys-surface-container))" stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <text x="320" y="114" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">ViewModel</text>
+  <text x="320" y="130" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="10">shared · StateFlow</text>
+
+  <line x1="320" y1="140" x2="320" y2="164" stroke="var(--mat-sys-outline-variant)" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="200" y="166" width="240" height="44" rx="6" fill="color-mix(in srgb, var(--mat-sys-primary) 12%, var(--mat-sys-surface-container))" stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <text x="320" y="184" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">UseCase</text>
+  <text x="320" y="200" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="10">logique métier pure</text>
+
+  <line x1="320" y1="210" x2="320" y2="234" stroke="var(--mat-sys-outline-variant)" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="200" y="236" width="240" height="44" rx="6" fill="color-mix(in srgb, var(--mat-sys-primary) 12%, var(--mat-sys-surface-container))" stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <text x="320" y="254" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">RepositoryImpl</text>
+  <text x="320" y="270" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="10">shared</text>
+
+  <!-- Arrows to storage -->
+  <line x1="270" y1="280" x2="155" y2="304" stroke="var(--mat-sys-outline-variant)" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="370" y1="280" x2="487" y2="304" stroke="var(--mat-sys-outline-variant)" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Storage row -->
+  <rect x="40" y="296" width="200" height="36" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-outline-variant)" stroke-width="1"/>
+  <text x="140" y="314" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Room KMP</text>
+  <text x="140" y="326" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="10">local</text>
+
+  <rect x="400" y="296" width="200" height="36" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-outline-variant)" stroke-width="1"/>
+  <text x="500" y="314" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Ktor</text>
+  <text x="500" y="326" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="10">réseau</text>
+</svg>`,
+          },
           highlight: {
             text: {
               en: 'DTOs from the network never touch the domain layer. Every boundary has an explicit mapper — Dto → Entity → Domain — enforced by the architecture doc.',
@@ -446,7 +498,8 @@ export class ProjectsService {
             fr: "Chaque service vit sous <code>*.wolf-361.ca</code>, mais que vous y accédiez via le VPN ou l'internet public, Traefik vous route différemment selon l'entrypoint qui a reçu la connexion.\n\n<strong>Traefik a deux entrypoints TLS :</strong>\n<ul><li><code>:443</code> (<code>internal</code>) — lié à l'IP NetBird du nœud (<code>wt0</code>). Accessible uniquement si vous êtes sur le VPN. Les tableaux de bord admin, Grafana, Prometheus, Cockpit et toutes les UIs de gestion vivent ici exclusivement.</li><li><code>:8443</code> (<code>https</code>) — atteint via le tunnel Cloudflare. Le daemon tunnel maintient une connexion sortante persistante vers Cloudflare ; aucun port entrant n'est jamais ouvert. Les services publics (status page, portfolio) passent par ici.</li></ul>\n\nLe résolveur DNS de Traefik pointe d'abord sur l'IP NetBird propre du nœud, puis sur <code>1.1.1.1</code>. Sur le VPN, <code>*.wolf-361.ca</code> résout vers une adresse <code>wt0</code> ; le trafic reste entièrement interne. Hors VPN, le même hostname résout via le DNS Cloudflare vers le tunnel. <strong>Même nom de domaine, deux chemins de trafic complètement différents, zéro exposition de port.</strong>\n\n<strong>Trafic inter-services :</strong> Quand un service sur le même nœud appelle un autre (ex: Promtail → Loki), le trafic passe directement par le réseau Docker <code>coolify</code>, sans saut VPN ni aller-retour par Traefik. Le trafic cross-nœud (ex: agent → monitoring hub) transite par le tunnel WireGuard NetBird entre les adresses <code>wt0</code>. Le VPN est le fabric inter-nœuds ; les réseaux Docker sont le fabric intra-nœud.\n\nAjouter un nœud : <code>make worker</code> — Ansible provisionne, NetBird assigne le <code>wt0</code>, l'IP remonte comme fact Ansible, Coolify enregistre le nœud via cette adresse interne.",
           },
           diagramLabel: 'home-ops-network.svg',
-          svgDiagram: `<svg viewBox="0 0 820 330" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
+          svgDiagram: {
+            en: `<svg viewBox="0 0 820 330" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
   <defs>
     <marker id="arr-pub" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
       <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-primary)"/>
@@ -543,6 +596,104 @@ export class ProjectsService {
         stroke="var(--mat-sys-tertiary)" stroke-width="1.5"/>
   <text x="286" y="318" fill="var(--mat-sys-on-surface-variant)" font-size="10">Internal path (NetBird VPN)</text>
 </svg>`,
+            fr: `<svg viewBox="0 0 820 330" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
+  <defs>
+    <marker id="arr-pub" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-primary)"/>
+    </marker>
+    <marker id="arr-vpn" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-tertiary)"/>
+    </marker>
+  </defs>
+
+  <!-- Browser (top-left) -->
+  <rect x="10" y="90" width="115" height="40" rx="6"
+        fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-outline-variant)" stroke-width="1"/>
+  <text x="67" y="107" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Browser</text>
+  <text x="67" y="121" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">hors VPN · public</text>
+
+  <!-- VPN Client (bottom-left) -->
+  <rect x="10" y="200" width="115" height="40" rx="6"
+        fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-tertiary)" stroke-width="1"/>
+  <text x="67" y="217" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">VPN Client</text>
+  <text x="67" y="231" text-anchor="middle" fill="var(--mat-sys-tertiary)" font-size="9">NetBird · wt0</text>
+
+  <!-- Cloudflare (center) -->
+  <rect x="210" y="80" width="135" height="58" rx="6"
+        fill="color-mix(in srgb, var(--mat-sys-primary) 10%, var(--mat-sys-surface-container))"
+        stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <text x="277" y="101" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Cloudflare</text>
+  <text x="277" y="116" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">DNS + Zero-Trust</text>
+  <text x="277" y="129" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">tunnel sortant uniquement</text>
+
+  <!-- Traefik outer box -->
+  <rect x="460" y="70" width="225" height="145" rx="8"
+        fill="var(--mat-sys-surface-container)" stroke="var(--mat-sys-outline-variant)" stroke-width="1"/>
+  <text x="572" y="90" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="12">Traefik · firenze</text>
+
+  <!-- :8443 entrypoint box -->
+  <rect x="476" y="98" width="193" height="38" rx="4"
+        fill="color-mix(in srgb, var(--mat-sys-primary) 12%, var(--mat-sys-surface-container-high))"
+        stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <text x="572" y="114" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">:8443  entrypoint https</text>
+  <text x="572" y="128" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">services publics · Cloudflare</text>
+
+  <!-- :443 entrypoint box -->
+  <rect x="476" y="148" width="193" height="38" rx="4"
+        fill="color-mix(in srgb, var(--mat-sys-tertiary) 12%, var(--mat-sys-surface-container-high))"
+        stroke="var(--mat-sys-tertiary)" stroke-width="1"/>
+  <text x="572" y="164" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">:443  entrypoint interne</text>
+  <text x="572" y="178" text-anchor="middle" fill="var(--mat-sys-tertiary)" font-size="9">wt0 · admin + tableaux de bord</text>
+
+  <!-- Portfolio (right of :8443, vertically centered on it) -->
+  <rect x="700" y="98" width="110" height="38" rx="5"
+        fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <text x="755" y="115" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">Portfolio</text>
+  <text x="755" y="128" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">public</text>
+
+  <!-- Grafana (right of :443, vertically centered on it) -->
+  <rect x="700" y="148" width="110" height="38" rx="5"
+        fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-tertiary)" stroke-width="1"/>
+  <text x="755" y="165" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600" font-size="10">Grafana</text>
+  <text x="755" y="178" text-anchor="middle" fill="var(--mat-sys-tertiary)" font-size="9">interne seulement</text>
+
+  <!-- ── Arrows ── -->
+
+  <!-- Browser → Cloudflare -->
+  <line x1="125" y1="110" x2="208" y2="110"
+        stroke="var(--mat-sys-primary)" stroke-width="1.5" stroke-dasharray="5,3"
+        marker-end="url(#arr-pub)"/>
+
+  <!-- Cloudflare → :8443 -->
+  <path d="M345,109 C400,109 430,117 474,117"
+        fill="none" stroke="var(--mat-sys-primary)" stroke-width="1.5" stroke-dasharray="5,3"
+        marker-end="url(#arr-pub)"/>
+
+  <!-- VPN Client → :443 -->
+  <path d="M125,220 C300,220 360,167 474,167"
+        fill="none" stroke="var(--mat-sys-tertiary)" stroke-width="1.5"
+        marker-end="url(#arr-vpn)"/>
+
+  <!-- :8443 → Portfolio -->
+  <line x1="669" y1="117" x2="698" y2="117"
+        stroke="var(--mat-sys-primary)" stroke-width="1" stroke-dasharray="4,3"
+        marker-end="url(#arr-pub)"/>
+
+  <!-- :443 → Grafana -->
+  <line x1="669" y1="167" x2="698" y2="167"
+        fill="none" stroke="var(--mat-sys-tertiary)" stroke-width="1"
+        marker-end="url(#arr-vpn)"/>
+
+  <!-- ── Legend ── -->
+  <line x1="10" y1="314" x2="38" y2="314"
+        stroke="var(--mat-sys-primary)" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="44" y="318" fill="var(--mat-sys-on-surface-variant)" font-size="10">Voie publique (tunnel Cloudflare)</text>
+
+  <line x1="252" y1="314" x2="280" y2="314"
+        stroke="var(--mat-sys-tertiary)" stroke-width="1.5"/>
+  <text x="286" y="318" fill="var(--mat-sys-on-surface-variant)" font-size="10">Voie interne (VPN NetBird)</text>
+</svg>`,
+          },
         },
         {
           id: 'security',
@@ -665,7 +816,8 @@ export class ProjectsService {
             fr: "Le companion est un binaire Go statiquement lié tournant dans un conteneur <code>scratch</code> distroless (10,2 Mo). Il exécute une boucle de sync en arrière-plan (<code>SYNC_INTERVAL</code>, défaut 1m) et réagit aux événements Docker en temps réel. Toutes les intégrations implémentent une interface <code>Processor</code> unique ; ajouter un nouveau provider revient à implémenter deux méthodes.\n\n<strong>Trois pipelines concurrents :</strong>\n<ul><li><strong>Pipeline interne (DNS NetBird)</strong> — filtre les routers Traefik sur l'entrypoint <code>internal</code>. Crée des entrées DNS NetBird pointant vers l'IP <code>wt0</code> du nœud. Pilote la résolution split-horizon : les clients VPN résolvent <code>*.wolf-361.ca</code> vers une adresse privée.</li><li><strong>Pipeline externe (DNS Cloudflare)</strong> — filtre les routers sur l'entrypoint <code>https</code>. Crée des enregistrements CNAME pointant vers l'UUID du tunnel Cloudflare. Les clients publics résolvent vers le tunnel sans jamais exposer une IP de nœud.</li><li><strong>Pipeline monitoring (Uptime Kuma)</strong> — découvre tous les routers, les groupe par conteneur, déduplique les URLs identiques. Crée et maintient deux objets Kuma distincts par service : un <strong>monitor</strong> (la vérification de disponibilité) et une <strong>entrée de page de statut publique</strong> (quelle page, l'ordre d'affichage, le groupe). Les deux sont entièrement pilotés par labels ; aucune manipulation manuelle dans l'UI Kuma, aucune dérive de configuration.</li></ul>\n\n<strong>Parseur de règles Go pur :</strong> Plutôt que d'importer les packages internes de Traefik (ce qui couplerait le binaire au cycle de release de Traefik), le companion embarque un parseur AST custom basé sur des regex qui extrait les hosts des expressions <code>Host()</code>, <code>PathPrefix()</code>, <code>&&</code> et <code>||</code>. Le binaire reste léger et immunisé aux breaking changes upstream.\n\n<strong>Modèle coordinateur/agent :</strong> L'API Socket.io d'Uptime Kuma a une race condition quand plusieurs nœuds écrivent l'état UI de la Status Page simultanément. Une instance tourne en <code>KUMA_COORDINATOR_MODE: server</code> et détient une file séquentielle. Toutes les autres sont clientes ; elles provisionnent leurs monitors localement mais transmettent les instructions UI au coordinateur. Aucun monitor en double, aucun conflit d'écriture.",
           },
           diagramLabel: 'mesh-companion-architecture.svg',
-          svgDiagram: `<svg viewBox="0 0 680 306" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
+          svgDiagram: {
+            en: `<svg viewBox="0 0 680 306" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
   <defs>
     <marker id="arr-mc2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
       <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-outline-variant)"/>
@@ -719,6 +871,61 @@ export class ProjectsService {
   <rect x="10" y="268" width="660" height="26" rx="4" fill="color-mix(in srgb, var(--mat-sys-error) 8%, var(--mat-sys-surface-container))"/>
   <text x="340" y="284" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">on container stop → orphan cleanup (all 3 providers)</text>
 </svg>`,
+            fr: `<svg viewBox="0 0 680 306" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="11">
+  <defs>
+    <marker id="arr-mc2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-outline-variant)"/>
+    </marker>
+    <marker id="arr-mc2-p" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-primary)"/>
+    </marker>
+    <marker id="arr-mc2-t" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L7,3 z" fill="var(--mat-sys-tertiary)"/>
+    </marker>
+  </defs>
+
+  <!-- Docker -->
+  <rect x="10" y="100" width="110" height="40" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-outline-variant)" stroke-width="1"/>
+  <text x="65" y="117" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Docker</text>
+  <text x="65" y="131" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">labels + événements</text>
+
+  <!-- Companion -->
+  <rect x="160" y="60" width="175" height="120" rx="8" fill="color-mix(in srgb, var(--mat-sys-primary) 10%, var(--mat-sys-surface-container))" stroke="var(--mat-sys-primary)" stroke-width="1.5"/>
+  <text x="247" y="82" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="700" font-size="12">mesh-companion</text>
+  <text x="247" y="97" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">10.2 MB · distroless Go</text>
+  <line x1="170" y1="106" x2="325" y2="106" stroke="var(--mat-sys-outline-variant)" stroke-width="0.5"/>
+  <text x="247" y="121" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">AST rule parser</text>
+  <text x="247" y="135" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">URL deduplicator</text>
+  <text x="247" y="149" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">coordinator queue</text>
+  <text x="247" y="163" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">interface Processor</text>
+
+  <line x1="120" y1="120" x2="158" y2="120" stroke="var(--mat-sys-outline-variant)" stroke-width="1.5" marker-end="url(#arr-mc2)"/>
+
+  <!-- Uptime Kuma -->
+  <rect x="390" y="16" width="175" height="44" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <text x="477" y="35" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Uptime Kuma</text>
+  <text x="477" y="49" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">monitors · pages de statut · tags</text>
+
+  <!-- Cloudflare -->
+  <rect x="400" y="100" width="155" height="44" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-primary)" stroke-width="1"/>
+  <text x="477" y="119" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">Cloudflare DNS</text>
+  <text x="477" y="133" text-anchor="middle" fill="var(--mat-sys-primary)" font-size="9">CNAME → tunnel UUID</text>
+
+  <!-- NetBird -->
+  <rect x="400" y="184" width="155" height="44" rx="6" fill="var(--mat-sys-surface-container-high)" stroke="var(--mat-sys-tertiary)" stroke-width="1"/>
+  <text x="477" y="203" text-anchor="middle" fill="var(--mat-sys-on-surface)" font-weight="600">NetBird DNS</text>
+  <text x="477" y="217" text-anchor="middle" fill="var(--mat-sys-tertiary)" font-size="9">A record → wt0 IP</text>
+
+  <!-- Arrows -->
+  <path d="M335,100 Q365,100 365,38 L388,38" stroke="var(--mat-sys-primary)" stroke-width="1.5" fill="none" marker-end="url(#arr-mc2-p)"/>
+  <line x1="335" y1="120" x2="398" y2="120" stroke="var(--mat-sys-primary)" stroke-width="1.5" marker-end="url(#arr-mc2-p)"/>
+  <path d="M335,140 Q365,140 365,206 L398,206" stroke="var(--mat-sys-tertiary)" stroke-width="1.5" fill="none" marker-end="url(#arr-mc2-t)"/>
+
+  <!-- Cleanup note -->
+  <rect x="10" y="268" width="660" height="26" rx="4" fill="color-mix(in srgb, var(--mat-sys-error) 8%, var(--mat-sys-surface-container))"/>
+  <text x="340" y="284" text-anchor="middle" fill="var(--mat-sys-on-surface-variant)" font-size="9">à l'arrêt du conteneur → nettoyage des orphelins (3 fournisseurs)</text>
+</svg>`,
+          },
         },
         {
           id: 'engineering',
