@@ -24,41 +24,53 @@ export default tseslint.config(
     plugins: { boundaries },
     settings: {
       'boundaries/elements': [
-        { type: 'core',     pattern: 'src/app/core/**' },
-        { type: 'shared',   pattern: 'src/app/shared/**' },
+        { type: 'core', pattern: 'src/app/core/**' },
+        { type: 'shared', pattern: 'src/app/shared/**' },
         { type: 'features', pattern: 'src/app/features/**' },
       ],
       'import/resolver': { typescript: true },
     },
     rules: {
       // app- for feature/core components, ui- for shared components
-      '@angular-eslint/component-selector': ['error', { type: 'element', prefix: ['app', 'ui'], style: 'kebab-case' }],
+      '@angular-eslint/component-selector': [
+        'error',
+        { type: 'element', prefix: ['app', 'ui'], style: 'kebab-case' },
+      ],
       // Attribute directives use no prefix — names are descriptive enough
-      '@angular-eslint/directive-selector': ['error', { type: 'attribute', prefix: '', style: 'camelCase' }],
+      '@angular-eslint/directive-selector': [
+        'error',
+        { type: 'attribute', prefix: '', style: 'camelCase' },
+      ],
 
       // Enforce Angular member ordering: inject() fields (private) first, then
       // public signals/inputs, then constructor, then methods
-      '@typescript-eslint/member-ordering': ['warn', {
-        default: [
-          'private-field',
-          'protected-field',
-          'public-field',
-          'constructor',
-          'public-method',
-          'protected-method',
-          'private-method',
-        ],
-      }],
+      '@typescript-eslint/member-ordering': [
+        'warn',
+        {
+          default: [
+            'private-field',
+            'protected-field',
+            'public-field',
+            'constructor',
+            'public-method',
+            'protected-method',
+            'private-method',
+          ],
+        },
+      ],
 
       // Enforce import rules from ADR-0001
-      'boundaries/dependencies': ['error', {
-        default: 'disallow',
-        rules: [
-          { from: 'features', allow: ['core', 'shared'] },
-          { from: 'shared',   allow: [] },
-          { from: 'core',     allow: ['shared'] },
-        ],
-      }],
+      'boundaries/dependencies': [
+        'error',
+        {
+          default: 'disallow',
+          rules: [
+            { from: 'features', allow: ['core', 'shared'] },
+            { from: 'shared', allow: [] },
+            { from: 'core', allow: ['shared'] },
+          ],
+        },
+      ],
     },
   },
 

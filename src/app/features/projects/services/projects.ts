@@ -5,10 +5,114 @@ import { ProjectDetail } from '../models/project-detail';
 @Injectable({ providedIn: 'root' })
 export class ProjectsService {
   private readonly _details: Record<string, ProjectDetail> = {
+    portfolio: {
+      slug: 'portfolio',
+      title: 'Portfolio',
+      subtitle: 'Angular 21 · Signals · Open Source',
+      status: { en: 'Production', fr: 'Production' },
+      description: {
+        en: 'This site — Angular 21 with Signals, Material Design 3, and import boundaries enforced by eslint-plugin-boundaries. Ten ADRs document every structural decision. Theme applied before first paint, zero RxJS in components.',
+        fr: "Ce site — Angular 21 avec Signals, Material Design 3, et frontières d'imports imposées par eslint-plugin-boundaries. Dix ADRs documentent chaque décision structurelle. Thème appliqué avant le premier rendu, zéro RxJS dans les composants.",
+      },
+      tags: [
+        'Angular 21',
+        'Signals',
+        'Angular Material M3',
+        'Vitest',
+        'Playwright',
+        'Bun',
+        'ESLint Boundaries',
+      ],
+      featured: false,
+      links: [{ label: 'GitHub', url: 'https://github.com/wolf-361/portfolio' }],
+      meta: {
+        role: { en: 'Author · Sole Engineer', fr: 'Auteur · Ingénieur solo' },
+        roleDetail: { en: 'Architecture, Frontend, DX', fr: 'Architecture, Frontend, DX' },
+        duration: { en: '2026 · Ongoing', fr: '2026 · En cours' },
+        team: { en: 'Solo · Open Source', fr: 'Solo · Open Source' },
+        url: 'https://github.com/wolf-361/portfolio',
+        urlLabel: { en: 'GitHub →', fr: 'GitHub →' },
+      },
+      heroVisual: { type: 'none' },
+      sections: [
+        {
+          id: 'constraint',
+          title: { en: 'The portfolio is the case study.', fr: "Le portfolio est l'étude de cas." },
+          tocLabel: { en: 'The Constraint', fr: 'La Contrainte' },
+          body: {
+            en: 'Most portfolio sites exist to show work done elsewhere. This one is the work. The constraint: build a production-quality Angular 21 app that demonstrates the same engineering discipline the CV claims — not as a toy, but as a codebase that holds up to the same scrutiny as any professional project.\n\nThat means import boundaries enforced at build time rather than by convention, a state model consistent enough to audit, tests that actually fail when something breaks, and a theme that does not flash on load. Every structural decision is written down in an ADR — not because the project requires it, but because the portfolio reader should be able to audit the reasoning, not just the code.',
+            fr: "La plupart des sites portfolio existent pour montrer du travail fait ailleurs. Celui-ci est le travail. La contrainte : construire une application Angular 21 de qualité production qui démontre la même discipline d'ingénierie que celle revendiquée dans le CV — pas en jouet, mais comme une codebase qui résiste au même niveau d'examen que n'importe quel projet professionnel.\n\nCela signifie des frontières d'imports imposées à la compilation plutôt que par convention, un modèle d'état suffisamment cohérent pour être audité, des tests qui échouent réellement quand quelque chose se casse, et un thème qui ne clignote pas au chargement. Chaque décision structurelle est consignée dans un ADR — non pas parce que le projet l'exige, mais parce que le lecteur du portfolio doit pouvoir auditer le raisonnement, pas seulement le code.",
+          },
+          highlight: {
+            text: {
+              en: 'If it is not enforced by tooling, it is not enforced at all.',
+              fr: "Si ce n'est pas imposé par les outils, ce n'est pas imposé du tout.",
+            },
+            attribution: { en: 'architecture principle', fr: "principe d'architecture" },
+          },
+        },
+        {
+          id: 'architecture',
+          title: {
+            en: 'Boundaries that cannot be broken.',
+            fr: 'Des frontières impossibles à violer.',
+          },
+          tocLabel: { en: 'Architecture', fr: 'Architecture' },
+          body: {
+            en: "The app is divided into three pillars, and <strong>eslint-plugin-boundaries</strong> makes a cross-layer import a <em>build error</em> — not a code review comment, not a convention, a CI failure.\n\n<ul><li><strong>core/</strong> — singletons loaded once: auth, guards, interceptors, layout, theme, HTTP. Cannot import from features.</li><li><strong>shared/</strong> — reusable UI components (<code>ui-*</code>) and directives with no feature affinity. Cannot import from core or features. Cross-feature dependencies are forced through here, which means they get reviewed before they become coupling.</li><li><strong>features/</strong> — one folder per business domain, each with <code>models/</code>, <code>services/</code>, <code>components/</code>, <code>pages/</code>. Can import core and shared, never another feature.</li></ul>\n\n<strong>Data fetching:</strong> <code>httpResource()</code> from Angular's HTTP package in services. Zero manual subscription management — the resource carries loading, error, and value state as signals. Components read <code>resource.value()</code>, <code>resource.isLoading()</code>, <code>resource.error()</code> directly.\n\n<strong>State:</strong> Signals throughout. <code>computed()</code> for derived state. No <code>BehaviorSubject</code>, no <code>async</code> pipe in templates. The component template is a pure function of its signals.",
+            fr: "L'application est divisée en trois piliers, et <strong>eslint-plugin-boundaries</strong> fait d'un import cross-couche une <em>erreur de build</em> — pas un commentaire de code review, pas une convention, un échec CI.\n\n<ul><li><strong>core/</strong> — singletons chargés une fois : auth, guards, intercepteurs, layout, thème, HTTP. Ne peut pas importer depuis features.</li><li><strong>shared/</strong> — composants UI réutilisables (<code>ui-*</code>) et directives sans affinité feature. Ne peut pas importer depuis core ou features. Les dépendances cross-features sont forcées à passer par ici, ce qui signifie qu'elles sont reviewées avant de devenir du couplage.</li><li><strong>features/</strong> — un dossier par domaine métier, chacun avec <code>models/</code>, <code>services/</code>, <code>components/</code>, <code>pages/</code>. Peut importer core et shared, jamais une autre feature.</li></ul>\n\n<strong>Fetching de données :</strong> <code>httpResource()</code> du package HTTP d'Angular dans les services. Zéro gestion manuelle de souscriptions — la resource porte les états loading, error et value comme signals. Les composants lisent <code>resource.value()</code>, <code>resource.isLoading()</code>, <code>resource.error()</code> directement.\n\n<strong>État :</strong> Signals partout. <code>computed()</code> pour l'état dérivé. Pas de <code>BehaviorSubject</code>, pas de pipe <code>async</code> dans les templates. Le template du composant est une fonction pure de ses signals.",
+          },
+          highlight: {
+            text: {
+              en: 'A cross-feature import is a lint error. The architecture is enforced in the pipeline, not in the PR review.',
+              fr: "Un import cross-feature est une erreur de lint. L'architecture est imposée dans le pipeline, pas dans la revue de PR.",
+            },
+            attribution: { en: 'ADR-0001', fr: 'ADR-0001' },
+          },
+        },
+        {
+          id: 'decisions',
+          title: { en: 'Ten decisions, ten ADRs.', fr: 'Dix décisions, dix ADRs.' },
+          tocLabel: { en: 'Decision Records', fr: 'Décisions' },
+          body: {
+            en: 'Every structural decision made during development is documented in a numbered ADR — written at the moment of choice, with context and consequences, so future contributors can audit the reasoning without reading the commit history.\n\n<ul><li><strong>ADR-0001 — Feature-First architecture.</strong> Three-pillar layout (<code>core/</code>, <code>shared/</code>, <code>features/</code>) over type-first folders. The full stack of a feature is co-located; no jumping between <code>services/</code>, <code>components/</code>, and <code>models/</code> at the root.</li><li><strong>ADR-0002 — Standalone components only.</strong> No NgModules. Each component declares its own imports. Smaller lazy chunks, simpler mental model, and no module graph to maintain.</li><li><strong>ADR-0003 — Signals as the state primitive.</strong> No RxJS in components, no NgRx. State in signals, derived state via <code>computed()</code>, async data via <code>httpResource()</code>.</li><li><strong>ADR-0004 — <code>httpResource()</code> over manual HTTP.</strong> Unified loading/error/value state with no boilerplate. Mutations go through <code>ApiService</code> methods directly.</li><li><strong>ADR-0005 — Theme before first paint.</strong> A small inline <code>&lt;script&gt;</code> in <code>index.html</code> reads <code>localStorage</code> and sets <code>data-theme</code> on <code>&lt;html&gt;</code> before Angular boots. Zero flash of wrong theme. <code>ThemeService</code> owns all subsequent reads and writes.</li><li><strong>ADR-0006 — M3 design tokens via <code>_tokens.scss</code>.</strong> All components reference stable token names (<code>sys.$primary</code>, <code>sys.$surface-container-high</code>) — never hard-coded colors. One file to swap the entire palette.</li><li><strong>ADR-0007 — Vitest over Karma.</strong> Vite-native, fast cold starts, same assertion API.</li><li><strong>ADR-0008 — Playwright for e2e.</strong> Reliable, cross-browser, parallel by default.</li><li><strong>ADR-0009 — Husky + lint-staged.</strong> ESLint + Prettier on changed files at commit time. Full suite in CI only.</li><li><strong>ADR-0010 — File naming convention.</strong> Flat names without type suffixes for component files (<code>hero.ts</code> not <code>hero.component.ts</code>); explicit suffixes for non-components (<code>project.model.ts</code>, <code>lang.ts</code>).</li></ul>',
+            fr: "Chaque décision structurelle prise pendant le développement est documentée dans un ADR numéroté — écrit au moment du choix, avec contexte et conséquences, pour que les contributeurs futurs puissent auditer le raisonnement sans lire l'historique des commits.\n\n<ul><li><strong>ADR-0001 — Architecture Feature-First.</strong> Disposition en trois piliers (<code>core/</code>, <code>shared/</code>, <code>features/</code>) plutôt que des dossiers type-first. Toute la pile d'une feature est co-localisée ; plus besoin de naviguer entre <code>services/</code>, <code>components/</code> et <code>models/</code> à la racine.</li><li><strong>ADR-0002 — Standalone components uniquement.</strong> Pas de NgModules. Chaque composant déclare ses propres imports. Chunks lazy plus légers, modèle mental plus simple, pas de graphe de modules à maintenir.</li><li><strong>ADR-0003 — Signals comme primitive d'état.</strong> Pas de RxJS dans les composants, pas de NgRx. État dans les signals, état dérivé via <code>computed()</code>, données async via <code>httpResource()</code>.</li><li><strong>ADR-0004 — <code>httpResource()</code> plutôt que HTTP manuel.</strong> État loading/error/value unifié sans boilerplate. Les mutations passent directement par les méthodes d'<code>ApiService</code>.</li><li><strong>ADR-0005 — Thème avant le premier rendu.</strong> Un petit <code>&lt;script&gt;</code> inline dans <code>index.html</code> lit <code>localStorage</code> et définit <code>data-theme</code> sur <code>&lt;html&gt;</code> avant le démarrage d'Angular. Zéro flash de thème incorrect. <code>ThemeService</code> gère toutes les lectures et écritures ultérieures.</li><li><strong>ADR-0006 — Tokens M3 via <code>_tokens.scss</code>.</strong> Tous les composants référencent des noms de tokens stables (<code>sys.$primary</code>, <code>sys.$surface-container-high</code>) — jamais de couleurs en dur. Un seul fichier pour changer toute la palette.</li><li><strong>ADR-0007 — Vitest plutôt que Karma.</strong> Natif Vite, démarrages rapides, même API d'assertion.</li><li><strong>ADR-0008 — Playwright pour les e2e.</strong> Fiable, multi-navigateur, parallèle par défaut.</li><li><strong>ADR-0009 — Husky + lint-staged.</strong> ESLint + Prettier sur les fichiers modifiés au commit. Suite complète en CI uniquement.</li><li><strong>ADR-0010 — Convention de nommage.</strong> Noms plats sans suffixe de type pour les fichiers composants (<code>hero.ts</code> plutôt que <code>hero.component.ts</code>) ; suffixes explicites pour les non-composants (<code>project.model.ts</code>, <code>lang.ts</code>).</li></ul>",
+          },
+          stats: [
+            {
+              value: '10',
+              label: {
+                en: 'ADRs — every structural decision is written down',
+                fr: 'ADRs — chaque décision structurelle est documentée',
+              },
+            },
+            {
+              value: '0',
+              label: {
+                en: 'RxJS subscriptions in components',
+                fr: 'Souscriptions RxJS dans les composants',
+              },
+            },
+            {
+              value: '0ms',
+              label: {
+                en: 'Theme flash — applied before Angular boots',
+                fr: "Flash de thème — appliqué avant le démarrage d'Angular",
+              },
+            },
+          ],
+        },
+      ],
+      pager: {
+        nextSlug: 'planific',
+        nextTitle: 'Planific',
+      },
+    },
+
     planific: {
       slug: 'planific',
       title: 'Planific',
-      subtitle: 'Studio Drave · Android & iOS',
+      subtitle: 'Studio Drave · KMP · Spring Boot',
       status: { en: 'In Development', fr: 'En développement' },
       description: {
         en: 'Cross-platform student planner for Android and iOS. The shared KMP module owns 100% of domain logic, state, and data — only the UI is platform-specific.',
@@ -23,6 +127,8 @@ export class ProjectsService {
         'SKIE',
         'Koin',
         'MVI',
+        'Spring Boot',
+        'PostgreSQL',
       ],
       featured: true,
       meta: {
@@ -172,6 +278,25 @@ export class ProjectsService {
           },
         },
         {
+          id: 'backend',
+          title: { en: 'Server side in Kotlin.', fr: 'Côté serveur en Kotlin.' },
+          tocLabel: { en: 'Backend', fr: 'Backend' },
+          body: {
+            en: 'Behind the mobile clients runs a <strong>Spring Boot + Kotlin REST API</strong> deployed on <mark>Google Cloud Run</mark>. The server is written in the same language as the shared KMP module — no context switch between client and server code, and domain models map cleanly across the boundary.\n\n<strong>Clean Architecture — feature-first vertical slices:</strong>\n\n<ul><li><strong>Domain layer</strong> — pure Kotlin models, use case interfaces, and repository interfaces. Zero Spring annotations. Fully testable with no framework bootstrap.</li><li><strong>Application layer</strong> — use case implementations orchestrate domain objects and call repository interfaces. No anemic service layer.</li><li><strong>Infrastructure layer</strong> — Spring REST controllers, JPA repository adapters, request/response mappers, and exception handlers. Framework concerns stay here and never bleed upward.</li></ul>\n\n<strong>Infrastructure:</strong> Cloud Run handles autoscaling and zero-downtime deployments from a container image. PostgreSQL on Cloud SQL. The Ktor client in the shared KMP module connects to this API via the <code>AppResult&lt;T&gt;</code> DSL, so error handling is consistent across Android, iOS, and any future client.',
+            fr: "Derrière les clients mobiles tourne une <strong>API REST Spring Boot + Kotlin</strong> déployée sur <mark>Google Cloud Run</mark>. Le serveur est écrit dans le même langage que le module KMP partagé — aucun changement de contexte entre le code client et serveur, et les modèles domaine se mappent proprement à travers la frontière.\n\n<strong>Clean Architecture — tranches verticales feature-first :</strong>\n\n<ul><li><strong>Couche domaine</strong> — modèles Kotlin purs, interfaces use case et interfaces repository. Zéro annotation Spring. Entièrement testable sans bootstrap framework.</li><li><strong>Couche application</strong> — les implémentations de use cases orchestrent les objets domaine et appellent les interfaces repository. Pas de couche service anémique.</li><li><strong>Couche infrastructure</strong> — controllers REST Spring, adaptateurs JPA, mappers requête/réponse et gestionnaires d'exceptions. Les préoccupations framework restent ici et ne remontent jamais.</li></ul>\n\n<strong>Infrastructure :</strong> Cloud Run gère l'autoscaling et les déploiements sans interruption depuis une image conteneur. PostgreSQL sur Cloud SQL. Le client Ktor dans le module KMP partagé se connecte à cette API via le DSL <code>AppResult&lt;T&gt;</code>, garantissant une gestion d'erreurs cohérente sur Android, iOS et tout futur client.",
+          },
+          highlight: {
+            text: {
+              en: 'The domain layer has zero Spring annotations. It is plain Kotlin — testable without a server, deployable to any runtime.',
+              fr: "La couche domaine n'a aucune annotation Spring. C'est du Kotlin pur — testable sans serveur, déployable sur n'importe quel runtime.",
+            },
+            attribution: {
+              en: 'Clean Architecture constraint',
+              fr: 'contrainte Clean Architecture',
+            },
+          },
+        },
+        {
           id: 'results',
           title: {
             en: 'Real numbers, measured on the repo.',
@@ -208,6 +333,8 @@ export class ProjectsService {
         },
       ],
       pager: {
+        prevSlug: 'portfolio',
+        prevTitle: 'Portfolio',
         nextSlug: 'home-ops',
         nextTitle: 'Home Ops',
       },
@@ -973,7 +1100,7 @@ export class ProjectsService {
     {
       title: 'Planific',
       slug: 'planific',
-      subtitle: 'Studio Drave · Android & iOS',
+      subtitle: 'Studio Drave · KMP · Spring Boot',
       status: { en: 'In Development', fr: 'En développement' },
       description: this._details['planific'].description,
       tags: [
@@ -985,6 +1112,8 @@ export class ProjectsService {
         'Koin',
         'SKIE',
         'MVI',
+        'Spring Boot',
+        'PostgreSQL',
       ],
       featured: true,
     },

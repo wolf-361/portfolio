@@ -35,6 +35,7 @@ features/{name}/
 ```
 
 Import rules:
+
 - `features/` may import from `core/` and `shared/`.
 - `shared/` may **not** import from `core/` or `features/`.
 - `core/` may **not** import from `features/`.

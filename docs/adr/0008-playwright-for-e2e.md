@@ -19,6 +19,7 @@ Use **Playwright** for end-to-end testing.
 Playwright is maintained by Microsoft, runs tests in Chromium, Firefox, and WebKit in parallel, and has first-class TypeScript support. Tests live in `e2e/` at the project root.
 
 The template ships with:
+
 - `playwright.config.ts` configured to run against `http://localhost:4200`.
 - A `e2e/example.spec.ts` showing how to write a basic navigation test.
 - An npm script `test:e2e` that starts the dev server and runs Playwright in one command.

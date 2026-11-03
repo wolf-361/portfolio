@@ -27,9 +27,14 @@ Modern web apps are expected to support both light and dark themes. There are se
    - `setTheme(theme: 'light' | 'dark' | 'system')` — explicit control.
 
 3. SCSS uses the class selector to scope theme-specific overrides:
+
    ```scss
-   :root { --color-background: #{$color-light-bg}; }
-   :root.dark { --color-background: #{$color-dark-bg}; }
+   :root {
+     --color-background: #{$color-light-bg};
+   }
+   :root.dark {
+     --color-background: #{$color-dark-bg};
+   }
    ```
 
 4. Angular Material's theme is defined with `color-scheme: light dark` and uses `mat.theme()` with both light and dark palettes. The `dark` class activates the dark palette.

@@ -27,22 +27,22 @@ All brand decisions live in `src/styles/_tokens.scss`. This is the **only file t
 
 ```scss
 // Brand colors
-$color-primary:    #6750A4;
-$color-secondary:  #625B71;
-$color-tertiary:   #7D5260;
-$color-error:      #B3261E;
+$color-primary: #6750a4;
+$color-secondary: #625b71;
+$color-tertiary: #7d5260;
+$color-error: #b3261e;
 
 // Surface colors (light)
-$color-light-bg:   #FFFBFE;
-$color-light-surface: #FFFBFE;
+$color-light-bg: #fffbfe;
+$color-light-surface: #fffbfe;
 
 // Surface colors (dark)
-$color-dark-bg:    #1C1B1F;
-$color-dark-surface: #1C1B1F;
+$color-dark-bg: #1c1b1f;
+$color-dark-surface: #1c1b1f;
 
 // Typography
-$font-family:      'Inter', sans-serif;
-$font-size-base:   16px;
+$font-family: 'Inter', sans-serif;
+$font-size-base: 16px;
 
 // Shape
 $border-radius-sm: 4px;
@@ -51,6 +51,7 @@ $border-radius-lg: 28px;
 ```
 
 These variables are consumed in two places:
+
 - `src/styles/_material-theme.scss` — feeds `mat.theme()` to configure Material components.
 - `src/styles/global.scss` — exports them as CSS custom properties on `:root` for use in custom components.
 
