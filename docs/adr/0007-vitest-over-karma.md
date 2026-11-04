@@ -9,6 +9,7 @@ Accepted — 2026-04
 Angular's default test runner has historically been Karma with Jasmine. Karma launches a real browser, which makes it slow to start and difficult to run in CI without a headless Chrome setup. The Angular team announced Karma as deprecated in Angular 16 and has since recommended migrating to Jest or Web Test Runner.
 
 The template must choose a unit test runner. The criteria:
+
 - Fast feedback loop (watch mode, no browser launch overhead).
 - Compatible with Angular's testing utilities (`TestBed`).
 - Good TypeScript support.

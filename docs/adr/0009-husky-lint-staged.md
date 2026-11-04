@@ -17,6 +17,7 @@ Use **Husky** to manage Git hooks and **lint-staged** to scope checks to staged 
 ### Pre-commit hook
 
 On every `git commit`, the pre-commit hook runs lint-staged, which:
+
 1. Runs `prettier --write` on staged `.ts`, `.html`, `.scss`, and `.json` files.
 2. Runs `eslint --fix` on staged `.ts` and `.html` files.
 3. Re-stages any files that were auto-fixed.
@@ -28,6 +29,7 @@ If lint-staged exits with an error (a rule that cannot be auto-fixed), the commi
 A `commit-msg` hook runs `commitlint` to enforce [Conventional Commits](https://www.conventionalcommits.org/) format (`feat:`, `fix:`, `chore:`, etc.). This keeps the git history readable and enables automated changelog generation if desired.
 
 Configuration lives in:
+
 - `.husky/pre-commit`
 - `.husky/commit-msg`
 - `.lintstagedrc.json`

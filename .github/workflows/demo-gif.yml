@@ -30,7 +30,7 @@ jobs:
 
       - name: Serve app
         run: bunx serve dist/portfolio/browser -l 4200 &
-        
+
       - name: Wait for server
         run: sleep 3
 

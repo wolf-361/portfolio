@@ -19,6 +19,7 @@ Two layers handle all HTTP and async state:
 ### 1. `ApiService` — URL construction and transport
 
 A single injectable service that wraps `HttpClient`. It handles:
+
 - Base URL injection via `APP_CONFIG`.
 - Default headers (Content-Type, Accept).
 - Error normalisation — maps `HttpErrorResponse` to a typed `ApiError`.
@@ -42,12 +43,12 @@ delete<T>(path: string): Observable<T>
 Feature services expose data as `HttpResourceRef<T>`, which provides:
 
 ```typescript
-resource.value()      // Signal<T | undefined>
-resource.hasValue()   // Signal<boolean>
-resource.isLoading()  // Signal<boolean>
-resource.error()      // Signal<unknown>
-resource.status()     // Signal<'idle' | 'loading' | 'resolved' | 'error'>
-resource.reload()     // manually re-trigger the fetch
+resource.value(); // Signal<T | undefined>
+resource.hasValue(); // Signal<boolean>
+resource.isLoading(); // Signal<boolean>
+resource.error(); // Signal<unknown>
+resource.status(); // Signal<'idle' | 'loading' | 'resolved' | 'error'>
+resource.reload(); // manually re-trigger the fetch
 ```
 
 The URL factory reads signals, so re-fetching on param changes is automatic:
@@ -67,9 +68,8 @@ readonly post = httpResource<Post>(
 Templates read the signals directly:
 
 ```html
-@if (profile.isLoading()) { <app-spinner /> }
-@else if (profile.error()) { <app-error /> }
-@else if (profile.hasValue()) { <app-profile-card [user]="profile.value()!" /> }
+@if (profile.isLoading()) { <app-spinner /> } @else if (profile.error()) { <app-error /> } @else if
+(profile.hasValue()) { <app-profile-card [user]="profile.value()!" /> }
 ```
 
 Mutations remain plain `Observable` methods on the service — they are one-off operations, not ongoing state. Callers invoke `resource.reload()` after a successful mutation to refresh the relevant resource.

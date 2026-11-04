@@ -63,12 +63,12 @@ export class HomePageComponent {
       },
       bullets: [
         {
-          en: 'Reverse-engineered an undocumented proprietary TCP protocol for the MiND1 hardware player — no documentation, no prior team — and implemented the command queue with mutex serialization and a keepalive coroutine on a dedicated dispatcher in Kotlin.',
-          fr: "Rétro-ingénierie d'un protocole TCP propriétaire non documenté pour le lecteur MiND1 — aucune doc, aucune équipe précédente — et implémentation de la file de commandes avec sérialisation par mutex et une coroutine keepalive sur dispatcher dédié en Kotlin.",
+          en: 'Reverse-engineered a partially documented proprietary TCP protocol for the MiND1 hardware player and implemented the command queue with mutex serialization and a keepalive coroutine on a dedicated dispatcher in Kotlin.',
+          fr: "Rétro-ingénierie d'un protocole TCP propriétaire partiellement documenté pour le lecteur MiND1, et implémentation de la file de commandes avec sérialisation par mutex et une coroutine keepalive sur dispatcher dédié en Kotlin.",
         },
         {
-          en: 'Rebuilt the TeamCity CI/CD pipeline from scratch on a Mac mini (Docker Compose) for the .NET → KMP migration: branch protection, unit tests, Android + iOS builds, Firebase App Distribution + TestFlight, manual production gate.',
-          fr: 'Reconstruction du pipeline CI/CD TeamCity depuis zéro sur Mac mini (Docker Compose) pour la migration .NET → KMP : protection des branches, tests unitaires, builds Android + iOS, Firebase App Distribution + TestFlight, gate manuel de production.',
+          en: 'Architected a Kotlin DSL TeamCity pipeline backed in Git, refactoring build configurations across 2 apps with AI tooling following a GitFlow rework. Enabled Android and iOS delivery to Firebase App Distribution and TestFlight, with branch protection, unit tests, and a manual production gate. Documented the setup for independent provisioning and restore.',
+          fr: "Conception d'un pipeline TeamCity en Kotlin DSL versionné dans Git, refactorisation des configurations de build de 2 applications avec l'outillage IA après une refonte GitFlow. Livraison Android et iOS activée vers Firebase App Distribution et TestFlight, avec protection des branches, tests unitaires et gate manuel de production. Installation documentée pour un provisionnement et une restauration autonomes.",
         },
         {
           en: 'Restructured the physical device test suite and contributed unit test coverage on the shared KMP module (AAA pattern).',
@@ -112,6 +112,25 @@ export class HomePageComponent {
         },
       ],
       stack: ['TypeScript', 'Angular', 'NestJS', 'Atlassian Forge', 'Jira API'],
+    },
+    {
+      title: { en: 'Research Assistant', fr: 'Assistant de recherche' },
+      company: 'UQTR',
+      period: { en: '2023 – 2024', fr: '2023 – 2024' },
+      periodShort: { en: '23–24', fr: '23–24' },
+      location: 'Trois-Rivières, QC',
+      kind: 'work',
+      summary: {
+        en: 'Research on an autonomous biopesticide-spraying robot.',
+        fr: "Recherche sur un robot autonome d'épandage de biopesticides.",
+      },
+      bullets: [
+        {
+          en: 'Implemented and optimized an OpenCV/Python image-processing pipeline translating visual data into actionable navigation parameters for an autonomous biopesticide-spraying robot.',
+          fr: "Implémentation et optimisation d'un pipeline de traitement d'images OpenCV/Python qui traduit les données visuelles en paramètres de navigation exploitables pour un robot autonome d'épandage de biopesticides.",
+        },
+      ],
+      stack: ['Python', 'OpenCV'],
     },
   ];
 
@@ -164,7 +183,7 @@ export class HomePageComponent {
       location: 'Trois-Rivières, QC',
       credits: { en: 'B.Sc. · 90 credits', fr: 'B.Sc. · 90 crédits' },
       active: true,
-      deanYears: [2023, 2024, 2025],
+      deanYears: [2023, 2024],
     },
     {
       degree: { en: 'B.Sc. Chemistry', fr: 'B.Sc. Chimie' },
@@ -244,15 +263,15 @@ export class HomePageComponent {
   readonly projects: Project[] = [
     {
       size: 'featured',
-      tag: { en: 'mobile · featured', fr: 'mobile · featured' },
+      tag: { en: 'mobile · fullstack', fr: 'mobile · fullstack' },
       title: { en: 'Planific', fr: 'Planific' },
       description: {
         en: 'Cross-platform student planner for Android and iOS. The shared KMP module owns 100% of domain logic, state, and data — only the UI is platform-specific.',
         fr: "Agenda étudiant multiplateforme pour Android et iOS. Le module KMP partagé détient 100 % de la logique métier, l'état et les données — seule l'interface est spécifique à chaque plateforme.",
       },
       details: {
-        en: 'Strict MVI unidirectional flow: Native UI → ViewModel (shared StateFlow) → UseCase → Repository → Room KMP / Ktor. Swift interop via SKIE, exposing Kotlin Flows as native AsyncSequence.',
-        fr: 'Flux MVI unidirectionnel strict : UI native → ViewModel (StateFlow partagé) → UseCase → Repository → Room KMP / Ktor. Interop Swift via SKIE, exposant les Flows Kotlin en AsyncSequence native.',
+        en: 'Strict MVI unidirectional flow: Native UI → ViewModel (shared StateFlow) → UseCase → Repository → Room KMP / Ktor. Swift interop via SKIE, exposing Kotlin Flows as native AsyncSequence.\n\nBehind the apps: a Spring Boot + Kotlin REST API on Google Cloud Run. Clean Architecture with feature-first modules — each feature owns its controller, use cases, domain models, and JPA adapter as a self-contained vertical slice. The KMP Ktor client connects to this API via the shared AppResult<T> DSL, so error handling is consistent across every platform.',
+        fr: "Flux MVI unidirectionnel strict : UI native → ViewModel (StateFlow partagé) → UseCase → Repository → Room KMP / Ktor. Interop Swift via SKIE, exposant les Flows Kotlin en AsyncSequence native.\n\nDerrière les apps : une API REST Spring Boot + Kotlin déployée sur Google Cloud Run. Clean Architecture avec modules feature-first — chaque feature possède son controller, ses use cases, ses modèles domaine et son adaptateur JPA en tranche verticale autonome. Le client Ktor KMP se connecte à cette API via le DSL AppResult<T> partagé, garantissant une gestion d'erreurs cohérente sur chaque plateforme.",
       },
       stack: [
         'Kotlin Multiplatform',
@@ -263,6 +282,8 @@ export class HomePageComponent {
         'SKIE',
         'Koin',
         'MVI',
+        'Spring Boot',
+        'PostgreSQL',
       ],
       slug: 'planific',
       urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
@@ -315,6 +336,20 @@ export class HomePageComponent {
           { name: 'edge-01', status: 'online', uptime: '2h', cpu: '11%' },
         ],
       },
+    },
+    {
+      size: 'small',
+      tag: { en: 'web · open source', fr: 'web · open source' },
+      accentFirst: false,
+      title: { en: 'Portfolio', fr: 'Portfolio' },
+      description: {
+        en: 'This site — Angular 21 with Signals, Material Design 3, and import boundaries enforced by eslint-plugin-boundaries. Ten ADRs document every structural decision. Theme applied before first paint, zero RxJS in components.',
+        fr: "Ce site — Angular 21 avec Signals, Material Design 3, et frontières d'imports imposées par eslint-plugin-boundaries. Dix ADRs documentent chaque décision structurelle. Thème appliqué avant le premier rendu, zéro RxJS dans les composants.",
+      },
+      stack: ['Angular 21', 'Signals', 'Angular Material M3', 'Vitest', 'Playwright', 'Bun'],
+      slug: 'portfolio',
+      repoUrl: 'https://github.com/wolf-361/portfolio',
+      urlLabel: { en: 'Case study →', fr: 'Étude de cas →' },
     },
     {
       size: 'small',
