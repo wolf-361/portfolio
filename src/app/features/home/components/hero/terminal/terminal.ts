@@ -60,11 +60,11 @@ function buildNeofetchLines(lang: Lang): TermLine[] {
     { text: '──────────────────────────────', style: S_SEP },
     { text: en ? 'Name:   Luc Allaire' : 'Nom:    Luc Allaire', style: S_VALUE },
     {
-      text: en ? 'Role:   Mobile Developer · KMP' : 'Rôle:   Développeur mobile · KMP',
+      text: en ? 'Role:   KMP · Spring Boot · Infra' : 'Rôle:   KMP · Spring Boot · Infra',
       style: S_VALUE,
     },
-    { text: en ? 'Bio:    Shared layer,' : 'Bio:    Couche partagée,', style: S_VALUE },
-    { text: '        Android & iOS.', style: S_DIM },
+    { text: en ? 'Bio:    KMP, Spring Boot,' : 'Bio:    KMP, Spring Boot,', style: S_VALUE },
+    { text: en ? '        full-stack infra.' : '        infra de bout en bout.', style: S_DIM },
     { text: '', style: '' },
     { text: en ? 'OS:     Arch Linux x86_64' : 'OS :    Arch Linux x86_64', style: S_VALUE },
     { text: en ? 'Host:   me.wolf-361.ca' : 'Hôte:   me.wolf-361.ca', style: S_VALUE },
@@ -157,8 +157,8 @@ function runCommand(raw: string, lang: Lang): CommandResult {
             kind: 'output',
             text:
               lang === 'en'
-                ? 'Mobile Developer · KMP Specialist · Self-Hosted Infrastructure'
-                : 'Développeur mobile · Spécialiste KMP · Infrastructure auto-hébergée',
+                ? 'Software Developer · KMP · Spring Boot · Self-Hosted Infrastructure'
+                : 'Développeur logiciel · KMP · Spring Boot · Infrastructure auto-hébergée',
           },
         ];
       if (file === 'bio.txt')

@@ -270,8 +270,8 @@ export class HomePageComponent {
         fr: "Agenda étudiant multiplateforme pour Android et iOS. Le module KMP partagé détient 100 % de la logique métier, l'état et les données — seule l'interface est spécifique à chaque plateforme.",
       },
       details: {
-        en: 'Strict MVI unidirectional flow: Native UI → ViewModel (shared StateFlow) → UseCase → Repository → Room KMP / Ktor. Swift interop via SKIE, exposing Kotlin Flows as native AsyncSequence.\n\nBehind the apps: a Spring Boot + Kotlin REST API on Google Cloud Run. Clean Architecture with feature-first modules — each feature owns its controller, use cases, domain models, and JPA adapter as a self-contained vertical slice. The KMP Ktor client connects to this API via the shared AppResult<T> DSL, so error handling is consistent across every platform.',
-        fr: "Flux MVI unidirectionnel strict : UI native → ViewModel (StateFlow partagé) → UseCase → Repository → Room KMP / Ktor. Interop Swift via SKIE, exposant les Flows Kotlin en AsyncSequence native.\n\nDerrière les apps : une API REST Spring Boot + Kotlin déployée sur Google Cloud Run. Clean Architecture avec modules feature-first — chaque feature possède son controller, ses use cases, ses modèles domaine et son adaptateur JPA en tranche verticale autonome. Le client Ktor KMP se connecte à cette API via le DSL AppResult<T> partagé, garantissant une gestion d'erreurs cohérente sur chaque plateforme.",
+        en: 'Strict MVI unidirectional flow: Native UI → ViewModel (shared StateFlow) → UseCase → Repository → Room KMP / Ktor. Swift interop via SKIE, exposing Kotlin Flows as native AsyncSequence.\n\nBehind the apps: a Spring Boot + Kotlin REST API on Google Cloud Run. Clean Architecture, feature-first vertical slices: each feature owns its controller, use cases, domain models, and JPA adapter as a self-contained unit. The KMP Ktor client connects to this API via the shared AppResult<T> DSL, so error handling is consistent across every platform.',
+        fr: "Flux MVI unidirectionnel strict : UI native → ViewModel (StateFlow partagé) → UseCase → Repository → Room KMP / Ktor. Interop Swift via SKIE, exposant les Flows Kotlin en AsyncSequence native.\n\nDerrière les apps : une API REST Spring Boot + Kotlin déployée sur Google Cloud Run. Clean Architecture, tranches verticales feature-first : chaque feature possède son controller, ses use cases, ses modèles domaine et son adaptateur JPA en unité autonome. Le client Ktor KMP se connecte à cette API via le DSL AppResult<T> partagé, garantissant une gestion d'erreurs cohérente sur chaque plateforme.",
       },
       stack: [
         'Kotlin Multiplatform',
@@ -343,8 +343,8 @@ export class HomePageComponent {
       accentFirst: false,
       title: { en: 'Portfolio', fr: 'Portfolio' },
       description: {
-        en: 'This site — Angular 21 with Signals, Material Design 3, and import boundaries enforced by eslint-plugin-boundaries. Ten ADRs document every structural decision. Theme applied before first paint, zero RxJS in components.',
-        fr: "Ce site — Angular 21 avec Signals, Material Design 3, et frontières d'imports imposées par eslint-plugin-boundaries. Dix ADRs documentent chaque décision structurelle. Thème appliqué avant le premier rendu, zéro RxJS dans les composants.",
+        en: 'Angular 21 with Signals, Material Design 3, and import boundaries enforced by eslint-plugin-boundaries. Ten ADRs document every structural decision. Theme applied before first paint, zero RxJS in components.',
+        fr: "Angular 21 avec Signals, Material Design 3, et frontières d'imports imposées par eslint-plugin-boundaries. Dix ADRs documentent chaque décision structurelle. Thème appliqué avant le premier rendu, zéro RxJS dans les composants.",
       },
       stack: ['Angular 21', 'Signals', 'Angular Material M3', 'Vitest', 'Playwright', 'Bun'],
       slug: 'portfolio',
