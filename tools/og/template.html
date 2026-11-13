@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>OG card template</title>
+    <style>
+      :root {
+        --bg: #0a1628;
+        --bg-accent: #092032;
+        --accent: #00bcd4;
+        --name: #ffffff;
+        --subtitle: #9ecdd6;
+        --tagline: #6b9ea8;
+        --divider: #075064;
+        --chip-border: #007a8a;
+        --chip-text: #9ecdd6;
+        --chip-highlight: #5c35b0;
+        --term-fill: #0d1f34;
+        --term-border: #076a7f;
+        --term-bar: #0d2840;
+        --term-path: #4db6c4;
+        --term-text: #9ecdd6;
+        --footer: #4db6c4;
+
+        --mono: 'DejaVu Sans Mono', 'JetBrains Mono', ui-monospace, monospace;
+        --sans: 'Inter Display', 'Inter', system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        background: var(--bg);
+      }
+
+      .card {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        background: var(--bg);
+        overflow: hidden;
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* soft off-centre glow, top right */
+      .card::before {
+        content: '';
+        position: absolute;
+        top: -250px;
+        right: -150px;
+        width: 580px;
+        height: 580px;
+        border-radius: 50%;
+        background: var(--bg-accent);
+      }
+      .card::after {
+        content: '';
+        position: absolute;
+        bottom: -270px;
+        right: -80px;
+        width: 520px;
+        height: 520px;
+        border-radius: 50%;
+        background: var(--bg-accent);
+      }
+
+      .inner {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        padding: 56px 60px;
+      }
+
+      .monogram {
+        width: 90px;
+        height: 90px;
+        border-radius: 18px;
+        background: var(--accent);
+        color: var(--bg);
+        font-family: var(--sans);
+        font-weight: 800;
+        font-size: 40px;
+        letter-spacing: 0.02em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .name {
+        margin-top: 42px;
+        color: var(--name);
+        font-weight: 800;
+        font-size: 76px;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+
+      .subtitle {
+        margin-top: 18px;
+        color: var(--subtitle);
+        font-weight: 500;
+        font-size: 30px;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+      }
+
+      .tagline {
+        margin-top: 14px;
+        max-width: 620px;
+        color: var(--tagline);
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 1.35;
+      }
+
+      .divider {
+        margin-top: 26px;
+        width: 560px;
+        height: 2px;
+        background: linear-gradient(to right, var(--divider), rgba(7, 80, 100, 0));
+      }
+
+      .chips {
+        margin-top: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        max-width: 620px;
+      }
+      .chip {
+        padding: 9px 16px;
+        border: 1.5px solid var(--chip-border);
+        border-radius: 8px;
+        color: var(--chip-text);
+        font-family: var(--mono);
+        font-size: 16px;
+        line-height: 1;
+        white-space: nowrap;
+      }
+      .chip.highlight {
+        background: var(--chip-highlight);
+        border-color: var(--chip-highlight);
+        color: #ffffff;
+      }
+
+      .footer {
+        position: absolute;
+        z-index: 1;
+        left: 60px;
+        bottom: 52px;
+        color: var(--footer);
+        font-family: var(--mono);
+        font-size: 22px;
+        letter-spacing: 0.01em;
+      }
+
+      .bar {
+        position: absolute;
+        z-index: 2;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(
+          to right,
+          var(--accent) 0%,
+          var(--accent) 22%,
+          #131a39 22%,
+          #131a39 100%
+        );
+      }
+
+      /* terminal */
+      .term {
+        position: absolute;
+        z-index: 1;
+        top: 130px;
+        right: 50px;
+        width: 382px;
+        border: 1.5px solid var(--term-border);
+        border-radius: 12px;
+        background: var(--term-fill);
+        overflow: hidden;
+      }
+      .term-bar {
+        height: 38px;
+        background: var(--term-bar);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 14px;
+      }
+      .dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+      }
+      .term-title {
+        margin-left: 10px;
+        color: var(--term-path);
+        font-family: var(--mono);
+        font-size: 12px;
+        opacity: 0.95;
+      }
+      .term-body {
+        padding: 16px 16px 18px;
+      }
+
+      .block + .block {
+        margin-top: 14px;
+      }
+      .prompt-path {
+        color: var(--term-path);
+        font-family: var(--mono);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .prompt-cmd {
+        color: #ffffff;
+        font-family: var(--mono);
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.5;
+      }
+      .prompt-cmd .glyph,
+      .prompt-path .glyph {
+        color: var(--term-border);
+        font-weight: 400;
+      }
+      .out {
+        margin-top: 6px;
+        color: var(--term-text);
+        font-family: var(--mono);
+        font-size: 13px;
+        line-height: 1.55;
+        opacity: 0.85;
+      }
+      .out.strong {
+        color: #ffffff;
+        opacity: 1;
+      }
+
+      .cursor {
+        display: inline-block;
+        width: 7px;
+        height: 15px;
+        background: var(--term-text);
+        vertical-align: -2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card" id="card">
+      <div class="inner">
+        <div class="monogram" id="monogram"></div>
+        <div class="name" id="name"></div>
+        <div class="subtitle" id="subtitle"></div>
+        <div class="tagline" id="tagline"></div>
+        <div class="divider"></div>
+        <div class="chips" id="chips"></div>
+      </div>
+      <div class="term" id="term">
+        <div class="term-bar">
+          <span class="dot" style="background: #ff5f57"></span>
+          <span class="dot" style="background: #febc2e"></span>
+          <span class="dot" style="background: #28c840"></span>
+          <span class="term-title" id="term-title"></span>
+        </div>
+        <div class="term-body" id="term-body"></div>
+      </div>
+      <div class="footer" id="footer"></div>
+      <div class="bar"></div>
+    </div>
+
+    <script>
+      const FALLBACK = {
+        brand: {},
+        content: {
+          monogram: 'LA',
+          name: 'Luc Allaire',
+          subtitle: 'Software Developer · Backend · DevOps',
+          tagline: 'Production KMP apps, Spring Boot services, and the infrastructure behind them.',
+          chips: [{ label: 'Kotlin Multiplatform' }, { label: 'Docker' }],
+          terminalTitle: 'luc@arch — ~/portfolio — zsh',
+          terminalBlocks: [
+            { command: 'cat about.md', lines: [{ text: 'Software Developer', strong: true }] },
+          ],
+          footer: 'me.wolf-361.ca',
+        },
+      };
+
+      const data = window.__OG_DATA__ || FALLBACK;
+      const c = data.content;
+      const brand = data.brand || {};
+
+      const VAR_MAP = {
+        bg: '--bg',
+        bgAccent: '--bg-accent',
+        accent: '--accent',
+        name: '--name',
+        subtitle: '--subtitle',
+        tagline: '--tagline',
+        divider: '--divider',
+        chipBorder: '--chip-border',
+        chipText: '--chip-text',
+        chipHighlight: '--chip-highlight',
+        termFill: '--term-fill',
+        termBorder: '--term-border',
+        termBar: '--term-bar',
+        termPath: '--term-path',
+        termText: '--term-text',
+        footer: '--footer',
+      };
+      for (const [key, cssVar] of Object.entries(VAR_MAP)) {
+        if (brand[key]) document.documentElement.style.setProperty(cssVar, brand[key]);
+      }
+
+      document.getElementById('monogram').textContent = c.monogram;
+      document.getElementById('name').textContent = c.name;
+      document.getElementById('subtitle').textContent = c.subtitle;
+      document.getElementById('tagline').textContent = c.tagline;
+      document.getElementById('footer').textContent = c.footer;
+      document.getElementById('term-title').textContent = c.terminalTitle;
+
+      const chips = document.getElementById('chips');
+      for (const chip of c.chips) {
+        const el = document.createElement('div');
+        el.className = 'chip' + (chip.highlight ? ' highlight' : '');
+        el.textContent = chip.label;
+        chips.appendChild(el);
+      }
+
+      const body = document.getElementById('term-body');
+      for (const block of c.terminalBlocks) {
+        const wrap = document.createElement('div');
+        wrap.className = 'block';
+
+        const path = document.createElement('div');
+        path.className = 'prompt-path';
+        path.innerHTML = '<span class="glyph">┌ </span>~/portfolio';
+        wrap.appendChild(path);
+
+        const cmd = document.createElement('div');
+        cmd.className = 'prompt-cmd';
+        cmd.innerHTML = '<span class="glyph">└ ❯ </span>' + block.command;
+        wrap.appendChild(cmd);
+
+        for (const line of block.lines) {
+          const out = document.createElement('div');
+          out.className = 'out' + (line.strong ? ' strong' : '');
+          out.textContent = line.text;
+          wrap.appendChild(out);
+        }
+        body.appendChild(wrap);
+      }
+
+      const tail = document.createElement('div');
+      tail.className = 'block';
+      tail.innerHTML =
+        '<div class="prompt-path"><span class="glyph">┌ </span>~/portfolio</div>' +
+        '<div class="prompt-cmd"><span class="glyph">└ ❯ </span><span class="cursor"></span></div>';
+      body.appendChild(tail);
+
+      window.__OG_READY__ = true;
+    </script>
+  </body>
+</html>
