@@ -321,8 +321,8 @@ export class HomePageComponent {
       tag: { en: 'infra · self-hosted', fr: 'infra · self-hosted' },
       title: { en: 'Home Ops', fr: 'Home Ops' },
       description: {
-        en: '3-node bare-metal Debian cluster. 12 Ansible roles, dual-path network (NetBird VPN + Cloudflare tunnels), Authelia SSO, full Prometheus/Grafana/Loki observability.',
-        fr: 'Cluster bare-metal 3 nœuds. 12 rôles Ansible, réseau dual-path (VPN NetBird + tunnels Cloudflare), Authelia SSO, observabilité Prometheus/Grafana/Loki complète.',
+        en: 'Bare-metal Debian cluster. 12 Ansible roles, dual-path network (NetBird VPN + Cloudflare tunnels), Authelia SSO, full Prometheus/Grafana/Loki observability.',
+        fr: 'Cluster bare-metal Debian. 12 rôles Ansible, réseau dual-path (VPN NetBird + tunnels Cloudflare), Authelia SSO, observabilité Prometheus/Grafana/Loki complète.',
       },
       stack: ['Ansible', 'Docker', 'Traefik', 'NetBird', 'Cloudflare', 'Authelia', 'Debian'],
       slug: 'home-ops',
