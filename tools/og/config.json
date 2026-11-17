@@ -1,0 +1,55 @@
+{
+  "brand": {
+    "bg": "#0a1628",
+    "bgAccent": "#092032",
+    "accent": "#00bcd4",
+    "name": "#ffffff",
+    "subtitle": "#9ecdd6",
+    "tagline": "#6b9ea8",
+    "divider": "#075064",
+    "chipBorder": "#007a8a",
+    "chipText": "#9ecdd6",
+    "chipHighlight": "#5c35b0",
+    "termFill": "#0d1f34",
+    "termBorder": "#076a7f",
+    "termBar": "#0d2840",
+    "termPath": "#4db6c4",
+    "termText": "#9ecdd6",
+    "footer": "#4db6c4"
+  },
+  "content": {
+    "monogram": "LA",
+    "name": "Luc Allaire",
+    "subtitle": "Software Developer · Mobile · Backend · DevOps",
+    "tagline": "Production KMP apps, Spring Boot services, and the infrastructure behind them.",
+    "chips": [
+      { "label": "Kotlin Multiplatform" },
+      { "label": "Jetpack Compose", "highlight": true },
+      { "label": "SwiftUI" },
+      { "label": "Spring Boot" },
+      { "label": "Angular 21" },
+      { "label": "Docker" },
+      { "label": "Ansible" }
+    ],
+    "terminalTitle": "luc@arch — ~/portfolio — zsh",
+    "terminalBlocks": [
+      {
+        "command": "cat about.md",
+        "lines": [
+          { "text": "Software Developer", "strong": true },
+          { "text": "Simaudio · UQTR · Studio Drave" },
+          { "text": "Planific · Home Ops" }
+        ]
+      },
+      {
+        "command": "cat stack.txt",
+        "lines": [
+          { "text": "KMP · Compose · SwiftUI", "strong": true },
+          { "text": "Spring Boot · Angular · Ansible" }
+        ]
+      }
+    ],
+    "footer": "me.wolf-361.ca"
+  },
+  "variants": [{ "name": "og-image", "width": 1200, "height": 630, "scale": 1 }]
+}

@@ -542,8 +542,8 @@ export class ProjectsService {
       subtitle: 'Self-Hosted · Bare Metal · Zero-Trust',
       status: { en: 'Production', fr: 'Production' },
       description: {
-        en: '3-node bare-metal Debian cluster provisioned end-to-end with Ansible. 12 roles, 9 production stacks, dual-path network (NetBird VPN for internal traffic, Cloudflare tunnels for public), mTLS + Authelia SSO, full Prometheus/Grafana/Loki observability stack. One command from fresh Debian to fully connected node.',
-        fr: "Cluster bare-metal 3 nœuds Debian provisionné intégralement avec Ansible. 12 rôles, 9 stacks en production, réseau dual-path (VPN NetBird pour le trafic interne, tunnels Cloudflare pour le public), mTLS + Authelia SSO, stack d'observabilité Prometheus/Grafana/Loki complète. Une commande depuis un Debian vierge jusqu'à un nœud pleinement connecté.",
+        en: 'Bare-metal Debian cluster provisioned end-to-end with Ansible. 12 roles, 9 stacks, dual-path network (NetBird VPN for internal traffic, Cloudflare tunnels for public), mTLS + Authelia SSO, full Prometheus/Grafana/Loki observability stack. One command from fresh Debian to fully connected node.',
+        fr: "Cluster bare-metal Debian provisionné intégralement avec Ansible. 12 rôles, 9 stacks, réseau dual-path (VPN NetBird pour le trafic interne, tunnels Cloudflare pour le public), mTLS + Authelia SSO, stack d'observabilité Prometheus/Grafana/Loki complète. Une commande depuis un Debian vierge jusqu'à un nœud pleinement connecté.",
       },
       tags: ['Ansible', 'Docker', 'Traefik', 'NetBird', 'Cloudflare', 'Authelia', 'Prometheus'],
       featured: false,
