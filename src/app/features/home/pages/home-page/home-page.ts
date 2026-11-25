@@ -126,8 +126,8 @@ export class HomePageComponent {
       },
       bullets: [
         {
-          en: 'Implemented and optimized an OpenCV/Python image-processing pipeline translating visual data into actionable navigation parameters for an autonomous biopesticide-spraying robot.',
-          fr: "Implémentation et optimisation d'un pipeline de traitement d'images OpenCV/Python qui traduit les données visuelles en paramètres de navigation exploitables pour un robot autonome d'épandage de biopesticides.",
+          en: 'Developed an OpenCV/Python image-processing pipeline to identify the plants to be treated.',
+          fr: "Développer un pipeline de traitement d'images OpenCV/Python pour repérer les plants à traiter.",
         },
       ],
       stack: ['Python', 'OpenCV'],

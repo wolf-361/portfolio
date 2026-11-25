@@ -343,13 +343,13 @@ export class ProjectsService {
     waystone: {
       slug: 'waystone',
       title: 'Waystone',
-      subtitle: 'Studio Drave · Android & iOS',
+      subtitle: 'Concept · Design study',
       status: { en: 'Design phase', fr: 'Phase de conception' },
       description: {
-        en: 'Spoiler-safe companion app for non-linear open-world games. Photograph any map, pin locations, track progress. Free and fully local. Curated maps with fog-of-war reveal mechanics and community sync are the paid tier.',
-        fr: "Application compagnon sans spoilers pour les jeux non-linéaires. Photographiez n'importe quelle carte, épinglez des emplacements, suivez votre progression. Gratuit et 100% local. Les cartes curées avec brouillard de guerre et synchronisation communautaire forment le palier payant.",
+        en: 'Design concept for a spoiler-safe companion app for non-linear open-world games. Photograph any map, pin locations, track progress — fully local by design. Curated maps with fog-of-war reveal mechanics and community sync form the planned paid tier.',
+        fr: "Concept de design : application compagnon sans spoilers pour les jeux non-linéaires. Photographiez n'importe quelle carte, épinglez des emplacements, suivez votre progression — 100% local par conception. Les cartes curées avec brouillard de guerre et synchronisation communautaire forment le palier payant prévu.",
       },
-      tags: ['Kotlin Multiplatform', 'Compose Canvas', 'SQLDelight', 'Supabase', 'Freemium'],
+      tags: ['Kotlin Multiplatform', 'Compose Canvas', 'SQLDelight', 'Supabase'],
       featured: true,
       meta: {
         role: { en: 'Founder · Sole Engineer', fr: 'Fondateur · Ingénieur solo' },
@@ -393,13 +393,13 @@ export class ProjectsService {
         {
           id: 'model',
           title: {
-            en: 'Free forever, paid for depth.',
-            fr: 'Gratuit pour toujours, payant pour la profondeur.',
+            en: 'Free by design, paid for depth.',
+            fr: 'Gratuit par conception, payant pour la profondeur.',
           },
           tocLabel: { en: 'Product Model', fr: 'Modèle produit' },
           body: {
-            en: "The free tier is fully functional with no account required. Photograph any map — the game box, a hand-drawn dungeon layout, a screenshot — and Waystone converts it into a pinnable spatial canvas. Drop markers across all 5 categories, write notes, track what you've cleared. Everything stays on-device.\n\nThe paid tier unlocks <strong>curated maps</strong>: official high-res layouts for specific games, pre-loaded with community-contributed points of interest. This is where the spoiler problem becomes an engineering problem.\n\n<strong>Fog-of-war reveal system:</strong>\n\n<ul><li><strong>All pins hidden by default.</strong> The map looks clean. No information you didn't earn.</li><li><strong>Long-press any spot</strong> to reveal that a pin exists there, without showing what it is. Mark it visited without being spoiled.</li><li><strong>Act-scoped unlocks</strong> — reveal all pins for a completed zone when you want a completeness check.</li><li><strong>Hint-first reveals</strong> — tap a hidden pin for a cryptic clue. One more tap to see the full annotation.</li></ul>",
-            fr: "Le palier gratuit est pleinement fonctionnel sans compte requis. Photographiez n'importe quelle carte et Waystone la convertit en canevas spatial épinglable. Posez des marqueurs dans les 5 catégories, rédigez des notes, suivez votre progression. Tout reste sur l'appareil.\n\nLe palier payant débloque les <strong>cartes curées</strong> : mises en page officielles haute résolution pré-chargées avec les points d'intérêt communautaires. C'est là que le problème de spoilers devient un problème d'ingénierie.\n\n<strong>Système de révélation brouillard de guerre :</strong>\n\n<ul><li><strong>Toutes les épingles cachées par défaut.</strong> La carte est propre. Aucune info non gagnée.</li><li><strong>Appui long sur un spot</strong> pour révéler qu'une épingle existe, sans montrer ce que c'est.</li><li><strong>Déverrouillages par acte</strong> — révélez toutes les épingles d'une zone complétée pour vérifier la complétion.</li><li><strong>Révélations par indice</strong> — appuyez sur une épingle cachée pour un indice cryptique. Un appui de plus pour l'annotation complète.</li></ul>",
+            en: "The free tier is designed to be fully functional with no account required. Photograph any map — the game box, a hand-drawn dungeon layout, a screenshot — and Waystone would convert it into a pinnable spatial canvas. Drop markers across all 5 categories, write notes, track what you've cleared. Everything would stay on-device.\n\nThe planned paid tier would unlock <strong>curated maps</strong>: official high-res layouts for specific games, pre-loaded with community-contributed points of interest. This is where the spoiler problem becomes an engineering problem.\n\n<strong>Fog-of-war reveal system:</strong>\n\n<ul><li><strong>All pins hidden by default.</strong> The map looks clean. No information you didn't earn.</li><li><strong>Long-press any spot</strong> to reveal that a pin exists there, without showing what it is. Mark it visited without being spoiled.</li><li><strong>Act-scoped unlocks</strong> — reveal all pins for a completed zone when you want a completeness check.</li><li><strong>Hint-first reveals</strong> — tap a hidden pin for a cryptic clue. One more tap to see the full annotation.</li></ul>",
+            fr: "Le palier gratuit est conçu pour être pleinement fonctionnel sans compte requis. Photographiez n'importe quelle carte et Waystone la convertirait en canevas spatial épinglable. Posez des marqueurs dans les 5 catégories, rédigez des notes, suivez votre progression. Tout resterait sur l'appareil.\n\nLe palier payant prévu débloquerait les <strong>cartes curées</strong> : mises en page officielles haute résolution pré-chargées avec les points d'intérêt communautaires. C'est là que le problème de spoilers devient un problème d'ingénierie.\n\n<strong>Système de révélation brouillard de guerre :</strong>\n\n<ul><li><strong>Toutes les épingles cachées par défaut.</strong> La carte est propre. Aucune info non gagnée.</li><li><strong>Appui long sur un spot</strong> pour révéler qu'une épingle existe, sans montrer ce que c'est.</li><li><strong>Déverrouillages par acte</strong> — révélez toutes les épingles d'une zone complétée pour vérifier la complétion.</li><li><strong>Révélations par indice</strong> — appuyez sur une épingle cachée pour un indice cryptique. Un appui de plus pour l'annotation complète.</li></ul>",
           },
         },
         {
@@ -410,13 +410,16 @@ export class ProjectsService {
           },
           tocLabel: { en: 'Architecture', fr: "L'Architecture" },
           body: {
-            en: 'The free tier must work with <strong>zero network calls</strong>. This is a hard constraint that shapes every layer.\n\n<strong>Shared KMP module (commonMain):</strong>\n\n<ul><li><strong>SQLDelight</strong> — typed queries at compile time, single schema shared across Android and iOS. The <code>RevealState</code> enum (<code>HIDDEN → HINTED → REVEALED → COMPLETED</code>) is persisted per pin.</li><li><strong>Camera → tile pipeline</strong> — photos are segmented into tiles in commonMain, stored locally, rendered by the Compose Canvas engine with viewport culling and zoom-level management.</li><li><strong>Supabase sync</strong> (paid) — delta sync on reconnect, last-write-wins conflict resolution per pin. Community contributions go through a moderation queue before entering the curated dataset.</li></ul>',
-            fr: "Le palier gratuit doit fonctionner avec <strong>zéro appel réseau</strong>. C'est une contrainte ferme qui structure chaque couche.\n\n<strong>Module KMP partagé (commonMain) :</strong>\n\n<ul><li><strong>SQLDelight</strong> — requêtes typées à la compilation, schéma unique partagé entre Android et iOS. L'enum <code>RevealState</code> (<code>HIDDEN → HINTED → REVEALED → COMPLETED</code>) est persisté par épingle.</li><li><strong>Pipeline caméra → tuiles</strong> — les photos sont segmentées en tuiles dans commonMain, stockées localement, rendues par le moteur Compose Canvas avec viewport culling et gestion par niveau de zoom.</li><li><strong>Sync Supabase</strong> (payant) — sync delta à la reconnexion, last-write-wins par épingle. Les contributions communautaires passent par une file de modération.</li></ul>",
+            en: 'The free tier is designed to work with <strong>zero network calls</strong>. This is a hard constraint that shapes every architectural decision.\n\n<strong>Shared KMP module (commonMain):</strong>\n\n<ul><li><strong>SQLDelight</strong> — typed queries at compile time, single schema shared across Android and iOS. The <code>RevealState</code> enum (<code>HIDDEN → HINTED → REVEALED → COMPLETED</code>) is persisted per pin.</li><li><strong>Camera → tile pipeline</strong> — photos are segmented into tiles in commonMain, stored locally, rendered by the Compose Canvas engine with viewport culling and zoom-level management.</li><li><strong>Supabase sync</strong> (planned paid) — delta sync on reconnect, last-write-wins conflict resolution per pin. Community contributions would go through a moderation queue before entering the curated dataset.</li></ul>',
+            fr: "Le palier gratuit est conçu pour fonctionner avec <strong>zéro appel réseau</strong>. C'est une contrainte ferme qui structure chaque décision architecturale.\n\n<strong>Module KMP partagé (commonMain) :</strong>\n\n<ul><li><strong>SQLDelight</strong> — requêtes typées à la compilation, schéma unique partagé entre Android et iOS. L'enum <code>RevealState</code> (<code>HIDDEN → HINTED → REVEALED → COMPLETED</code>) est persisté par épingle.</li><li><strong>Pipeline caméra → tuiles</strong> — les photos sont segmentées en tuiles dans commonMain, stockées localement, rendues par le moteur Compose Canvas avec viewport culling et gestion par niveau de zoom.</li><li><strong>Sync Supabase</strong> (payant prévu) — sync delta à la reconnexion, last-write-wins par épingle. Les contributions communautaires passeraient par une file de modération.</li></ul>",
           },
           stats: [
             {
               value: '0',
-              label: { en: 'Network calls — free tier', fr: 'Appels réseau — free tier' },
+              label: {
+                en: 'Network calls — free tier (design target)',
+                fr: 'Appels réseau — palier gratuit (cible de conception)',
+              },
             },
             {
               value: '5',
@@ -1120,7 +1123,7 @@ export class ProjectsService {
     {
       title: 'Waystone',
       slug: 'waystone',
-      subtitle: 'Studio Drave · Android & iOS',
+      subtitle: 'Concept · Design study',
       status: { en: 'Design phase', fr: 'Phase de conception' },
       description: this._details['waystone'].description,
       tags: ['Kotlin Multiplatform', 'Compose Canvas', 'SQLDelight', 'Supabase', 'Offline-First'],
